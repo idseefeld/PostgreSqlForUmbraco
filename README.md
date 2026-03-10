@@ -17,7 +17,7 @@ fixed in future releases of Umbraco.
 
 ### Comments and contributions are very welcome!
 
-Please report any issue to the [Issue Tracker](/idseefeld/PostgreSqlForUmbraco/issues).
+Please report any issue to the [Issue Tracker](/idseefeld/PostgreSqlForUmbraco.issues.git).
 
 
 ### Install PostgreSQL Database
@@ -27,4 +27,4 @@ Please report any issue to the [Issue Tracker](/idseefeld/PostgreSqlForUmbraco/i
 1. If not trusting databse certificate "SSL Mode" is set to `VerifyCA` during installation. But you can change this later on in the connection string in `appsettings.json` file. Read details: https://www.npgsql.org/doc/security.html?tabs=tabid-1
 
 ### Wiki
-Further details are in the [Wiki](/idseefeld/PostgreSqlForUmbraco/wiki) of this project.
+Further details are in the [Wiki](https://github.com/idseefeld/PostgreSqlForUmbraco.wiki.git) of this project.
