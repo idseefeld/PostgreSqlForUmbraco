@@ -1,0 +1,23 @@
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Our.Umbraco.PostgreSql.EFCore.Migrations
+{
+    /// <inheritdoc />
+    public partial class UpdateOpenIddictToV5 : Migration
+    {
+
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            // No op. Existing tables are added by npoco. This will only create the history table.
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+
+        }
+    }
+}
