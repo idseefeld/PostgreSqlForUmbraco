@@ -2,7 +2,7 @@
 
 [![Downloads](https://img.shields.io/nuget/dt/Our.Umbraco.PostgreSql?color=cc9900)](https://www.nuget.org/packages/Our.Umbraco.PostgreSql/)
 [![NuGet](https://img.shields.io/nuget/vpre/Our.Umbraco.PostgreSql?color=0273B3)](https://www.nuget.org/packages/Our.Umbraco.PostgreSql)
-[![GitHub license](https://img.shields.io/github/idseefeld/Our.Umbraco.PostgreSql?color=8AB803)](../LICENSE)
+[![GitHub license](https://img.shields.io/github/license/idseefeld/PostgreSqlForUmbraco?color=8AB803)](../LICENSE)
 
 ### Documentation for the PostgreSQL Provider Package for Umbraco CMS
 
