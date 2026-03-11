@@ -6,6 +6,7 @@
     <Project Path="Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.pack.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path="../LICENSE" />
     <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="Umbraco17.www/Umbraco17.www.csproj" />
