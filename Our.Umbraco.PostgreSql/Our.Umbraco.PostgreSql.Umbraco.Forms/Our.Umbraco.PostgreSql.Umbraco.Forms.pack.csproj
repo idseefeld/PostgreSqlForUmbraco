@@ -2,17 +2,9 @@
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
-		<VersionPrefix>17.3.0</VersionPrefix>
-		<Company>-</Company>
-		<Authors>Dirk Seefeld</Authors>
-		<PackageIcon>upostgresqlfix.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<Product>PostgreSQL Provider for Umbraco CMS</Product>
-		<PackageTags>umbraco, postgresql, community</PackageTags>
 		<Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
-		<TargetFramework>net10.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageIcon>upostgresqlfix.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>

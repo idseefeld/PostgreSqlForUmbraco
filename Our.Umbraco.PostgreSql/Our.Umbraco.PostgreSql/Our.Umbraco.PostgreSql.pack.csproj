@@ -2,18 +2,8 @@
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql</PackageId>
-		<VersionPrefix>17.3.0</VersionPrefix>
-		<Company>-</Company>
-		<Authors>Dirk Seefeld</Authors>
-		<PackageIcon>uPostgresql.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<Product>PostgreSQL Provider for Umbraco CMS</Product>
-		<PackageTags>umbraco, postgresql, community</PackageTags>
-		<Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
 		<Title>Umbraco CMS - Persistence - PostgreSQL</Title>
 		<Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
-		<TargetFramework>net10.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -33,6 +23,7 @@
 
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
+		<Content Include="umbraco-marketplace.json" Pack="true" PackagePath="" Visible="false" />
 		<Content Include="uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 

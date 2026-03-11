@@ -2,17 +2,8 @@
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql.EFCore</PackageId>
-		<VersionPrefix>17.3.0</VersionPrefix>
-		<Company>-</Company>
-		<Authors>Dirk Seefeld</Authors>
-		<PackageIcon>uPostgresql.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<Product>PostgreSQL Provider for Umbraco CMS</Product>
-		<PackageTags>umbraco, postgresql, community</PackageTags>
 		<Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL migrations</Title>
 		<Description>Adds support for Entity Framework Core PostgreSQL migrations to Umbraco CMS.</Description>
-		<TargetFramework>net10.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
