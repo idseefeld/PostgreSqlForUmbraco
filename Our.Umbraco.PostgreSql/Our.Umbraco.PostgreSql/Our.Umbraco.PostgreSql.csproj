@@ -14,6 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="datetime-erros.playlist" />
     <None Remove="ExecuteScalar-errors.playlist" />
     <None Remove="file-open-error.playlist" />

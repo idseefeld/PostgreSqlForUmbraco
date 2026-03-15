@@ -24,7 +24,6 @@ namespace Our.Umbraco.PostgreSql.Migrations.Dtos
 
         //[Column("status")]
         //[NullSetting(NullSetting = NullSettings.Null)]
-        //[Index(IndexTypes.NonClustered, Name = "IX_myPackageTable_status")]
         //public string? Status { get; set; }
     }
 }
