@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 	<PropertyGroup>
-		<VersionPrefix>17.3.0-rc</VersionPrefix>
+		<VersionPrefix>17.3.0-rc1</VersionPrefix>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>uPostgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<Product>PostgreSQL Provider for Umbraco CMS</Product>
-		<PackageTags>umbraco, postgresql, community</PackageTags>
 		<Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<TargetFramework>net10.0</TargetFramework>
