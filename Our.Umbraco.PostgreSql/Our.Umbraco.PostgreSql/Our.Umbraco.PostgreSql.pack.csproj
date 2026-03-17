@@ -29,7 +29,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="10.0.1" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.0--rc.preview.233.g6acb0ba" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.0-rc" />
 	</ItemGroup>
 
 	<ItemGroup>
