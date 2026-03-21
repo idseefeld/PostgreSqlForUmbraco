@@ -23,10 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="10.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\source\repos\_idseefeld\npgsql\src\Npgsql\Npgsql.csproj" />
     <ProjectReference Include="..\..\..\..\IdsUmbFork\src\Umbraco.Infrastructure\Umbraco.Infrastructure.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.source.csproj" />
   </ItemGroup>
