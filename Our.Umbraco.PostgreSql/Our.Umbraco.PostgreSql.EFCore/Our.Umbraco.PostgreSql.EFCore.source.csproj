@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+		<ProjectReference Include="..\..\..\..\..\source\repos\_idseefeld\efcore.pg\src\EFCore.PG\EFCore.PG.csproj" />
 		<ProjectReference Include="..\..\..\..\IdsUmbFork\src\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
 	</ItemGroup>
 
