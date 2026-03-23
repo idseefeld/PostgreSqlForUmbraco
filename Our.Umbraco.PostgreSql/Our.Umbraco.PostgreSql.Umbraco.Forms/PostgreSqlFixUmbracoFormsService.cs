@@ -60,13 +60,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
         {
             var success = true;
 
-            if (!(cmd.CommandText.Contains(" UF") || cmd.CommandText.Contains(" \"UF")))
+            if (!IsUfCommand(cmd))
             {
                 return success;
             }
-
-            var oldCommandText = cmd.CommandText;
-
 
             if (cmd.CommandText.StartsWith("SELECT "))
             {
@@ -281,7 +278,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = $"UPDATE \"UFWorkflows\" SET \"Updated\" = \"Updated\" {GetTimeZone()}";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE \"user\" = @p7":
-                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = @p7";
+                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'";
+                        break;
+                    case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE \"user\" = @p3 AND form = @p4":
+                        cmd.CommandText = "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4";
                         break;
                     default:
                         success = false;
@@ -310,6 +310,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     case "DELETE FROM UFRecordFields WHERE UFRecordFields.Record in (@p0)":
                         cmd.CommandText = "DELETE FROM \"UFRecordFields\" WHERE \"Record\" IN (@p0)";
                         break;
+                    case "DELETE FROM \"UFUserStartFolders\" WHERE UserId = @p0":
+                        cmd.CommandText = "DELETE FROM \"UFUserStartFolders\" WHERE \"UserId\" = @p0";
+                        break;
                     default:
                         success = false;
                         break;
@@ -325,9 +328,18 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
             return success;
         }
 
-        public override Func<object, object> GetParameterConverter(DbCommand dbCommand, Type sourceType)
+        private bool IsUfCommand(DbCommand cmd)
         {
-            return (value =>
+            return cmd.CommandText.Contains(" UF") || cmd.CommandText.Contains(" \"UF");
+        }
+        public override Func<object, object> GetParameterConverter(DbCommand cmd, Type sourceType)
+        {
+            if (!IsUfCommand(cmd))
+            {
+                return null;
+            }
+
+            return value =>
             {
                 if (value is string str && Guid.TryParse(str, out Guid guidValue))
                 {
@@ -335,14 +347,14 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 }
 
                 if (value is int i
-                    && dbCommand.CommandText.Contains("UFUserGroupSecurity", StringComparison.OrdinalIgnoreCase)
+                    && (i == 0 || i == 1)
                     && bool.TryParse(i.ToString(), out bool boolValue))
                 {
                     return boolValue;
                 }
 
                 return value;
-            });
+            };
         }
     }
 }
