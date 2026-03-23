@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NPoco;
 using Our.Umbraco.PostgreSql.Caching;
 using Our.Umbraco.PostgreSql.Mappers;
+using System.Data;
+using System.Data.SqlTypes;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence;
@@ -21,7 +18,6 @@ using Umbraco.Cms.Infrastructure.Persistence.DatabaseAnnotations;
 using Umbraco.Cms.Infrastructure.Persistence.DatabaseModelDefinitions;
 using Umbraco.Cms.Infrastructure.Persistence.SqlSyntax;
 using Umbraco.Extensions;
-
 using ColumnInfo = Umbraco.Cms.Infrastructure.Persistence.SqlSyntax.ColumnInfo;
 using UCC = Umbraco.Cms.Core;
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Our.Umbraco.PostgreSql.Services;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Infrastructure.Persistence;
 
 namespace Our.Umbraco.PostgreSql.Umbraco.Forms;
 
@@ -12,6 +13,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms;
 public class Composer : IComposer
 {
     /// <inheritdoc />
-    public void Compose(IUmbracoBuilder builder) => builder.Services
-        .TryAddEnumerable(ServiceDescriptor.Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
+    public void Compose(IUmbracoBuilder builder)
+    {
+        builder.Services.TryAddEnumerable(ServiceDescriptor
+            .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
+
+        // builder.Services.TryAddEnumerable(ServiceDescriptor
+        //    .Singleton<IProviderSpecificMapperFactory, PostgreSqlUmbracoFormsMapperFactory>());
+    }
 }
