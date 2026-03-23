@@ -20,5 +20,7 @@ namespace Our.Umbraco.PostgreSql.Services
 
             return $"AT TIME ZONE '{tz}' AT TIME ZONE 'UTC'";
         }
+
+        public virtual Func<object, object> GetParameterConverter(DbCommand dbCommand, Type sourceType) => null;
     }
 }

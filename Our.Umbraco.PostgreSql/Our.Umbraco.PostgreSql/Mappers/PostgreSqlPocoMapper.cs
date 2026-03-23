@@ -1,13 +1,14 @@
+using NPoco;
+using Our.Umbraco.PostgreSql.Services;
 using System;
 using System.Data.Common;
 using System.Reflection;
-using NPoco;
 using Umbraco.Cms.Core.Mapping;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.Mappers
 {
-    public class PostgreSqlPocoMapper : DefaultMapper
+    public class PostgreSqlPocoMapper(IEnumerable<IPostgreSqlFixService> fixServices) : DefaultMapper
     {
         public override Func<object, object> GetFromDbConverter(MemberInfo destMemberInfo, Type sourceType)
         {
@@ -161,8 +162,25 @@ namespace Our.Umbraco.PostgreSql.Mappers
                 dbCommand.CommandText.Replace("parentID", "parentId");
             }
 
+            if (rVal == null)
+            {
+                foreach (var fixService in fixServices)
+                {
+                    rVal = fixService.GetParameterConverter(dbCommand, sourceType);
+                    if (rVal != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
             return rVal ?? (value =>
             {
+                if (value is string str && Guid.TryParse(str, out Guid guidValue))
+                {
+                    return guidValue;
+                }
+
                 if (value is DateTime dt && dt.Kind != DateTimeKind.Utc)
                 {
                     // PostgreSQL Npgsql expects DateTime to be in UTC
