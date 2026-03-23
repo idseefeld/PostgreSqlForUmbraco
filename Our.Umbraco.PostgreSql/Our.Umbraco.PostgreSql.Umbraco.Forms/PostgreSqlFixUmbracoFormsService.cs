@@ -51,13 +51,13 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFForms\"\nWHERE (\"UFForms\".\"FolderKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"FolderKey\" Is Not Null)";
                         break;
                     case "SELECT count(*) As Count,max(created) As LastSubmittedDate\nFROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)":
-                        cmd.CommandText = "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= '@0' AND \"Created\" <= '@1')\nAND (\"Form\" = '@2')";
+                        cmd.CommandText = "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= @0 AND \"Created\" <= @1)\nAND (\"Form\" = @2)";
                         break;
                     //case "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= '@0' AND \"Created\" <= '@1')\nAND (\"Form\" = '@2')":
 
                     //    break;
                     case "SELECT \"UFForms\".\"FolderKey\" AS \"FolderKey\", \"UFForms\".\"NodeId\" AS \"NodeId\", \"UFForms\".\"CreatedBy\" AS \"CreatedBy\", \"UFForms\".\"UpdatedBy\" AS \"UpdatedBy\", \"UFForms\".\"Id\" AS \"Id\", \"UFForms\".\"Key\" AS \"Key\", \"UFForms\".\"Name\" AS \"Name\", \"UFForms\".\"Definition\" AS \"Definition\", \"UFForms\".\"Created\" AS \"CreateDate\", \"UFForms\".\"Updated\" AS \"UpdateDate\"\nFROM \"UFForms\"\nWHERE ((\"UFForms\".\"Key\" = @p0))":
-                        cmd.CommandText = "SELECT \"UFForms\".\"FolderKey\" AS \"FolderKey\", \"UFForms\".\"NodeId\" AS \"NodeId\", \"UFForms\".\"CreatedBy\" AS \"CreatedBy\", \"UFForms\".\"UpdatedBy\" AS \"UpdatedBy\", \"UFForms\".\"Id\" AS \"Id\", \"UFForms\".\"Key\" AS \"Key\", \"UFForms\".\"Name\" AS \"Name\", \"UFForms\".\"Definition\" AS \"Definition\", \"UFForms\".\"Created\" AS \"CreateDate\", \"UFForms\".\"Updated\" AS \"UpdateDate\"\nFROM \"UFForms\"\nWHERE ((\"UFForms\".\"Key\" = '@0'))";
+                        cmd.CommandText = "SELECT \"UFForms\".\"FolderKey\" AS \"FolderKey\", \"UFForms\".\"NodeId\" AS \"NodeId\", \"UFForms\".\"CreatedBy\" AS \"CreatedBy\", \"UFForms\".\"UpdatedBy\" AS \"UpdatedBy\", \"UFForms\".\"Id\" AS \"Id\", \"UFForms\".\"Key\" AS \"Key\", \"UFForms\".\"Name\" AS \"Name\", \"UFForms\".\"Definition\" AS \"Definition\", \"UFForms\".\"Created\" AS \"CreateDate\", \"UFForms\".\"Updated\" AS \"UpdateDate\"\nFROM \"UFForms\"\nWHERE ((\"UFForms\".\"Key\" = @0))";
                         break;
                     default:
                         success = false;
@@ -139,10 +139,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = $"UPDATE \"UFWorkflows\" SET \"Updated\" = \"Updated\" {GetTimeZone()}";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE \"user\" = @p7":
-                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @0, \"ManageDataSources\" = @1, \"ManagePreValueSources\" = @2, \"ManageWorkflows\" = @3, \"ViewEntries\" = @4, \"EditEntries\" = @5, \"DeleteEntries\" = @6 WHERE \"User\" = '@7'";
+                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @0, \"ManageDataSources\" = @1, \"ManagePreValueSources\" = @2, \"ManageWorkflows\" = @3, \"ViewEntries\" = @4, \"EditEntries\" = @5, \"DeleteEntries\" = @6 WHERE \"User\" = @7";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @0, managedatasources = @1, manageprevaluesources = @2, manageworkflows = @3, viewEntries = @4, editEntries = @5, deleteEntries = @6 WHERE [user] = @7":
-                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @0, \"ManageDataSources\" = @1, \"ManagePreValueSources\" = @2, \"ManageWorkflows\" = @3, \"ViewEntries\" = @4, \"EditEntries\" = @5, \"DeleteEntries\" = @6 WHERE \"User\" = '@7'";
+                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @0, \"ManageDataSources\" = @1, \"ManagePreValueSources\" = @2, \"ManageWorkflows\" = @3, \"ViewEntries\" = @4, \"EditEntries\" = @5, \"DeleteEntries\" = @6 WHERE \"User\" = @7";
                         break;
                     default:
                         success = false;
