@@ -17,8 +17,5 @@ public class Composer : IComposer
     {
         builder.Services.TryAddEnumerable(ServiceDescriptor
             .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
-
-        // builder.Services.TryAddEnumerable(ServiceDescriptor
-        //    .Singleton<IProviderSpecificMapperFactory, PostgreSqlUmbracoFormsMapperFactory>());
     }
 }
