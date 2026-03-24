@@ -176,11 +176,6 @@ namespace Our.Umbraco.PostgreSql.Mappers
 
             return rVal ?? (value =>
             {
-                if (value is string str && Guid.TryParse(str, out Guid guidValue))
-                {
-                    return guidValue;
-                }
-
                 if (value is DateTime dt && dt.Kind != DateTimeKind.Utc)
                 {
                     // PostgreSQL Npgsql expects DateTime to be in UTC
