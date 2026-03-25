@@ -21,6 +21,7 @@
     <None Remove="ExecuteScalar-errors.playlist" />
     <None Remove="file-open-error.playlist" />
     <None Remove="getalias-errors.playlist" />
+    <None Remove="second-half-of-integration-tests.playlist" />
     <None Remove="umb.sql" />
     <None Remove="umbMain.sql" />
     <None Remove="uniqueid-errors.playlist" />
