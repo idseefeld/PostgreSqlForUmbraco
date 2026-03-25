@@ -1029,8 +1029,6 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         return sql.Append($"LIMIT {top}");
     }
 
-    #region implementation for abstract methods from SqlSyntaxProviderBase
-
     /// <inheritdoc />
     public override IEnumerable<Tuple<string, string, string, bool>> GetDefinedIndexes(IDatabase db)
     {
@@ -1119,5 +1117,15 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         public string ConstraintName { get; set; } = string.Empty;
     }
 
-    #endregion implementation for abstract methods from SqlSyntaxProviderBase
+    /// <inheritdoc />
+    public override string CreateTempTable(string tableName, string columnDefinitionSql)
+        => $"CREATE TABLE {GetQuotedTableName(tableName)} ({columnDefinitionSql})";
+
+    /// <inheritdoc />
+    public override string TempTableName(string baseName) 
+        => $"{GetQuotedTableName(baseName)}";
+
+    /// <inheritdoc />
+    public override string DropTempTable(string tableName)
+        => $"DROP TABLE IF EXISTS {GetQuotedTableName(tableName)}";
 }
