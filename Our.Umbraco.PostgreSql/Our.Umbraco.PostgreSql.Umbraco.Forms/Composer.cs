@@ -1,9 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Our.Umbraco.PostgreSql.Services;
+using Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Infrastructure.Persistence;
+using Umbraco.Forms.Core.Providers;
+using Umbraco.Forms.Core.Providers.Extensions;
+using Umbraco.Forms.Web.Models.Backoffice;
 
 namespace Our.Umbraco.PostgreSql.Umbraco.Forms;
 
@@ -17,5 +20,10 @@ public class Composer : IComposer
     {
         builder.Services.TryAddEnumerable(ServiceDescriptor
             .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
+
+        builder.FormsDataSources().Clear();
+        builder.WithCollectionBuilder<DataSourceTypeCollectionBuilder>().Add<PostgreSqlDataSourceType>();
+
+        // builder.WithCollectionBuilder<FieldPreValueSourceCollectionBuilder>().Add<FixedListPrevalueSource>();
     }
 }

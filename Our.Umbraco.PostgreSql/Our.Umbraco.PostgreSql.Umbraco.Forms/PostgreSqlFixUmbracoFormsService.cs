@@ -78,6 +78,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     case "SELECT count(*) As Count,max(created) As LastSubmittedDate\nFROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)":
                         cmd.CommandText = "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" = @p2)";
                         break;
+                    case "":
+                        cmd.CommandText = "";
+                        break;
                     case "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record = @p0":
                         cmd.CommandText = "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE \"Record\" = @p0";
                         break;
@@ -93,6 +96,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0, @p1)":
                         cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0, @p1)";
                         break;
+                    //case "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"":
+                    //    cmd.CommandText = "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"";
+                    //    break;
                     default:
                         success = false;
                         break;
@@ -312,6 +318,14 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         break;
                     case "DELETE FROM \"UFUserStartFolders\" WHERE UserId = @p0":
                         cmd.CommandText = "DELETE FROM \"UFUserStartFolders\" WHERE \"UserId\" = @p0";
+                        break;
+                    case "DELETE FROM UFPrevalueSource WHERE [key] = @0":
+                    case "DELETE FROM UFPrevalueSource WHERE [key] = @p0":
+                        cmd.CommandText = "DELETE FROM \"UFPrevalueSource\" WHERE \"Key\" = @p0";
+                        break;
+                    case "DELETE FROM UFDataSource WHERE [key] = @0":
+                    case "DELETE FROM UFDataSource WHERE [key] = @p0":
+                        cmd.CommandText = "DELETE FROM \"UFDataSource\" WHERE \"Key\" = @p0";
                         break;
                     default:
                         success = false;
