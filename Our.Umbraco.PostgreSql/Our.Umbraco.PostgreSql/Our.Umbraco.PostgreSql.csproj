@@ -14,12 +14,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove=".gitignore" />
     <None Remove="datetime-erros.playlist" />
+    <None Remove="errors-2.playlist" />
+    <None Remove="errors-3.playlist" />
+    <None Remove="errors.playlist" />
     <None Remove="ExecuteScalar-errors.playlist" />
     <None Remove="file-open-error.playlist" />
     <None Remove="getalias-errors.playlist" />
     <None Remove="umb.sql" />
     <None Remove="umbMain.sql" />
+    <None Remove="uniqueid-errors.playlist" />
+    <None Remove="upostgresql.psd" />
   </ItemGroup>
 
   <ItemGroup>
