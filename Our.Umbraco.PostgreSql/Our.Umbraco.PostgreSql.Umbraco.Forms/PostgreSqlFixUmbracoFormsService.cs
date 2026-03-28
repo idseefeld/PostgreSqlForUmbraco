@@ -32,7 +32,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 "UFWorkflows"
                 ];
 
-        private bool ContainsUfTableName(string sqlStatement, string tableName = null)
+        private bool ContainsUfTableName(string sqlStatement, string? tableName = null)
         {
             if (string.IsNullOrEmpty(tableName))
             {
@@ -346,7 +346,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
         {
             return cmd.CommandText.Contains(" UF") || cmd.CommandText.Contains(" \"UF");
         }
-        public override Func<object, object> GetParameterConverter(DbCommand cmd, Type sourceType)
+        public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
             if (!IsUfCommand(cmd))
             {

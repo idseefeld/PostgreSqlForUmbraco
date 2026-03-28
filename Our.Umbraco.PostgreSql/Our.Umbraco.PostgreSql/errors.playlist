@@ -10,10 +10,119 @@
               <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType" />
               <Rule Match="Any">
                 <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyDataTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.ByKeyDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CopyDataTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.CopyDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
                   <Property Name="Class" Value="IsUsedDataTypeControllerTests" />
                   <Rule Match="Any">
                     <Rule Match="All">
                       <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.IsUsedDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="MoveDataTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.MoveDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateDataTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.UpdateDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Folder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyDataTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Folder.ByKeyDataTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateDataTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Folder.CreateDataTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteDataTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Folder.DeleteDataTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateDataTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Folder.UpdateDataTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AncestorsDataTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Item.AncestorsDataTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
                         <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
@@ -26,10 +135,32 @@
               <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree" />
               <Rule Match="Any">
                 <Rule Match="All">
+                  <Property Name="Class" Value="ChildrenDataTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree.ChildrenDataTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
                   <Property Name="Class" Value="RootDataTypeTreeControllerTests" />
                   <Rule Match="Any">
                     <Rule Match="All">
                       <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree.RootDataTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="SearchDataTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree.SearchDataTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
                         <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
@@ -79,17 +210,6 @@
                   <Rule Match="Any">
                     <Rule Match="All">
                       <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.DeleteDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
-                      <Rule Match="Any">
-                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
-                      </Rule>
-                    </Rule>
-                  </Rule>
-                </Rule>
-                <Rule Match="All">
-                  <Property Name="Class" Value="ExportDictionaryControllerTests" />
-                  <Rule Match="Any">
-                    <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.ExportDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
                         <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
@@ -166,6 +286,1319 @@
                   <Rule Match="Any">
                     <Rule Match="All">
                       <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Tree.RootDictionaryTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdatePublicAccessDocumentControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Editor_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Editor_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Sensitive_Data_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Sensitive_Data_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Translator_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Translator_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Unauthorized_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Unauthorized_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.UpdatePublicAccessDocumentControllerTests.As_Writer_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Writer_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootDocumentTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Document.Tree.RootDocumentTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllowedParentsDocumentTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.AllowedParentsDocumentTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyDocumentTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.ByKeyDocumentTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateDocumentTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.CreateDocumentTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteDocumentTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.DeleteDocumentTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateDocumentTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.UpdateDocumentTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Folder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyDocumentTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Folder.ByKeyDocumentTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateDocumentTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Folder.CreateDocumentTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteDocumentTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Folder.DeleteDocumentTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateDocumentTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Folder.UpdateDocumentTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootDocumentTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Tree.RootDocumentTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="SearchDocumentTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DocumentType.Tree.SearchDocumentTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ExecuteActionHealthCheckControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck.ExecuteActionHealthCheckControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck.Group" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllHealthCheckGroupControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck.Group.AllHealthCheckGroupControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByNameHealthCheckGroupControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck.Group.ByNameHealthCheckGroupControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CheckHealthCheckGroupControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.HealthCheck.Group.CheckHealthCheckGroupControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Indexer" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllIndexerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Indexer.AllIndexerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DetailsIndexerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Indexer.DetailsIndexerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="RebuildIndexerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Indexer.RebuildIndexerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Install" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="SettingsInstallControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Install.SettingsInstallControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="SetupInstallControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Install.SetupInstallControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ValidateDatabaseInstallControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Install.ValidateDatabaseInstallControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllLanguageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language.AllLanguageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByIsoCodeLanguageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language.ByIsoCodeLanguageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateLanguageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language.CreateLanguageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteLanguageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language.DeleteLanguageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateLanguageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Language.UpdateLanguageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.AllLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllMessageTemplateLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.AllMessageTemplateLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllSinkLevelLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.AllSinkLevelLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="LogLevelCountLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.LogLevelCountLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ValidateLogFileSizeLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.ValidateLogFileSizeLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.SavedSearch" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllSavedSearchLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.SavedSearch.AllSavedSearchLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByNameSavedSearchLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.SavedSearch.ByNameSavedSearchLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateSavedSearchLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.SavedSearch.CreateSavedSearchLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteSavedSearchLogViewerControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.LogViewer.SavedSearch.DeleteSavedSearchLogViewerControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Media" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyMediaControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Media.ByKeyMediaControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateMediaControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Media.CreateMediaControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Media.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootMediaTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Media.Tree.RootMediaTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllowedParentsMediaTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.AllowedParentsMediaTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateMediaTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.CreateMediaTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteMediaTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.DeleteMediaTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Folder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyMediaTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Folder.ByKeyMediaTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateMediaTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Folder.CreateMediaTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteMediaTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Folder.DeleteMediaTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateMediaTypeFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Folder.UpdateMediaTypeFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AncestorsMediaTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Item.AncestorsMediaTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ItemMediaTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Item.ItemMediaTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ChildrenMediaTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MediaType.Tree.ChildrenMediaTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberGroup.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootMemberGroupTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberGroup.Tree.RootMemberGroupTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="BatchMemberTypesControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.BatchMemberTypesControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AncestorsMemberTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.Item.AncestorsMemberTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ItemMemberTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.Item.ItemMemberTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootMemberTypeTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.MemberType.Tree.RootMemberTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ModelsBuilder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="BuildModelsBuilderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ModelsBuilder.BuildModelsBuilderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="GetModelsBuilderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ModelsBuilder.GetModelsBuilderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="StatusModelsBuilderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ModelsBuilder.StatusModelsBuilderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ObjectTypes" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllowedObjectTypesControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.ObjectTypes.AllowedObjectTypesControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllMigrationStatusPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.AllMigrationStatusPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="RunMigrationPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.RunMigrationPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.AllCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.ByKeyCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.CreateCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.DeleteCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DownloadCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.DownloadCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateCreatedPackageControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Package.Created.UpdateCreatedPackageControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByPathPartialViewControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.ByPathPartialViewControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeletePartialViewControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.DeletePartialViewControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdatePartialViewControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.UpdatePartialViewControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.Folder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreatePartialViewFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.Folder.CreatePartialViewFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ChildrenPartialViewTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.Tree.ChildrenPartialViewTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootPartialViewTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PartialView.Tree.RootPartialViewTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Preview" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="EndPreviewControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Preview.EndPreviewControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="EnterPreviewControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Preview.EnterPreviewControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Profiling" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="GetStatusProfilingControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Profiling.GetStatusProfilingControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateStatusProfilingControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Profiling.UpdateStatusProfilingControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PublishedCache" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RebuildPublishedCacheControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PublishedCache.RebuildPublishedCacheControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ReloadPublishedCacheControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.PublishedCache.ReloadPublishedCacheControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyRedirectUrlManagementControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement.ByKeyRedirectUrlManagementControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteByKeyRedirectUrlManagementControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement.DeleteByKeyRedirectUrlManagementControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="GetAllRedirectUrlManagementControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement.GetAllRedirectUrlManagementControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="GetStatusRedirectUrlManagementControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement.GetStatusRedirectUrlManagementControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="SetStatusRedirectUrlManagementControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RedirectUrlManagement.SetStatusRedirectUrlManagementControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Relation" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByRelationTypeKeyRelationControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Relation.ByRelationTypeKeyRelationControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RelationType" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyRelationTypeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RelationType.ByKeyRelationTypeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RelationType.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ItemRelationTypeItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.RelationType.Item.ItemRelationTypeItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByPathScriptControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.ByPathScriptControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateScriptControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.CreateScriptControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateScriptControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.UpdateScriptControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Folder" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByPathScriptFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Folder.ByPathScriptFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateScriptFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Folder.CreateScriptFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteScriptFolderControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Folder.DeleteScriptFolderControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ItemScriptItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Item.ItemScriptItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ChildrenScriptTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Tree.ChildrenScriptTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootScriptTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Script.Tree.RootScriptTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Searcher" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllSearcherControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Searcher.AllSearcherControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="QuerySearcherControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Searcher.QuerySearcherControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
                         <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>

@@ -60,12 +60,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions
         [global::Umbraco.Forms.Core.Attributes.Setting("ConnectionString",
             Description = "PostgreSQL specific connection string.",
             View = "Umb.PropertyEditorUi.TextArea")]
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = string.Empty;
 
         [global::Umbraco.Forms.Core.Attributes.Setting("Table",
             Description = "The database table",
             View = "Umb.PropertyEditorUi.TextBox")]
-        public string Table { get; set; }
+        public string Table { get; set; } = string.Empty;
 
         public PostgreSqlDataSourceType(ILogger<PostgreSqlDataSourceType> logger)
         {
