@@ -7,45 +7,167 @@
           <Property Name="Project" Value="Umbraco.Tests.Integration" />
           <Rule Match="Any">
             <Rule Match="All">
-              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services" />
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType" />
               <Rule Match="Any">
                 <Rule Match="All">
-                  <Property Name="Class" Value="ContentVersionCleanupServiceTest" />
+                  <Property Name="Class" Value="IsUsedDataTypeControllerTests" />
                   <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_MultipleCalls_IsIdempotent" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.IsUsedDataTypeControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_MultipleCalls_IsIdempotent" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootDataTypeTreeControllerTests" />
+                  <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_WithContentTypeOverride_RespectsPreventCleanup" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.DataType.Tree.RootDataTypeTreeControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_WithContentTypeOverride_RespectsPreventCleanup" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AllDictionaryControllerTests" />
+                  <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_WithKeepAllNewerThanDays_RetainsRecentVersions" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.AllDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_WithKeepAllNewerThanDays_RetainsRecentVersions" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ByKeyDictionaryControllerTests" />
+                  <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_WithKeepLatestPerDay_RetainsOnePerDay" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.ByKeyDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_WithKeepLatestPerDay_RetainsOnePerDay" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="CreateDictionaryControllerTests" />
+                  <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_WithMaxVersionsPerRunCap_DeletesOnlyUpToCap" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.CreateDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_WithMaxVersionsPerRunCap_DeletesOnlyUpToCap" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="DeleteDictionaryControllerTests" />
+                  <Rule Match="Any">
                     <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Services.ContentVersionCleanupServiceTest.PerformContentVersionCleanup_WithNoKeepPeriods_DeletesEverythingExceptActive" />
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.DeleteDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
                       <Rule Match="Any">
-                        <Property Name="DisplayName" Value="PerformContentVersionCleanup_WithNoKeepPeriods_DeletesEverythingExceptActive" />
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ExportDictionaryControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.ExportDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="ImportDictionaryControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.ImportDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="MoveDictionaryControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.MoveDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="UpdateDictionaryControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.UpdateDictionaryControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Item" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ItemDictionaryItemControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Item.ItemDictionaryItemControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Tree" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ChildrenDictionaryTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Tree.ChildrenDictionaryTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="RootDictionaryTreeControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Dictionary.Tree.RootDictionaryTreeControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
                       </Rule>
                     </Rule>
                   </Rule>
