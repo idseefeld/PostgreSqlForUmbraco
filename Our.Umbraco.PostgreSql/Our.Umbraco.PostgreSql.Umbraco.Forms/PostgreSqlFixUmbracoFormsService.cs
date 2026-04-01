@@ -99,6 +99,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     //case "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"":
                     //    cmd.CommandText = "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"";
                     //    break;
+                    case "SELECT COUNT(*)\nFROM sys.indexes\nWHERE (object_id = OBJECT_ID(@p0) AND name = @p1)":
+                        cmd.CommandText = "SELECT COUNT(*) FROM pg_class t INNER JOIN pg_index ix ON t.oid = ix.indrelid INNER JOIN pg_class i ON i.oid = ix.indexrelid INNER JOIN pg_namespace n ON n.oid = t.relnamespace LEFT JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) WHERE (t.relname = @p0 AND i.relname = @p1)";
+                        break;
                     default:
                         success = false;
                         break;
@@ -109,43 +112,40 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 var tableName = string.Empty;
                 switch (cmd.CommandText)
                 {
+                    case "INSERT INTO UFRecordDataString(\"Key\", \"Value\") VALUES(@p0, @p1)":
                     case "INSERT INTO UFRecordDataString([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataString\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataString";
                         break;
                     case "INSERT INTO UFRecordDataLongString(\"Key\", \"Value\") VALUES(@p0, @p1)":
+                    case "INSERT INTO UFRecordDataLongString([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataLongString\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataLongString";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecordDataLongString_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecordDataLongString\";";
                         break;
                     case "INSERT INTO UFRecordDataInteger(\"Key\", \"Value\") VALUES(@p0, @p1)":
+                    case "INSERT INTO UFRecordDataInteger([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataInteger\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataInteger";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecordDataInteger_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecordDataInteger\";";
                         break;
                     case "INSERT INTO UFRecordDataBit(\"Key\", \"Value\") VALUES(@p0, @p1)":
+                    case "INSERT INTO UFRecordDataBit([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataBit\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataBit";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecordDataBit_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecordDataBit\";";
                         break;
                     case "INSERT INTO UFRecordDataIDateTime(\"Key\", \"Value\") VALUES(@p0, @p1)":
+                    case "INSERT INTO UFRecordDataIDateTime([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataIDateTime\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataIDateTime";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecordDataIDateTime_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecordDataIDateTime\";";
                         break;
                     case "INSERT INTO \"UFRecords\" (\"Form\",\"Created\",\"Updated\",\"CurrentPage\",\"UmbracoPageId\",\"IP\",\"MemberKey\",\"UniqueId\",\"State\",\"RecordData\",\"Culture\",\"AdditionalData\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8,@p9,@p10,@p11) returning \"id\" as id":
                         cmd.CommandText = "INSERT INTO \"UFRecords\" (\"Form\",\"Created\",\"Updated\",\"CurrentPage\",\"UmbracoPageId\",\"IP\",\"MemberKey\",\"UniqueId\",\"State\",\"RecordData\",\"Culture\",\"AdditionalData\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8,@p9,@p10,@p11) returning \"Id\" as id;";
                         tableName = "UFRecords";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecords_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecords\";";
                         break;
                     case "INSERT INTO \"UFForms\" (\"FolderKey\",\"NodeId\",\"CreatedBy\",\"UpdatedBy\",\"Key\",\"Name\",\"Definition\",\"Created\",\"Updated\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8) returning \"id\" as id":
                         cmd.CommandText = "INSERT INTO \"UFForms\" (\"FolderKey\",\"NodeId\",\"CreatedBy\",\"UpdatedBy\",\"Key\",\"Name\",\"Definition\",\"Created\",\"Updated\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8) returning \"Id\" as id;";
                         tableName = "UFForms";
-                        //cmd.CommandText += "ALTER SEQUENCE \"UFRecords_Id_seq\" RESTART WITH SELECT MAX(\"Id\") + 1 FROM \"UFRecords\";";
                         break;
-                    //case "INSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p0,@p1,@p2,@p3,@p4);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p5,@p6,@p7,@p8,@p9);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p10,@p11,@p12,@p13,@p14);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p15,@p16,@p17,@p18,@p19);":
-                    //    cmd.CommandText = "INSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p0,@p1,@p2,@p3,@p4);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p5,@p6,@p7,@p8,@p9);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p10,@p11,@p12,@p13,@p14);\nINSERT INTO \"UFRecordFields\" (\"Key\",\"FieldId\",\"Record\",\"Alias\",\"DataType\") VALUES (@p15,@p16,@p17,@p18,@p19);";
-                    //    break;
+
                     case "UFDataSource":
                         cmd.CommandText = "";
                         tableName = "UFDataSource";
@@ -284,9 +284,11 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = $"UPDATE \"UFWorkflows\" SET \"Updated\" = \"Updated\" {GetTimeZone()}";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE \"user\" = @p7":
+                    case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE [user] = @p7":
                         cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'";
                         break;
                     case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE \"user\" = @p3 AND form = @p4":
+                    case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE [user] = @p3 AND form = @p4":
                         cmd.CommandText = "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4";
                         break;
                     default:
@@ -344,7 +346,11 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
         private bool IsUfCommand(DbCommand cmd)
         {
-            return cmd.CommandText.Contains(" UF") || cmd.CommandText.Contains(" \"UF");
+            return 
+                string.IsNullOrEmpty(cmd.CommandText) 
+                || cmd.CommandText.Contains(" UF") 
+                || cmd.CommandText.Contains(" \"UF") 
+                || cmd.CommandText.Contains("sys.indexes");
         }
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
