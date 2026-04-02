@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove=".gitignore" />
     <None Remove="datetime-erros.playlist" />
     <None Remove="errors-2.playlist" />
     <None Remove="errors-3.playlist" />
