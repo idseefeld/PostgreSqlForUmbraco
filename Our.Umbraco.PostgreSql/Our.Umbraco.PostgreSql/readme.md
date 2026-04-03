@@ -3,10 +3,11 @@
 ```
 ATTENTION: This is a community driven project and is not officially supported by Umbraco HQ.
 
-Currently it is still in early development and should be used for testing and evaluation 
-purposes only. And there are several issues in Umbraco's core that prevent full functionality 
-when using PostgreSQL as the database. These are already addressed and will hopefully be 
-fixed in future releases of Umbraco.
+All Umbraco Unit and Integration test are passing successfully.
+
+I did my best to implement a PostgreSQL provider for Umbraco, but there might be some edge cases that I haven't covered yet. 
+If you find any issues or have suggestions for improvements, please don't hesitate to reach out.
+
 ```
 
 
