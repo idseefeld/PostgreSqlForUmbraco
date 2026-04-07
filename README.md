@@ -1,11 +1,9 @@
 # PostgreSQL Provider for Umbraco
 
-[![Downloads](https://img.shields.io/nuget/dt/Our.Umbraco.PostgreSql?color=cc9900)](https://www.nuget.org/packages/Our.Umbraco.PostgreSql/)
-[![NuGet](https://img.shields.io/nuget/vpre/Our.Umbraco.PostgreSql?color=0273B3)](https://www.nuget.org/packages/Our.Umbraco.PostgreSql)
-[![GitHub license](https://img.shields.io/github/license/idseefeld/PostgreSqlForUmbraco?color=8AB803)](../LICENSE)
-
 ```
 ATTENTION: This is a community driven project and is not officially supported by Umbraco HQ.
+
+```
 
 All Umbraco Unit and Integration test are passing successfully.
 
@@ -14,12 +12,13 @@ If you find any issues or have suggestions for improvements, please don't hesita
 
 ```
 
-
 ### Comments and contributions are very welcome!
 
 If you are curios about the progress, please have a look into my fork of Umbraco on GitHub:
 
 [Our.Umbraco.PostgreSql](https://github.com/idseefeld/Umbraco-CMS/tree/v173/postgreSqlProvider)
+
+
 
 
 
