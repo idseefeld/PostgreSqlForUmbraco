@@ -1,7 +1,6 @@
 <Solution>
   <Folder Name="/PostgreSQL/">
-    <Project Path="Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.pack.csproj" />
-    <Project Path="Our.Umbraco.PostgreSql.Umbraco.Forms/Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
+    <File Path="Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.pack.csproj" />
     <Project Path="Our.Umbraco.PostgreSql.Umbraco.License/Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
     <Project Path="Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.pack.csproj" />
   </Folder>
