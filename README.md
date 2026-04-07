@@ -11,19 +11,9 @@ All Umbraco Unit and Integration test are passing successfully.
 
 I did my best to implement a PostgreSQL provider for Umbraco, but there might be some edge 
 cases that I haven't covered yet. If you find any issues or have suggestions for 
-
 improvements, please don't hesitate to reach out.
 
 ```
-
-### Comments and contributions are very welcome!
-
-If you are curios about the progress, please have a look into my fork of Umbraco on GitHub:
-
-[Our.Umbraco.PostgreSql](https://github.com/idseefeld/Umbraco-CMS/tree/v173/postgreSqlProvider)
-
-
-
 
 
 ## Install PostgreSQL Database
@@ -36,3 +26,7 @@ If you are curios about the progress, please have a look into my fork of Umbraco
 
 You can find more details in the [Documentation](https://github.com/idseefeld/PostgreSqlForUmbraco/wiki).
 If you find any issues or want to ask for features, please use the [IssueTracker](https://github.com/idseefeld/PostgreSqlForUmbraco/issues)
+
+
+
+### Comments and contributions are very welcome!
