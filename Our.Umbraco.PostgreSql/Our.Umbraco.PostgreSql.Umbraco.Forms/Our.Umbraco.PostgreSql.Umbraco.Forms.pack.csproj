@@ -8,6 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="forms-errors.playlist" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
 		<Content Include="..\Our.Umbraco.PostgreSql\upostgresqlfix.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>

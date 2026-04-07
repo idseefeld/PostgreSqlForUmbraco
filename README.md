@@ -3,12 +3,12 @@
 ```
 ATTENTION: This is a community driven project and is not officially supported by Umbraco HQ.
 
-```
-
 All Umbraco Unit and Integration test are passing successfully.
 
-I did my best to implement a PostgreSQL provider for Umbraco, but there might be some edge cases that I haven't covered yet. 
-If you find any issues or have suggestions for improvements, please don't hesitate to reach out.
+I did my best to implement a PostgreSQL provider for Umbraco, but there might be some edge 
+cases that I haven't covered yet. If you find any issues or have suggestions for 
+
+improvements, please don't hesitate to reach out.
 
 ```
 
