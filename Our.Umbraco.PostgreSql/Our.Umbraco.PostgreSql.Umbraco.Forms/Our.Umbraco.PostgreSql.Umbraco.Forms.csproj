@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Umbraco.Forms.Core.Providers" Version="17.2.1" />
+    <PackageReference Include="Umbraco.Forms.Core.Providers" />
   </ItemGroup>
 
   <ItemGroup>
