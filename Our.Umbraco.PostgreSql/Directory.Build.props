@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<VersionPrefix>17.3.0.3</VersionPrefix>
 		<Authors>Dirk Seefeld</Authors>
-		<PackageIcon>uPostgresql.png</PackageIcon>
+		<PackageIcon>upostgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<Product>PostgreSQL Provider for Umbraco CMS</Product>
 		<Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>

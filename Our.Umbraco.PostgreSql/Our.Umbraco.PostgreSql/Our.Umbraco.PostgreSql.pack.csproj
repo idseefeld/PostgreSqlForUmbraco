@@ -9,6 +9,8 @@
 
 	<ItemGroup>
 		<None Remove="datetime-erros.playlist" />
+		<None Remove="errors-2.playlist" />
+		<None Remove="errors-3.playlist" />
 		<None Remove="errors.playlist" />
 		<None Remove="ExecuteScalar-errors.playlist" />
 		<None Remove="file-open-error.playlist" />
@@ -23,6 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="upostgresql.png" Pack="true" PackagePath="" Visible="false" />
 		<Content Include="../../readme.md" Pack="true" PackagePath="" />
 		<Content Include="umbraco-marketplace.json" Pack="true" PackagePath="" />
 	</ItemGroup>
