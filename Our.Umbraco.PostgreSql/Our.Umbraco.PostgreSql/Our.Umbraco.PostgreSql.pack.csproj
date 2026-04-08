@@ -9,17 +9,22 @@
 
 	<ItemGroup>
 		<None Remove="datetime-erros.playlist" />
+		<None Remove="errors.playlist" />
 		<None Remove="ExecuteScalar-errors.playlist" />
 		<None Remove="file-open-error.playlist" />
 		<None Remove="getalias-errors.playlist" />
+		<None Remove="second-half-of-integration-tests.playlist" />
 		<None Remove="umb.sql" />
 		<None Remove="umbMain.sql" />
+		<None Remove="uniqueid-errors.playlist" />
+		<None Remove="upostgresql.png" />
+		<None Remove="upostgresql.psd" />
+		<None Remove="upostgresqlfix.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="../../readme.md" Pack="true" PackagePath="" />
 		<Content Include="umbraco-marketplace.json" Pack="true" PackagePath="" />
-		<Content Include="uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
