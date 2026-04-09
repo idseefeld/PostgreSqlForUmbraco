@@ -25,7 +25,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="upostgresql.png" Pack="true" PackagePath="" Visible="false" />
 		<Content Include="../../readme.md" Pack="true" PackagePath="" />
 		<Content Include="umbraco-marketplace.json" Pack="true" PackagePath="" />
 	</ItemGroup>

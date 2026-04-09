@@ -2,14 +2,12 @@
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.License</PackageId>
-		<PackageIcon>upostgresqlfix.png</PackageIcon>		
 		<Title>Umbraco CMS - Persistence - Umbraco.License - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.License with PostgreSQL.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
-		<Content Include="..\Our.Umbraco.PostgreSql\upostgresqlfix.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
