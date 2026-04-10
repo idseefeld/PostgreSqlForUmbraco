@@ -4,6 +4,7 @@
     <PackageId>Our.Umbraco.PostgreSql.EFCore</PackageId>
     <Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL</Title>
     <Description>Adds support for Entity Framework Core PostgreSQL to Umbraco CMS.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
