@@ -2,32 +2,21 @@
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql.EFCore</PackageId>
-    <Company>-</Company>
-    <Authors>Dirk Seefeld</Authors>
-    <PackageIcon>uPostgresql.png</PackageIcon>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <Product>PostgreSQL Provider for Umbraco CMS</Product>
-    <PackageTags>umbraco, postgresql, community</PackageTags>
     <Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL</Title>
     <Description>Adds support for Entity Framework Core PostgreSQL to Umbraco CMS.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="readme.md" Pack="true" PackagePath="\" />
-    <Content Include="..\Our.Umbraco.PostgreSql\uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <ProjectReference Include="..\..\..\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\IdsUmbFork\src\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
-  </ItemGroup>
-
 
 </Project>
