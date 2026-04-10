@@ -11,6 +11,7 @@
     <Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
     <Title>Umbraco CMS - Persistence - PostgreSQL</Title>
     <Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
