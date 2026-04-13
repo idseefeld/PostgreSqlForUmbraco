@@ -66,7 +66,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return success;
             }
 
-            if(cmd.CommandText.Contains("@0"))
+            if (cmd.CommandText.Contains('['))
+            {
+                cmd.CommandText = cmd.CommandText.Replace("[", "\"").Replace("]", "\"");
+            }
+
+            if (cmd.CommandText.Contains("@0"))
             {
                 for (int i = 0; i < cmd.Parameters.Count; i++)
                 {
@@ -76,42 +81,17 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
             if (cmd.CommandText.StartsWith("SELECT "))
             {
-                if (cmd.CommandText.StartsWith("SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
+                //if (cmd.CommandText.StartsWith("SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
+                if   (cmd.CommandText.StartsWith("SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
                 {
-                    //var sql = new StringBuilder("SELECT \"Form\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (");
-                    //for (int i = 2; i < cmd.Parameters.Count; i++)
-                    //{
-                    //    sql.Append($"@p{i}");
-                    //    if (i < cmd.Parameters.Count - 1)
-                    //    {
-                    //        sql.Append(", ");
-                    //    }
-                    //}
-                    //sql.Append(")) GROUP BY \"Form\"");
-                    //cmd.CommandText = sql.ToString();
-                    cmd.CommandText = cmd.CommandText.Replace("FROM UFRecords\n", "FROM \"UFRecords\" ");
-                    return true;
+                    cmd.CommandText = cmd.CommandText.Replace("FROM UFRecords", "FROM \"UFRecords\"");
+                    return success;
                 }
                 else if (cmd.CommandText.Contains("WHERE RecordUniqueId IN ("))
                 {
                     cmd.CommandText = cmd.CommandText.Replace("WHERE RecordUniqueId IN (", "WHERE \"RecordUniqueId\" IN (");
-                    return true;
+                    return success;
                 }
-                //else if (cmd.CommandText.Contains("SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN ("))
-                //{
-                //    var sql = new StringBuilder("SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (");
-                //    for (int i = 0; i < cmd.Parameters.Count; i++)
-                //    {
-                //        sql.Append($"@p{i}");
-                //        if (i < cmd.Parameters.Count - 1)
-                //        {
-                //            sql.Append(", ");
-                //        }
-                //    }
-                //    sql.Append(")");
-                //    cmd.CommandText = sql.ToString();
-                //    return true;
-                //}
                 else
                 {
                     switch (cmd.CommandText)
@@ -127,6 +107,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             break;
                         //case "SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2,@p3))\nGROUP BY \"Form\"":
                         //    cmd.CommandText = "SELECT \"Form\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2,@p3)) GROUP BY \"Form\"";
+                        //    break;
+                        //case "SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2,@p3,@p4))\nGROUP BY \"Form\"":
+                        //    cmd.CommandText = "SELECT \"Form\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2,@p3,@p4)) GROUP BY \"Form\"";
                         //    break;
                         case "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record = @p0":
                             cmd.CommandText = "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE \"Record\" = @p0";
@@ -149,18 +132,16 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         case "SELECT COUNT(*)\nFROM sys.indexes\nWHERE (object_id = OBJECT_ID(@p0) AND name = @p1)":
                             cmd.CommandText = "SELECT COUNT(*) FROM pg_class t INNER JOIN pg_index ix ON t.oid = ix.indrelid INNER JOIN pg_class i ON i.oid = ix.indexrelid INNER JOIN pg_namespace n ON n.oid = t.relnamespace LEFT JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) WHERE (t.relname = @p0 AND i.relname = @p1)";
                             break;
-                        case "SELECT MIN([Created])\nFROM UFRecords":
+                        case "SELECT MIN(\"Created\")\nFROM UFRecords":
                             cmd.CommandText = "SELECT MIN(\"Created\") FROM \"UFRecords\"";
                             break;
-                        case "SELECT MIN([Date])\nFROM UFAnalyticsProcessedDates":
+                        case "SELECT MIN(\"Date\")\nFROM UFAnalyticsProcessedDates":
                             cmd.CommandText = "SELECT MIN(\"Date\") FROM \"UFAnalyticsProcessedDates\"";
                             break;
                         case "SELECT *\nFROM UFAnalyticsProcessedDates\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)":
-                        case "SELECT *\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @p0 AND [Date] <= @p1)":
                             cmd.CommandText = "SELECT * FROM \"UFAnalyticsProcessedDates\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
                             break;
-                        case "SELECT COUNT(*)\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @0 AND [Date] <= @1)":
-                        case "SELECT COUNT(*)\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @p0 AND [Date] <= @p1)":
+                        case "SELECT COUNT(*)\nFROM UFAnalyticsProcessedDates\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)":
                             cmd.CommandText = "SELECT COUNT(*) FROM \"UFAnalyticsProcessedDates\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
                             break;
                         case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nAND (UniqueId in (@p3))":
@@ -181,27 +162,22 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 switch (cmd.CommandText)
                 {
                     case "INSERT INTO UFRecordDataString(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                    case "INSERT INTO UFRecordDataString([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataString\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataString";
                         break;
                     case "INSERT INTO UFRecordDataLongString(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                    case "INSERT INTO UFRecordDataLongString([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataLongString\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataLongString";
                         break;
                     case "INSERT INTO UFRecordDataInteger(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                    case "INSERT INTO UFRecordDataInteger([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataInteger\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataInteger";
                         break;
                     case "INSERT INTO UFRecordDataBit(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                    case "INSERT INTO UFRecordDataBit([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataBit\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataBit";
                         break;
                     case "INSERT INTO UFRecordDataIDateTime(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                    case "INSERT INTO UFRecordDataIDateTime([Key], [Value]) VALUES(@p0, @p1)":
                         cmd.CommandText = "INSERT INTO \"UFRecordDataIDateTime\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataIDateTime";
                         break;
@@ -286,8 +262,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     }
                     if (cmd.CommandText.Contains(") returning "))
                     {
-                        //if (UfTables.Any(table => cmd.CommandText[insertStart.Length..].StartsWith(table, StringComparison.OrdinalIgnoreCase)))
-                        //{
                         if (cmd.CommandText.InvariantContains(") returning \"id\" as id"))
                         {
                             cmd.CommandText = cmd.CommandText.Replace(") returning \"id\" as id", ") returning \"Id\" as id;", StringComparison.OrdinalIgnoreCase);
@@ -298,7 +272,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             cmd.CommandText = cmd.CommandText[..cmd.CommandText.IndexOf(" returning ", StringComparison.OrdinalIgnoreCase)];
                             success = true;
                         }
-                        //}
                     }
                 }
             }
@@ -352,11 +325,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = $"UPDATE \"UFWorkflows\" SET \"Updated\" = \"Updated\" {GetTimeZone()}";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE \"user\" = @p7":
-                    case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE [user] = @p7":
                         cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'";
                         break;
                     case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE \"user\" = @p3 AND form = @p4":
-                    case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE [user] = @p3 AND form = @p4":
                         cmd.CommandText = "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4";
                         break;
                     default:
@@ -389,24 +360,16 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     case "DELETE FROM \"UFUserStartFolders\" WHERE UserId = @p0":
                         cmd.CommandText = "DELETE FROM \"UFUserStartFolders\" WHERE \"UserId\" = @p0";
                         break;
-                    case "DELETE FROM UFPrevalueSource WHERE [key] = @0":
-                    case "DELETE FROM UFPrevalueSource WHERE [key] = @p0":
+                    case "DELETE FROM UFPrevalueSource WHERE \"key\" = @p0":
                         cmd.CommandText = "DELETE FROM \"UFPrevalueSource\" WHERE \"Key\" = @p0";
                         break;
-                    case "DELETE FROM UFDataSource WHERE [key] = @0":
-                    case "DELETE FROM UFDataSource WHERE [key] = @p0":
+                    case "DELETE FROM UFDataSource WHERE \"key\" = @p0":
                         cmd.CommandText = "DELETE FROM \"UFDataSource\" WHERE \"Key\" = @p0";
                         break;
                     default:
                         success = false;
                         break;
                 }
-            }
-
-            if (cmd.CommandText.Contains('['))
-            {
-                cmd.CommandText = cmd.CommandText.Replace("[", "\"").Replace("]", "\"");
-                success = true;
             }
 
             return success;
