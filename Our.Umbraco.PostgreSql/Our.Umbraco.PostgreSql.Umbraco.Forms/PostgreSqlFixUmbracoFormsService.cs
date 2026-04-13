@@ -111,6 +111,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
+                //                                   SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (
                 else if (cmd.CommandText.StartsWith("SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
                 {
                     var sb = new StringBuilder("SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (");
@@ -122,7 +123,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             sb.Append(",");
                         }
                     }
-                    sb.Append(")) GROUP BY CAST(\\\"Created\\\" AS DATE) ORDER BY CAST(\\\"Created\\\" AS DATE)\"");
+                    sb.Append(")) GROUP BY CAST(\"Created\" AS DATE) ORDER BY CAST(\"Created\" AS DATE)");
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
@@ -142,17 +143,14 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 {
                     switch (cmd.CommandText)
                     {
+                        case "SELECT r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"Day\", wfa.\"WorkflowKey\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" < @p1)\nGROUP BY r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE), wfa.\"WorkflowKey\"":
+                            cmd.CommandText = "SELECT r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"Day\", wfa.\"WorkflowKey\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" < @p1) GROUP BY r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE), wfa.\"WorkflowKey\"";
+                            break;
                         case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE form=@p0":
                             cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE \"Form\" = @p0";
                             break;
-                        //case "SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2))\nGROUP BY CAST(Created AS DATE)\nORDER BY CAST(Created AS DATE)":
-                        //    cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2)) GROUP BY CAST(\"Created\" AS DATE) ORDER BY CAST(\"Created\" AS DATE)";
-                        //    break;
-                        //case "SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1)\nAND (wfa.\"ExecutionStatus\" = @p2)\nAND (r.\"Form\" IN (@p3,@p4,@p5))\nGROUP BY CAST(wfa.\"ExecutedOn\" AS DATE)\nORDER BY CAST(wfa.\"ExecutedOn\" AS DATE)":
-                        //    cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1) AND (wfa.\"ExecutionStatus\" = @p2) AND (r.\"Form\" IN (@p3,@p4,@p5)) GROUP BY CAST(wfa.\"ExecutedOn\" AS DATE) ORDER BY CAST(wfa.\"ExecutedOn\" AS DATE)";
-                        //    break;
-                        case "SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2,@p3,@p4))\nGROUP BY CAST(Created AS DATE)\nORDER BY CAST(Created AS DATE)":
-                            cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2,@p3,@p4)) GROUP BY CAST(\"Created\" AS DATE) ORDER BY CAST(\"Created\" AS DATE)";
+                        case "SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" = @p2)\nGROUP BY CAST(Created AS DATE)\nORDER BY CAST(Created AS DATE)":
+                            cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) GROUP BY CAST(\"Created\" AS DATE) ORDER BY CAST(\"Created\" AS DATE)";
                             break;
                         case "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (ParentKey Is Not Null)":
                             cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"ParentKey\" Is Not Null)";
@@ -193,9 +191,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         case "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", DATEPART(HOUR, \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" < @p1)\nGROUP BY \"Form\", CAST(\"Created\" AS DATE), DATEPART(HOUR, \"Created\"), \"UmbracoPageId\"":
                             cmd.CommandText = "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", EXTRACT(HOUR FROM \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" < @p1) GROUP BY \"Form\", CAST(\"Created\" AS DATE), EXTRACT(HOUR FROM \"Created\"), \"UmbracoPageId\"";
                             break;
-                        //case "SELECT r.\"Form\", COUNT(*) as \"Total\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1)\nAND (wfa.\"ExecutionStatus\" = @p2)\nAND (r.\"Form\" IN (@p3,@p4,@p5))\nGROUP BY r.\"Form\"":
-                        //    cmd.CommandText = "SELECT r.\"Form\", COUNT(*) as \"Total\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1) AND (wfa.\"ExecutionStatus\" = @p2) AND (r.\"Form\" IN (@p3,@p4,@p5)) GROUP BY r.\"Form\"";
-                        //    break;
                         default:
                             success = false;
                             break;
@@ -449,6 +444,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             break;
                         case "DELETE FROM umbracoNode WHERE id = @p0":
                             cmd.CommandText = "DELETE FROM \"umbracoNode\" WHERE \"id\" = @p0";
+                            break;
+                        case "DELETE FROM UFWorkflows WHERE \"key\" = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFWorkflows\" WHERE \"Key\" = @p0";
                             break;
                         default:
                             success = false;
