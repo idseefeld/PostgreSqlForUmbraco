@@ -96,7 +96,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         .Replace("INNER JOIN UFRecords", "INNER JOIN \"UFRecords\"");
                     return success;
                 }
-
                 else if (cmd.CommandText.StartsWith("SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1)\nAND (wfa.\"ExecutionStatus\" = @p2)\nAND (r.\"Form\" IN ("))
                 {
                     var sb = new StringBuilder("SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1) AND (wfa.\"ExecutionStatus\" = @p2) AND (r.\"Form\" IN (");
@@ -109,6 +108,21 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         }
                     }
                     sb.Append(")) GROUP BY CAST(wfa.\"ExecutedOn\" AS DATE) ORDER BY CAST(wfa.\"ExecutedOn\" AS DATE)");
+                    cmd.CommandText = sb.ToString();
+                    return success;
+                }
+                else if (cmd.CommandText.StartsWith("SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
+                {
+                    var sb = new StringBuilder("SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (");
+                    for (int i = 2; i < cmd.Parameters.Count; i++)
+                    {
+                        sb.Append($"@p{i}");
+                        if (i < cmd.Parameters.Count - 1)
+                        {
+                            sb.Append(",");
+                        }
+                    }
+                    sb.Append(")) GROUP BY CAST(\\\"Created\\\" AS DATE) ORDER BY CAST(\\\"Created\\\" AS DATE)\"");
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
@@ -131,6 +145,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE form=@p0":
                             cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE \"Form\" = @p0";
                             break;
+                        //case "SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2))\nGROUP BY CAST(Created AS DATE)\nORDER BY CAST(Created AS DATE)":
+                        //    cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2)) GROUP BY CAST(\"Created\" AS DATE) ORDER BY CAST(\"Created\" AS DATE)";
+                        //    break;
                         //case "SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1)\nAND (wfa.\"ExecutionStatus\" = @p2)\nAND (r.\"Form\" IN (@p3,@p4,@p5))\nGROUP BY CAST(wfa.\"ExecutedOn\" AS DATE)\nORDER BY CAST(wfa.\"ExecutedOn\" AS DATE)":
                         //    cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1) AND (wfa.\"ExecutionStatus\" = @p2) AND (r.\"Form\" IN (@p3,@p4,@p5)) GROUP BY CAST(wfa.\"ExecutedOn\" AS DATE) ORDER BY CAST(wfa.\"ExecutedOn\" AS DATE)";
                         //    break;
@@ -366,50 +383,77 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
             }
             else if (cmd.CommandText.StartsWith("DELETE "))
             {
-                switch (cmd.CommandText)
+                if (cmd.CommandText.StartsWith("DELETE FROM UFRecordAudit WHERE UFRecordAudit.Record IN ("))
                 {
-                    case "DELETE FROM UFRecordDataString WHERE record = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFRecordDataString\" WHERE \"Record\" = @p0";
-                        break;
-                    case "DELETE FROM UFRecordDataLongString WHERE record = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFRecordDataLongString\" WHERE \"Record\" = @p0";
-                        break;
-                    case "DELETE FROM UFRecordDataInteger WHERE record = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFRecordDataInteger\" WHERE \"Record\" = @p0";
-                        break;
-                    case "DELETE FROM UFRecordDataBit WHERE record = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFRecordDataBit\" WHERE \"Record\" = @p0";
-                        break;
-                    case "DELETE FROM UFRecordDataIDateTime WHERE record = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFRecordDataIDateTime\" WHERE \"Record\" = @p0";
-                        break;
-                    case "DELETE FROM UFRecordFields WHERE UFRecordFields.Record in (@p0)":
-                        cmd.CommandText = "DELETE FROM \"UFRecordFields\" WHERE \"Record\" IN (@p0)";
-                        break;
-                    case "DELETE FROM \"UFUserStartFolders\" WHERE UserId = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFUserStartFolders\" WHERE \"UserId\" = @p0";
-                        break;
-                    case "DELETE FROM UFPrevalueSource WHERE \"key\" = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFPrevalueSource\" WHERE \"Key\" = @p0";
-                        break;
-                    case "DELETE FROM UFDataSource WHERE \"key\" = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFDataSource\" WHERE \"Key\" = @p0";
-                        break;
-                    case "DELETE FROM UFUserFormSecurity WHERE Form = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFUserFormSecurity\" WHERE \"Form\" = @p0";
-                        break;
-                    case "DELETE FROM UFUserGroupFormSecurity WHERE Form = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFUserGroupFormSecurity\" WHERE \"Form\" = @p0";
-                        break;
-                    case "DELETE FROM UFForms WHERE \"key\" = @p0":
-                        cmd.CommandText = "DELETE FROM \"UFForms\" WHERE \"Key\" = @p0";
-                        break;
-                    case "DELETE FROM umbracoRelation WHERE parentid = (SELECT id FROM umbracoNode WHERE uniqueid = @p0) OR childId = (SELECT id FROM umbracoNode WHERE uniqueid = @p0)":
-                        cmd.CommandText = "DELETE FROM \"umbracoRelation\" WHERE \"parentId\" = (SELECT \"id\" FROM \"umbracoNode\" WHERE \"uniqueId\" = @p0) OR \"childId\" = (SELECT \"id\" FROM \"umbracoNode\" WHERE \"uniqueId\" = @p0)";
-                        break;
-                    default:
-                        success = false;
-                        break;
+                    cmd.CommandText = cmd.CommandText.Replace("UFRecordAudit WHERE UFRecordAudit.Record", "\"UFRecordAudit\" WHERE \"Record\"");
+                    return success;
+                }
+                else if (cmd.CommandText.StartsWith("DELETE FROM UFRecordFields WHERE UFRecordFields.Record in ("))
+                {
+                    cmd.CommandText = cmd.CommandText.Replace("UFRecordFields WHERE UFRecordFields.Record", "\"UFRecordFields\" WHERE \"Record\"");
+                    return success;
+                }
+                else if (cmd.CommandText.StartsWith("DELETE FROM UFRecordWorkflowAudit WHERE RecordUniqueId IN (SELECT UniqueId FROM UFRecords WHERE UFRecords.Id IN ("))
+                {
+                    cmd.CommandText = cmd.CommandText.Replace(
+                        "DELETE FROM UFRecordWorkflowAudit WHERE RecordUniqueId IN (SELECT UniqueId FROM UFRecords WHERE UFRecords.Id IN (",
+                        "DELETE FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (SELECT \"UniqueId\" FROM \"UFRecords\" WHERE \"Id\" IN (");
+                    return success;
+                }
+                else
+                {
+                    switch (cmd.CommandText)
+                    {
+                        case "DELETE FROM UFRecordDataString WHERE record = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFRecordDataString\" WHERE \"Record\" = @p0";
+                            break;
+                        case "DELETE FROM UFRecordDataLongString WHERE record = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFRecordDataLongString\" WHERE \"Record\" = @p0";
+                            break;
+                        case "DELETE FROM UFRecordDataInteger WHERE record = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFRecordDataInteger\" WHERE \"Record\" = @p0";
+                            break;
+                        case "DELETE FROM UFRecordDataBit WHERE record = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFRecordDataBit\" WHERE \"Record\" = @p0";
+                            break;
+                        case "DELETE FROM UFRecordDataIDateTime WHERE record = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFRecordDataIDateTime\" WHERE \"Record\" = @p0";
+                            break;
+                        case "DELETE FROM UFRecordFields WHERE UFRecordFields.Record in (@p0)":
+                            cmd.CommandText = "DELETE FROM \"UFRecordFields\" WHERE \"Record\" IN (@p0)";
+                            break;
+                        case "DELETE FROM \"UFUserStartFolders\" WHERE UserId = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFUserStartFolders\" WHERE \"UserId\" = @p0";
+                            break;
+                        case "DELETE FROM UFPrevalueSource WHERE \"key\" = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFPrevalueSource\" WHERE \"Key\" = @p0";
+                            break;
+                        case "DELETE FROM UFDataSource WHERE \"key\" = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFDataSource\" WHERE \"Key\" = @p0";
+                            break;
+                        case "DELETE FROM UFUserFormSecurity WHERE Form = @p0":
+                        case "DELETE FROM \"UFUserFormSecurity\" WHERE form = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFUserFormSecurity\" WHERE \"Form\" = @p0";
+                            break;
+                        case "DELETE FROM UFUserGroupFormSecurity WHERE Form = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFUserGroupFormSecurity\" WHERE \"Form\" = @p0";
+                            break;
+                        case "DELETE FROM UFForms WHERE \"key\" = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFForms\" WHERE \"Key\" = @p0";
+                            break;
+                        case "DELETE FROM umbracoRelation WHERE parentid = (SELECT id FROM umbracoNode WHERE uniqueid = @p0) OR childId = (SELECT id FROM umbracoNode WHERE uniqueid = @p0)":
+                            cmd.CommandText = "DELETE FROM \"umbracoRelation\" WHERE \"parentId\" = (SELECT \"id\" FROM \"umbracoNode\" WHERE \"uniqueId\" = @p0) OR \"childId\" = (SELECT \"id\" FROM \"umbracoNode\" WHERE \"uniqueId\" = @p0)";
+                            break;
+                        case "DELETE FROM umbracoNode WHERE uniqueid = @p0":
+                            cmd.CommandText = "DELETE FROM \"umbracoNode\" WHERE \"uniqueId\" = @p0";
+                            break;
+                        case "DELETE FROM umbracoNode WHERE id = @p0":
+                            cmd.CommandText = "DELETE FROM \"umbracoNode\" WHERE \"id\" = @p0";
+                            break;
+                        default:
+                            success = false;
+                            break;
+                    }
                 }
             }
 
@@ -422,7 +466,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 string.IsNullOrEmpty(cmd.CommandText)
                 || cmd.CommandText.Contains(" UF")
                 || cmd.CommandText.Contains(" \"UF")
-                || cmd.CommandText.Contains("sys.indexes");
+                || cmd.CommandText.Contains("sys.indexes")
+                || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
+                || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
         }
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
