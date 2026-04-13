@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Our.Umbraco.PostgreSql.Services;
 using System.Data;
 using System.Data.Common;
+using System.Text;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
 
@@ -65,46 +66,113 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return success;
             }
 
+            if(cmd.CommandText.Contains("@0"))
+            {
+                for (int i = 0; i < cmd.Parameters.Count; i++)
+                {
+                    cmd.CommandText = cmd.CommandText.Replace($"@{i}", $"@p{i}");
+                }
+            }
+
             if (cmd.CommandText.StartsWith("SELECT "))
             {
-                switch (cmd.CommandText)
+                if (cmd.CommandText.StartsWith("SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
                 {
-                    case "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (ParentKey Is Not Null)":
-                        cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"ParentKey\" Is Not Null)";
-                        break;
-                    case "SELECT COUNT(*)\nFROM \"UFForms\"\nWHERE (\"UFForms\".\"FolderKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (FolderKey Is Not Null)":
-                        cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFForms\"\nWHERE (\"UFForms\".\"FolderKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"FolderKey\" Is Not Null)";
-                        break;
-                    case "SELECT count(*) As Count,max(created) As LastSubmittedDate\nFROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)":
-                        cmd.CommandText = "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" = @p2)";
-                        break;
-                    case "":
-                        cmd.CommandText = "";
-                        break;
-                    case "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record = @p0":
-                        cmd.CommandText = "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE \"Record\" = @p0";
-                        break;
-                    case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\n) npoco_tbl":
-                        cmd.CommandText = "SELECT COUNT(*) FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND \"Form\" = @p2;";
-                        break;
-                    case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nORDER BY created DESC\nLIMIT @p3 OFFSET @p4":
-                        cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) ORDER BY \"Created\" DESC LIMIT @p3 OFFSET @p4";
-                        break;
-                    case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0)":
-                        cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0)";
-                        break;
-                    case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0, @p1)":
-                        cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0, @p1)";
-                        break;
-                    //case "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"":
-                    //    cmd.CommandText = "SELECT \"UFPrevalueSource\".\"Id\" AS \"Id\", \"UFPrevalueSource\".\"Name\" AS \"Name\", \"UFPrevalueSource\".\"Key\" AS \"Key\", \"UFPrevalueSource\".\"Created\" AS \"CreateDate\", \"UFPrevalueSource\".\"FieldPreValueSourceTypeId\" AS \"FieldPreValueSourceTypeId\"\nFROM \"UFPrevalueSource\"";
-                    //    break;
-                    case "SELECT COUNT(*)\nFROM sys.indexes\nWHERE (object_id = OBJECT_ID(@p0) AND name = @p1)":
-                        cmd.CommandText = "SELECT COUNT(*) FROM pg_class t INNER JOIN pg_index ix ON t.oid = ix.indrelid INNER JOIN pg_class i ON i.oid = ix.indexrelid INNER JOIN pg_namespace n ON n.oid = t.relnamespace LEFT JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) WHERE (t.relname = @p0 AND i.relname = @p1)";
-                        break;
-                    default:
-                        success = false;
-                        break;
+                    //var sql = new StringBuilder("SELECT \"Form\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (");
+                    //for (int i = 2; i < cmd.Parameters.Count; i++)
+                    //{
+                    //    sql.Append($"@p{i}");
+                    //    if (i < cmd.Parameters.Count - 1)
+                    //    {
+                    //        sql.Append(", ");
+                    //    }
+                    //}
+                    //sql.Append(")) GROUP BY \"Form\"");
+                    //cmd.CommandText = sql.ToString();
+                    cmd.CommandText = cmd.CommandText.Replace("FROM UFRecords\n", "FROM \"UFRecords\" ");
+                    return true;
+                }
+                else if (cmd.CommandText.Contains("WHERE RecordUniqueId IN ("))
+                {
+                    cmd.CommandText = cmd.CommandText.Replace("WHERE RecordUniqueId IN (", "WHERE \"RecordUniqueId\" IN (");
+                    return true;
+                }
+                //else if (cmd.CommandText.Contains("SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN ("))
+                //{
+                //    var sql = new StringBuilder("SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (");
+                //    for (int i = 0; i < cmd.Parameters.Count; i++)
+                //    {
+                //        sql.Append($"@p{i}");
+                //        if (i < cmd.Parameters.Count - 1)
+                //        {
+                //            sql.Append(", ");
+                //        }
+                //    }
+                //    sql.Append(")");
+                //    cmd.CommandText = sql.ToString();
+                //    return true;
+                //}
+                else
+                {
+                    switch (cmd.CommandText)
+                    {
+                        case "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (ParentKey Is Not Null)":
+                            cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFFolders\"\nWHERE (\"UFFolders\".\"ParentKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"ParentKey\" Is Not Null)";
+                            break;
+                        case "SELECT COUNT(*)\nFROM \"UFForms\"\nWHERE (\"UFForms\".\"FolderKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (FolderKey Is Not Null)":
+                            cmd.CommandText = "SELECT COUNT(*)\nFROM \"UFForms\"\nWHERE (\"UFForms\".\"FolderKey\" NOT IN (SELECT \"UFFolders\".\"Key\" AS \"Key\"\nFROM \"UFFolders\"))\nAND (\"FolderKey\" Is Not Null)";
+                            break;
+                        case "SELECT count(*) As Count,max(created) As LastSubmittedDate\nFROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)":
+                            cmd.CommandText = "SELECT COUNT(*) As \"Count\", MAX(\"Created\") As \"LastSubmittedDate\"\nFROM \"UFRecords\"\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" = @p2)";
+                            break;
+                        //case "SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (@p2,@p3))\nGROUP BY \"Form\"":
+                        //    cmd.CommandText = "SELECT \"Form\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (@p2,@p3)) GROUP BY \"Form\"";
+                        //    break;
+                        case "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record = @p0":
+                            cmd.CommandText = "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE \"Record\" = @p0";
+                            break;
+                        case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\n) npoco_tbl":
+                            cmd.CommandText = "SELECT COUNT(*) FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND \"Form\" = @p2;";
+                            break;
+                        case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nORDER BY created DESC\nLIMIT @p3 OFFSET @p4":
+                            cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) ORDER BY \"Created\" DESC LIMIT @p3 OFFSET @p4";
+                            break;
+                        //case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0)":
+                        //    cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0)";
+                        //    break;
+                        //case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0, @p1)":
+                        //    cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0, @p1)";
+                        //    break;                       
+                        //case "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE RecordUniqueId IN (@p0, @p1, @p2)":
+                        //    cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"RecordUniqueId\" AS \"RecordUniqueId\", \"WorkflowKey\" AS \"WorkflowKey\", \"WorkflowName\" AS \"WorkflowName\", \"WorkflowTypeId\" AS \"WorkflowTypeId\", \"WorkflowTypeName\" AS \"WorkflowTypeName\", \"ExecutedOn\" AS \"ExecutedOn\", \"ExecutionStage\" AS \"ExecutionStage\", \"ExecutionStatus\" AS \"ExecutionStatus\" FROM \"UFRecordWorkflowAudit\" WHERE \"RecordUniqueId\" IN (@p0, @p1, @p2)";
+                        //    break;
+                        case "SELECT COUNT(*)\nFROM sys.indexes\nWHERE (object_id = OBJECT_ID(@p0) AND name = @p1)":
+                            cmd.CommandText = "SELECT COUNT(*) FROM pg_class t INNER JOIN pg_index ix ON t.oid = ix.indrelid INNER JOIN pg_class i ON i.oid = ix.indexrelid INNER JOIN pg_namespace n ON n.oid = t.relnamespace LEFT JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = ANY(ix.indkey) WHERE (t.relname = @p0 AND i.relname = @p1)";
+                            break;
+                        case "SELECT MIN([Created])\nFROM UFRecords":
+                            cmd.CommandText = "SELECT MIN(\"Created\") FROM \"UFRecords\"";
+                            break;
+                        case "SELECT MIN([Date])\nFROM UFAnalyticsProcessedDates":
+                            cmd.CommandText = "SELECT MIN(\"Date\") FROM \"UFAnalyticsProcessedDates\"";
+                            break;
+                        case "SELECT *\nFROM UFAnalyticsProcessedDates\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)":
+                        case "SELECT *\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @p0 AND [Date] <= @p1)":
+                            cmd.CommandText = "SELECT * FROM \"UFAnalyticsProcessedDates\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
+                            break;
+                        case "SELECT COUNT(*)\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @0 AND [Date] <= @1)":
+                        case "SELECT COUNT(*)\nFROM UFAnalyticsProcessedDates\nWHERE ([Date] >= @p0 AND [Date] <= @p1)":
+                            cmd.CommandText = "SELECT COUNT(*) FROM \"UFAnalyticsProcessedDates\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
+                            break;
+                        case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nAND (UniqueId in (@p3))":
+                            cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) AND (\"UniqueId\" IN (@p3))";
+                            break;
+                        case "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", DATEPART(HOUR, \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" < @p1)\nGROUP BY \"Form\", CAST(\"Created\" AS DATE), DATEPART(HOUR, \"Created\"), \"UmbracoPageId\"":
+                            cmd.CommandText = "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", EXTRACT(HOUR FROM \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" < @p1) GROUP BY \"Form\", CAST(\"Created\" AS DATE), EXTRACT(HOUR FROM \"Created\"), \"UmbracoPageId\"";
+                            break;
+                        default:
+                            success = false;
+                            break;
+                    }
                 }
             }
             else if (cmd.CommandText.StartsWith("INSERT "))
@@ -346,10 +414,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
         private bool IsUfCommand(DbCommand cmd)
         {
-            return 
-                string.IsNullOrEmpty(cmd.CommandText) 
-                || cmd.CommandText.Contains(" UF") 
-                || cmd.CommandText.Contains(" \"UF") 
+            return
+                string.IsNullOrEmpty(cmd.CommandText)
+                || cmd.CommandText.Contains(" UF")
+                || cmd.CommandText.Contains(" \"UF")
                 || cmd.CommandText.Contains("sys.indexes");
         }
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
