@@ -143,6 +143,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 {
                     switch (cmd.CommandText)
                     {
+                        case "SELECT \"FormId\", \"Date\", \"Id\"\nFROM UFAnalyticsDailySummary\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)":
+                            cmd.CommandText = "SELECT \"FormId\", \"Date\", \"Id\" FROM \"UFAnalyticsDailySummary\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
+                            break;
                         case "SELECT r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"Day\", wfa.\"WorkflowKey\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" < @p1)\nGROUP BY r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE), wfa.\"WorkflowKey\"":
                             cmd.CommandText = "SELECT r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"Day\", wfa.\"WorkflowKey\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" WHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" < @p1) GROUP BY r.\"Form\", CAST(wfa.\"ExecutedOn\" AS DATE), wfa.\"WorkflowKey\"";
                             break;
