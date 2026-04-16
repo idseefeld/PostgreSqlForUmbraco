@@ -1,11 +1,12 @@
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-using Our.Umbraco.PostgreSql.Services;
 using System.Data;
 using System.Data.Common;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using Our.Umbraco.PostgreSql.Services;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 {
@@ -33,28 +34,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 "UFWorkflows"
                 ];
 
-        private bool ContainsUfTableName(string sqlStatement, string? tableName = null)
-        {
-            if (string.IsNullOrEmpty(tableName))
-            {
-                foreach (var table in UfTables)
-                {
-                    if (sqlStatement.Contains(table, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if (UfTables.Contains(tableName) && sqlStatement.Contains(tableName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
         public override bool FixCommanText(DbCommand cmd)
         {
             var success = true;
@@ -87,11 +66,24 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         .Replace("FROM UFRecords", "FROM \"UFRecords\"");
                     return success;
                 }
+                else if (cmd.CommandText.StartsWith("SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record in ("))
+                {
+                    cmd.CommandText = cmd.CommandText
+                        .Replace(" record ", " \"Record\" ");
+                    return success;
+                }
+                else if (cmd.CommandText.StartsWith("SELECT *\nFROM UFAnalyticsDailySummary\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)\nAND (\"FormId\" IN ("))
+                {
+                    cmd.CommandText = cmd.CommandText
+                        .Replace(" UFAnalyticsDailySummary\n", " \"UFAnalyticsDailySummary\" ");
+                    return success;
+                }
                 else if (cmd.CommandText.StartsWith("SELECT r.\"Form\", COUNT(*) as \"Total\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r"))
                 {
                     cmd.CommandText = cmd.CommandText
-                        .Replace("FROM UFRecordWorkflowAudit", "FROM \"UFRecordWorkflowAudit\"")
-                        .Replace("INNER JOIN UFRecords", "INNER JOIN \"UFRecords\"");
+                        .Replace(
+                            "SELECT r.\"Form\", COUNT(*) as \"Total\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r",
+                            "SELECT r.\"Form\", COUNT(*) as \"Total\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r");
                     return success;
                 }
                 else if (cmd.CommandText.StartsWith("SELECT COUNT(*) as \"Total\", CAST(wfa.\"ExecutedOn\" AS DATE) as \"ExecutedOn\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nWHERE (wfa.\"ExecutedOn\" >= @p0 AND wfa.\"ExecutedOn\" <= @p1)\nAND (wfa.\"ExecutionStatus\" = @p2)\nAND (r.\"Form\" IN ("))
@@ -152,9 +144,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             break;
                         case "SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\", \"UmbracoPageId\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"UmbracoPageId\" IS NOT NULL AND \"UmbracoPageId\" > 0)\nAND (\"Form\" = @p2)\nGROUP BY CAST(Created AS DATE), \"UmbracoPageId\"\nORDER BY CAST(Created AS DATE), \"UmbracoPageId\"":
                             cmd.CommandText = "SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\", \"UmbracoPageId\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"UmbracoPageId\" IS NOT NULL AND \"UmbracoPageId\" > 0) AND (\"Form\" = @p2) GROUP BY CAST(\"Created\" AS DATE), \"UmbracoPageId\" ORDER BY CAST(\"Created\" AS DATE), \"UmbracoPageId\"";
-                            break;
-                        case "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record in (@p0)":
-                            cmd.CommandText = "SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE \"Record\" IN (@p0)";
                             break;
                         case "SELECT *\nFROM UFAnalyticsProcessedDates\nWHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)":
                             cmd.CommandText = "SELECT * FROM \"UFAnalyticsProcessedDates\" WHERE (\"Date\" >= @p0 AND \"Date\" <= @p1)";
@@ -219,7 +208,17 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         case "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", DATEPART(HOUR, \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" < @p1)\nGROUP BY \"Form\", CAST(\"Created\" AS DATE), DATEPART(HOUR, \"Created\"), \"UmbracoPageId\"":
                             cmd.CommandText = "SELECT \"Form\", CAST(\"Created\" AS DATE) as \"Day\", EXTRACT(HOUR FROM \"Created\") as \"Hour\", \"UmbracoPageId\", COUNT(*) as \"Total\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" < @p1) GROUP BY \"Form\", CAST(\"Created\" AS DATE), EXTRACT(HOUR FROM \"Created\"), \"UmbracoPageId\"";
                             break;
+                        case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (uniqueid IN (@p0))\n AND form = @p1\nORDER BY \"UFRecords\".\"Created\" DESC":
+                            cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"UniqueId\" IN (@p0)) AND (\"Form\" = @p1) ORDER BY \"Created\" DESC";
+                            break;
                         default:
+                            var skipThis = cmd.CommandText.Contains("User")
+                                && !cmd.CommandText.Contains("\"UFUserFormSecurity\"")
+                                && !cmd.CommandText.Contains("\"UFUserStartFolders\"")
+                                && !cmd.CommandText.Contains("\"UFUserSecurity\"");
+
+                            var catchThis = cmd.CommandText.Contains("UFAnalyticsDailySummary");
+
                             success = false;
                             break;
                     }
@@ -305,30 +304,31 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFFolders"))
+                    else if (cmd.CommandText.Contains("UFFolders"))
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFPrevalueSource"))
+                    else if (cmd.CommandText.Contains("UFPrevalueSource"))
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFRecordAudit"))
+                    else if (cmd.CommandText.Contains("UFRecordAudit"))
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFRecordWorkflowAudit"))
+                    else if (cmd.CommandText.Contains("UFRecordWorkflowAudit"))
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFUserFormSecurity"))
+                    else if (cmd.CommandText.Contains("UFUserFormSecurity"))
                     {
 
                     }
-                    if (cmd.CommandText.Contains("UFUserGroupFormSecurity"))
+                    else if (cmd.CommandText.Contains("UFUserGroupFormSecurity"))
                     {
 
                     }
+
                     if (cmd.CommandText.Contains(") returning "))
                     {
                         if (cmd.CommandText.InvariantContains(") returning \"id\" as id"))
@@ -476,11 +476,30 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         case "DELETE FROM UFWorkflows WHERE \"key\" = @p0":
                             cmd.CommandText = "DELETE FROM \"UFWorkflows\" WHERE \"Key\" = @p0";
                             break;
+                        case "DELETE FROM UFAnalyticsDailySummary WHERE \"Date\" < @p0":
+                            cmd.CommandText = "DELETE FROM \"UFAnalyticsDailySummary\" WHERE \"Date\" < @p0";
+                            break;
                         default:
                             success = false;
                             break;
                     }
                 }
+            }
+            else if (cmd.CommandText.StartsWith("DROP "))
+            {
+                switch (cmd.CommandText)
+                {
+                    case "DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\"":
+                        cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
+                        break;
+                    default:
+                        success = false;
+                        break;
+                }
+            }
+            else if (cmd.CommandText.Contains(" NONCLUSTERED "))
+            {
+                cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED ", " ");
             }
 
             return success;

@@ -19,6 +19,11 @@ public class PostgreSqlExecutingInterceptor(IPackagesService packagesService) : 
     public void OnExecutingCommand(IDatabase database, DbCommand command)
     {
         // Place for changes e.g. of the command.CommandText
+        if (command.CommandText.Contains(" NONCLUSTERED INDEX "))
+        {
+            // Example of a specific fix for a known issue with the covering index creation command
+            command.CommandText = command.CommandText.Replace(" NONCLUSTERED INDEX ", " INDEX ");
+        }
     }
 
     /// <summary>
