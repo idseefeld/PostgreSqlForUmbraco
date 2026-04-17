@@ -4,16 +4,20 @@
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
-		<PackageIcon>upostgresqlfix.png</PackageIcon>
+		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
-		<Content Include="..\Our.Umbraco.PostgreSql\upostgresqlfix.png" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
+	  <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.6" />
+	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="17.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
 	</ItemGroup>
 
 </Project>

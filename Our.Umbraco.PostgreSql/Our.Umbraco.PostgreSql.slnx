@@ -1,13 +1,3 @@
 <Solution>
-  <Folder Name="/PostgreSQL/">
-    <Project Path="Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.pack.csproj" />
-    <Project Path="Our.Umbraco.PostgreSql.Umbraco.License/Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
-    <Project Path="Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.pack.csproj" />
-  </Folder>
-  <Folder Name="/Solution Items/">
-    <File Path="../LICENSE" />
-    <File Path="../README.md" />
-    <File Path="Directory.Build.props" />
-  </Folder>
   <Project Path="Umbraco17.www/Umbraco17.www.csproj" />
 </Solution>
