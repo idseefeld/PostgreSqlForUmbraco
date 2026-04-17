@@ -22,5 +22,8 @@ namespace Our.Umbraco.PostgreSql.Services
         }
 
         public virtual Func<object, object>? GetParameterConverter(DbCommand dbCommand, Type sourceType) => null;
+
+        public virtual void InterceptCommandExecuting(DbCommand cmd)
+        { }
     }
 }

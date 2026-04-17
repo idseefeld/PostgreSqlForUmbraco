@@ -7,5 +7,7 @@ namespace Our.Umbraco.PostgreSql.Services
         bool FixCommanText(DbCommand cmd);
 
         Func<object, object>? GetParameterConverter(DbCommand dbCommand, Type sourceType);
+
+        void InterceptCommandExecuting(DbCommand cmd);
     }
 }

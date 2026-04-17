@@ -51,5 +51,13 @@ namespace Our.Umbraco.PostgreSql.Services
 
             return cmd;
         }
+
+        public void InterceptCommandExecuting(DbCommand cmd)
+        {
+            foreach (IPostgreSqlFixService fix in _fixPackageServices)
+            {
+                fix.InterceptCommandExecuting(cmd);
+            }
+        }
     }
 }

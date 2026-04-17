@@ -560,5 +560,28 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return value;
             };
         }
+
+        public override void InterceptCommandExecuting(DbCommand cmd)
+        {
+            base.InterceptCommandExecuting(cmd);
+
+            // Place for changes e.g. of the command.CommandText
+            if (cmd.CommandText.Contains(" NONCLUSTERED INDEX "))
+            {
+                // Example of a specific fix for a known issue with the covering index creation command
+                cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED INDEX ", " INDEX ");
+            }
+            else if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
+            {
+                // Example of a specific fix for a known issue with dropping the index
+                cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
+            }
+            else if (cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE [Date] < @0")
+                || cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE \"Date\" < @p0"))
+            {
+                // Example of a specific fix for a known issue with creating the index
+                cmd.CommandText = "DELETE FROM \"UFAnalyticsProcessedDates\" WHERE \"Date\" < @p0";
+            }
+        }
     }
 }
