@@ -394,10 +394,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = $"UPDATE \"UFWorkflows\" SET \"Updated\" = \"Updated\" {GetTimeZone()}";
                         break;
                     case "UPDATE \"UFUserSecurity\" SET manageforms = @p0, managedatasources = @p1, manageprevaluesources = @p2, manageworkflows = @p3, viewEntries = @p4, editEntries = @p5, deleteEntries = @p6 WHERE \"user\" = @p7":
-                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\"::text = '@p7'";
+                        cmd.CommandText = "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\"::integer = @p7";
                         break;
                     case "UPDATE \"UFUserFormSecurity\" SET HasAccess = @p0, SecurityType = @p1, AllowInEditor = @p2 WHERE \"user\" = @p3 AND form = @p4":
-                        cmd.CommandText = "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\"::text = '@p3' AND \"Form\" = @p4";
+                        cmd.CommandText = "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\"::integer = @p3 AND \"Form\" = @p4";
                         break;
                     default:
                         success = false;
