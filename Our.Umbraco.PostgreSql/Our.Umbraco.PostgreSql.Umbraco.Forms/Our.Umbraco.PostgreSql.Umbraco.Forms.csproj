@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
-    <Company>-</Company>
-    <Authors>Dirk Seefeld</Authors>
-    <PackageIcon>upostgresqlfix.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <Product>PostgreSQL Provider for Umbraco CMS</Product>
     <PackageTags>umbraco, postgresql, community</PackageTags>
