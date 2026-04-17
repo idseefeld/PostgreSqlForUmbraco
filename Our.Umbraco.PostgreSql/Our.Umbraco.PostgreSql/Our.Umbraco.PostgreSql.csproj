@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\PostgreSqlDatabase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="datetime-erros.playlist" />
     <None Remove="errors-2.playlist" />
@@ -41,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="readme.md" Pack="true" PackagePath="\" />
+    <Content Include="../../readme.md" Pack="true" PackagePath="\" />
     <Content Include="uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 

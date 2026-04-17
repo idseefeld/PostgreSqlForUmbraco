@@ -99,7 +99,10 @@ namespace Our.Umbraco.PostgreSql.Services
                 => _inner.Cancel();
 
             public override int ExecuteNonQuery()
-                => _inner.ExecuteNonQuery();
+            {
+
+                return _inner.ExecuteNonQuery();
+            }
 
             public override object? ExecuteScalar()
                 => _inner.ExecuteScalar();
