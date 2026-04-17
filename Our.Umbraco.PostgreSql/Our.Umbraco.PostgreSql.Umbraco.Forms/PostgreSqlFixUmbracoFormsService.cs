@@ -63,7 +63,8 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText.StartsWith("SELECT \"Form\", \"UmbracoPageId\"\nFROM UFRecords\nWHERE (\"Form\" IN ("))
                 {
                     cmd.CommandText = cmd.CommandText
-                        .Replace("FROM UFRecords", "FROM \"UFRecords\"");
+                        .Replace("FROM UFRecords", "FROM \"UFRecords\"")
+                        .Replace("GROUP BY Form", "GROUP BY \"Form\"");
                     return success;
                 }
                 else if (cmd.CommandText.StartsWith("SELECT \"Key\" AS \"Key\", \"FieldId\" AS \"FieldId\", \"Record\" AS \"Record\", \"Alias\" AS \"Alias\", \"DataType\" AS \"DataTypeAlias\" FROM \"UFRecordFields\" WHERE record in ("))
@@ -478,6 +479,10 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             break;
                         case "DELETE FROM UFAnalyticsDailySummary WHERE \"Date\" < @p0":
                             cmd.CommandText = "DELETE FROM \"UFAnalyticsDailySummary\" WHERE \"Date\" < @p0";
+                            break;
+                        case "DELETE FROM UFAnalyticsProcessedDates WHERE \"Date\" < @p0":
+                        case "DELETE FROM UFAnalyticsProcessedDates WHERE [Date] < @p0":
+                            cmd.CommandText = "DELETE FROM \"UFAnalyticsProcessedDates\" WHERE \"Date\" < @p0";
                             break;
                         default:
                             success = false;
