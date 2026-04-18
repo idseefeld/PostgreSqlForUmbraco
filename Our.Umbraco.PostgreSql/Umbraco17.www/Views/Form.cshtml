@@ -1,0 +1,25 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Form>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Model.Name</title>
+        <link href="/css/main.css" rel="stylesheet">
+        <link href="/css/bootstrap.5.3.8.css" rel="stylesheet">
+</head>
+    <body>
+        
+        @await Component.InvokeAsync("RenderForm", new { formId = @Model.FormPicker, 
+                                                 theme = @Model.ThemePicker,
+                                                 includeScripts = false })
+
+    </body>
+    <footer>
+        <a href="/umbraco" target="_blank">backoffice</a>
+    </footer>
+    <script src="/scripts/boostrap.5.3.8.js"></script>
+</html>

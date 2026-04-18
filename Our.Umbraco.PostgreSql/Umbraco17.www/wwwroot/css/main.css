@@ -1,0 +1,23 @@
+.field-validation-error {
+  color: red;
+}
+
+.umbraco-forms-hidden {
+  display: none;
+}
+
+form {
+  padding: 1em;
+}
+
+.btn.primary {
+  color: var(--bs-btn-active-color);
+  background-color: #eee;
+  border-color: var(--bs-btn-active-border-color);
+}
+
+  .btn.primary:hover {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+  }
