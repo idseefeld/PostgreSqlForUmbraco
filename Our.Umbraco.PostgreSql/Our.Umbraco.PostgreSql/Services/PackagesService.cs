@@ -37,7 +37,7 @@ namespace Our.Umbraco.PostgreSql.Services
 
             foreach (IPostgreSqlFixService fix in _fixPackageServices)
             {
-                if (fix.FixCommanText(cmd))
+                if (fix.InterceptCommandExecuting(cmd))
                 {
                     continue;
                 }

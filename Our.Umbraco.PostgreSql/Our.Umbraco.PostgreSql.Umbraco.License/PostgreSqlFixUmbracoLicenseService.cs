@@ -12,7 +12,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
     /// </summary>
     public class PostgreSqlFixUmbracoLicenseService : PostgreSqlFixServiceBase
     {
-        public override bool FixCommanText(DbCommand cmd)
+        private static bool FixCommanText(DbCommand cmd)
         {
             var success = true;
 
@@ -36,6 +36,15 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
                     success = false;
                     break;
             }
+
+            return success;
+        }
+
+        public override bool InterceptCommandExecuting(DbCommand cmd)
+        {
+            var success = base.InterceptCommandExecuting(cmd);
+
+            success = FixCommanText(cmd);
 
             return success;
         }

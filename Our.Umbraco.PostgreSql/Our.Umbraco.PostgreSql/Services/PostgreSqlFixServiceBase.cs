@@ -7,8 +7,6 @@ namespace Our.Umbraco.PostgreSql.Services
 {
     public abstract class PostgreSqlFixServiceBase : IPostgreSqlFixService
     {
-        public abstract bool FixCommanText(DbCommand cmd);
-
         public static string GetTimeZone(string timeZone = Constants.DefaultTimeZone)
         {
             var tz = "Europe/Berlin";
@@ -23,7 +21,8 @@ namespace Our.Umbraco.PostgreSql.Services
 
         public virtual Func<object, object>? GetParameterConverter(DbCommand dbCommand, Type sourceType) => null;
 
-        public virtual void InterceptCommandExecuting(DbCommand cmd)
-        { }
+        // public virtual bool FixCommanText(DbCommand cmd) => true;
+
+        public virtual bool InterceptCommandExecuting(DbCommand cmd) => true;
     }
 }
