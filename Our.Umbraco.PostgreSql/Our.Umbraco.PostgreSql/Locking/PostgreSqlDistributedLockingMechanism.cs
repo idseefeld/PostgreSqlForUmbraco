@@ -57,6 +57,7 @@ namespace Our.Umbraco.PostgreSql.Locking
             {
                 throw new InvalidOperationException("Distributed locking is not enabled. Please check your connection strings and provider name.");
             }
+
             obtainLockTimeout ??= _globalSettings.DistributedLockingReadLockDefaultTimeout;
             return new PostgreSqlDistributedLock(this, _scopeAccessor, lockId, DistributedLockType.ReadLock, obtainLockTimeout.Value);
         }
@@ -150,8 +151,18 @@ namespace Our.Umbraco.PostgreSql.Locking
 
                 if (db.Transaction is not null && db.Transaction.IsolationLevel < IsolationLevel.ReadCommitted)
                 {
+                    //if (db.Transaction.IsolationLevel == IsolationLevel.ReadUncommitted)
+                    //{
+
+                    //}
+                    //else
+                    //{
+
+                    // this ocures also for Sql Server
                     throw new InvalidOperationException(
-                        "A transaction with minimum ReadCommitted isolation level is required.");
+                    "A transaction with minimum ReadCommitted isolation level is required.");
+
+                    //}
                 }
 
                 string query = $"SELECT value FROM {_syntax.GetQuotedTableName("umbracoLock")} WHERE id = @id FOR SHARE";

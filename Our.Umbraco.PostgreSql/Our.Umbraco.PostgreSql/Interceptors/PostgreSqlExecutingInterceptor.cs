@@ -18,7 +18,7 @@ public class PostgreSqlExecutingInterceptor(IPackagesService packagesService) : 
     /// </summary>
     public void OnExecutingCommand(IDatabase database, DbCommand command)
     {
-        command.FixCommanText(packagesService);
+        packagesService.InterceptCommandExecuting(command);
     }
 
     /// <summary>

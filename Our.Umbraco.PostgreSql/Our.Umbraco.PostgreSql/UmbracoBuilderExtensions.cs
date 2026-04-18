@@ -62,17 +62,12 @@ namespace Our.Umbraco.PostgreSql
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlAddRetryPolicyInterceptor>());
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlExecutingInterceptor>());
-            builder.Services.TryAddEnumerable(ServiceDescriptor
-                .Singleton<IProviderSpecificInterceptor, PostgreSqlDataInterceptor>());
 
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IPackagesService, PackagesService>());
+
             DbProviderFactories.UnregisterFactory(Constants.ProviderName);
             DbProviderFactories.RegisterFactory(Constants.ProviderName, PostgreSqlDbProviderFactory.Instance);
-
-            // NOTE: No longer need to replace IUmbracoDatabaseFactory.
-            // The custom UmbracoPostgreSQLDatabaseType returned by PostgreSqlSyntaxProvider.GetUpdatedDatabaseType
-            // handles primary key name normalization (ID -> id) internally.
 
             return builder;
         }

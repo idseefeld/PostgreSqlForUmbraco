@@ -7,6 +7,11 @@ namespace Our.Umbraco.PostgreSql.Extensions
     {
         public static DbCommand FixCommanText(this DbCommand cmd, IPackagesService packagesFixService)
         {
+            if (string.IsNullOrEmpty(cmd.CommandText))
+            {
+                return cmd;
+            }
+
             packagesFixService.FixCommanText(cmd);
 
             if (cmd.CommandText.Contains('['))

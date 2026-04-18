@@ -137,6 +137,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
         public override string ToString()
             => $"PostgreSQLDistributedLock({LockId}, {LockType}";
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "EF1002:Risk of vulnerability to SQL injection.", Justification = "<Pending>")]
         private void ObtainReadLock()
         {
             IEfCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope

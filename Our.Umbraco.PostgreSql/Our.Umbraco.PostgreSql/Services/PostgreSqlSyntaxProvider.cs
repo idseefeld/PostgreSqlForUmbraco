@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NPoco;
 using Our.Umbraco.PostgreSql.Caching;
 using Our.Umbraco.PostgreSql.Mappers;
+using System.Data;
+using System.Data.SqlTypes;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence;
@@ -21,7 +18,6 @@ using Umbraco.Cms.Infrastructure.Persistence.DatabaseAnnotations;
 using Umbraco.Cms.Infrastructure.Persistence.DatabaseModelDefinitions;
 using Umbraco.Cms.Infrastructure.Persistence.SqlSyntax;
 using Umbraco.Extensions;
-
 using ColumnInfo = Umbraco.Cms.Infrastructure.Persistence.SqlSyntax.ColumnInfo;
 using UCC = Umbraco.Cms.Core;
 
@@ -1033,8 +1029,6 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         return sql.Append($"LIMIT {top}");
     }
 
-    #region implementation for abstract methods from SqlSyntaxProviderBase
-
     /// <inheritdoc />
     public override IEnumerable<Tuple<string, string, string, bool>> GetDefinedIndexes(IDatabase db)
     {
@@ -1123,5 +1117,15 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         public string ConstraintName { get; set; } = string.Empty;
     }
 
-    #endregion implementation for abstract methods from SqlSyntaxProviderBase
+    ///// <inheritdoc />
+    //public override string CreateTempTable(string tableName, string columnDefinitionSql)
+    //    => $"CREATE TABLE {GetQuotedTableName(tableName)} ({columnDefinitionSql})";
+
+    ///// <inheritdoc />
+    //public override string TempTableName(string baseName) 
+    //    => $"{GetQuotedTableName(baseName)}";
+
+    ///// <inheritdoc />
+    //public override string DropTempTable(string tableName)
+    //    => $"DROP TABLE IF EXISTS {GetQuotedTableName(tableName)}";
 }

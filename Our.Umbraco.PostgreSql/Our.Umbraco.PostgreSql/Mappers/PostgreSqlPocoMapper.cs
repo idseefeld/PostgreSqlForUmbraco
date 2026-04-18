@@ -1,13 +1,14 @@
+using NPoco;
+using Our.Umbraco.PostgreSql.Services;
 using System;
 using System.Data.Common;
 using System.Reflection;
-using NPoco;
 using Umbraco.Cms.Core.Mapping;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.Mappers
 {
-    public class PostgreSqlPocoMapper : DefaultMapper
+    public class PostgreSqlPocoMapper(IEnumerable<IPostgreSqlFixService> fixServices) : DefaultMapper
     {
         public override Func<object, object> GetFromDbConverter(MemberInfo destMemberInfo, Type sourceType)
         {
@@ -159,6 +160,18 @@ namespace Our.Umbraco.PostgreSql.Mappers
             if (dbCommand.CommandText != null && dbCommand.CommandText.Contains("parentID"))
             {
                 dbCommand.CommandText.Replace("parentID", "parentId");
+            }
+
+            if (rVal == null)
+            {
+                foreach (var fixService in fixServices)
+                {
+                    rVal = fixService.GetParameterConverter(dbCommand, sourceType);
+                    if (rVal != null)
+                    {
+                        break;
+                    }
+                }
             }
 
             return rVal ?? (value =>

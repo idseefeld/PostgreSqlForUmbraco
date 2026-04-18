@@ -3,12 +3,12 @@ using Umbraco.Cms.Infrastructure.Persistence;
 
 namespace Our.Umbraco.PostgreSql.Services
 {
-    public class PostgreSqlSpecificMapperFactory : IProviderSpecificMapperFactory
+    public class PostgreSqlSpecificMapperFactory(IEnumerable<IPostgreSqlFixService> fixServices) : IProviderSpecificMapperFactory
     {
         /// <inheritdoc />
         public string ProviderName => Constants.ProviderName;
 
         /// <inheritdoc />
-        public NPocoMapperCollection Mappers => new(() => [new PostgreSqlPocoMapper()]);
+        public NPocoMapperCollection Mappers => new(() => [new PostgreSqlPocoMapper(fixServices)]);
     }
 }

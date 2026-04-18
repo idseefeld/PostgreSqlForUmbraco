@@ -4,8 +4,11 @@
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
-		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="forms-errors.playlist" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
