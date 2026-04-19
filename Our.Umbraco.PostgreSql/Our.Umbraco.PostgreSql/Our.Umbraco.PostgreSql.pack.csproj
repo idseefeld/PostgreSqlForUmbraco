@@ -31,7 +31,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="10.0.1" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.3.4" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[17.3.0,17.4.0)" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -16,7 +16,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.6" />
-	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="17.3.0" />
+	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="[17.3.0,17.4.0)" />
 	</ItemGroup>
 
 	<ItemGroup>
