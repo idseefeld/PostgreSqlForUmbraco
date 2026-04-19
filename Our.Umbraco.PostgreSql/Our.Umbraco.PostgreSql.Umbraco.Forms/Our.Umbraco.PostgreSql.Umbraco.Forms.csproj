@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
     <Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
