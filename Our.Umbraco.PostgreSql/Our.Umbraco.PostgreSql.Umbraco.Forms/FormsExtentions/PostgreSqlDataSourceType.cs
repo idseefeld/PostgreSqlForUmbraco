@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -57,12 +57,14 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions
             }
         }
 
-        [global::Umbraco.Forms.Core.Attributes.Setting("ConnectionString",
+        [global::Umbraco.Forms.Core.Attributes.Setting(
+            "ConnectionString",
             Description = "PostgreSQL specific connection string.",
             View = "Umb.PropertyEditorUi.TextArea")]
         public string ConnectionString { get; set; } = string.Empty;
 
-        [global::Umbraco.Forms.Core.Attributes.Setting("Table",
+        [global::Umbraco.Forms.Core.Attributes.Setting(
+            "Table",
             Description = "The database table",
             View = "Umb.PropertyEditorUi.TextBox")]
         public string Table { get; set; } = string.Empty;
@@ -76,7 +78,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions
             this.Description = "A data source for PostgreSQL databases.";
             this.Icon = "icon-database";
         }
-        
+
         public override void Dispose()
         {
 
@@ -121,6 +123,16 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions
         public override List<Exception> ValidateSettings()
         {
             var rVal = new List<Exception>();
+
+            if (string.IsNullOrWhiteSpace(ConnectionString))
+            {
+                rVal.Add(new Exception("Connection string cannot be empty."));
+            }
+
+            if (string.IsNullOrWhiteSpace(Table))
+            {
+                rVal.Add(new Exception("Table cannot be empty."));
+            }
 
             return rVal;
         }

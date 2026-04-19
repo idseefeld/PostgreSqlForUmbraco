@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="forms-errors.playlist" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
