@@ -1,23 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <PackageId>Our.Umbraco.PostgreSql.EFCore</PackageId>
-    <Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL</Title>
-    <Description>Adds support for Entity Framework Core PostgreSQL to Umbraco CMS.</Description>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL</Title>
+		<Description>Adds support for Entity Framework Core PostgreSQL to Umbraco CMS.</Description>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="readme.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
+	</ItemGroup>
 
 </Project>
