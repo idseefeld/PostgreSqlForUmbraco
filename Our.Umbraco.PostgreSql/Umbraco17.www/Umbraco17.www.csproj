@@ -12,10 +12,10 @@
   <ItemGroup>
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-    <PackageReference Include="Our.Umbraco.PostgreSql" Version="17.3.4" />
-    <PackageReference Include="Our.Umbraco.PostgreSql.Umbraco.Forms" Version="17.3.4" />
     <PackageReference Include="Umbraco.Cms" Version="17.3.4" />
     <PackageReference Include="Umbraco.Forms" Version="17.3.0" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.pack.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
 
