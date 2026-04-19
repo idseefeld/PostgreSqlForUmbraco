@@ -13,8 +13,8 @@
 </head>
     <body>
         
-        @await Component.InvokeAsync("RenderForm", new { formId = @Model.FormPicker, 
-                                                 theme = @Model.ThemePicker,
+        @await Component.InvokeAsync("RenderForm", new { formId = @Model.Picker, 
+                                                 theme = @Model.Theme,
                                                  includeScripts = false })
 
     </body>

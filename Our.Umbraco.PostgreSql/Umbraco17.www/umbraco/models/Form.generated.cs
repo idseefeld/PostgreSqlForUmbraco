@@ -50,18 +50,18 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Form Picker
+		/// Picker
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.3.4+87e12b9")]
-		[ImplementPropertyType("formPicker")]
-		public virtual global::System.Nullable<global::System.Guid> FormPicker => this.Value<global::System.Nullable<global::System.Guid>>(_publishedValueFallback, "formPicker");
+		[ImplementPropertyType("picker")]
+		public virtual global::System.Nullable<global::System.Guid> Picker => this.Value<global::System.Nullable<global::System.Guid>>(_publishedValueFallback, "picker");
 
 		///<summary>
-		/// Theme Picker
+		/// Theme
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "17.3.4+87e12b9")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("themePicker")]
-		public virtual string ThemePicker => this.Value<string>(_publishedValueFallback, "themePicker");
+		[ImplementPropertyType("theme")]
+		public virtual string Theme => this.Value<string>(_publishedValueFallback, "theme");
 	}
 }
