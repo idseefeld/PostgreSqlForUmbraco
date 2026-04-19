@@ -1,0 +1,16 @@
+{
+  "name": "keyvalues datasource",
+  "createdBy": -1,
+  "updatedBy": -1,
+  "settings": {
+    "ConnectionString": "Host=localhost;Port=5434;SSL Mode=Allow;Database=FormsDataSource;Username=umb;Password=umb",
+    "Table": "keyvalues"
+  },
+  "formDataSourceTypeId": "97908e3b-e75f-4a5c-aea6-fa9281293d72",
+  "id": 2,
+  "key": "86b4dfed-bf62-44ab-9d6a-ce514d7780d4",
+  "createDate": "2026-04-19T17:05:59.165776Z",
+  "updateDate": "2026-04-19T17:06:02.7573572Z",
+  "deleteDate": null,
+  "hasIdentity": true
+}

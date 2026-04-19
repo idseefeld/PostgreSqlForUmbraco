@@ -4,8 +4,12 @@ using Our.Umbraco.PostgreSql.Services;
 using Our.Umbraco.PostgreSql.Umbraco.Forms.FormsExtentions;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Forms.Core.Healthchecks;
 using Umbraco.Forms.Core.Providers;
+using Umbraco.Forms.Core.Providers.DatasourceTypes;
 using Umbraco.Forms.Core.Providers.Extensions;
+using Umbraco.Forms.Core.Providers.PreValues;
+using Umbraco.Forms.Core.Providers.WorkflowTypes;
 using Umbraco.Forms.Web.Models.Backoffice;
 
 namespace Our.Umbraco.PostgreSql.Umbraco.Forms;
@@ -21,9 +25,21 @@ public class Composer : IComposer
         builder.Services.TryAddEnumerable(ServiceDescriptor
             .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
 
-        builder.FormsDataSources().Clear();
-        builder.WithCollectionBuilder<DataSourceTypeCollectionBuilder>().Add<PostgreSqlDataSourceType>();
+        builder.FormsDataSources().Exclude<MsSql>();
+        // builder.WithCollectionBuilder<DataSourceTypeCollectionBuilder>().Add<PostgreSqlDataSourceType>();
 
-        // builder.WithCollectionBuilder<FieldPreValueSourceCollectionBuilder>().Add<FixedListPrevalueSource>();
+        builder.HealthChecks().Exclude<DatabaseIntegrityHealthCheck>();
+
+        builder.FormsFieldPreValueSources().Exclude<ReadOnlySql>();
+        builder.FormsFieldPreValueSources().Exclude<DataSource>();
+
+        builder.FormsWorkflows().Exclude<PostToUrl>();
+        builder.FormsWorkflows().Exclude<PostAsXml>();
+        builder.FormsWorkflows().Exclude<SaveAsFile>();
+        builder.FormsWorkflows().Exclude<SaveAsUmbracoNode>();
+        builder.FormsWorkflows().Exclude<ChangeRecordState>();
+
+        builder.FormsWorkflows().Exclude<Slack>();
+        builder.FormsWorkflows().Exclude<SlackV2>();
     }
 }

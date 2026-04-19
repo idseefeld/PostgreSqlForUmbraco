@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <Product>PostgreSQL Provider for Umbraco CMS</Product>
-    <PackageTags>umbraco, postgresql, community</PackageTags>
     <Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
     <Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="forms-errors.playlist" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="readme.md" Pack="true" PackagePath="\" />
-    <Content Include="..\Our.Umbraco.PostgreSql\upostgresqlfix.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>

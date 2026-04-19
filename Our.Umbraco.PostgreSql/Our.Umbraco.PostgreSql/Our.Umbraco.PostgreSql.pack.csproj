@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql</PackageId>
 		<Title>Umbraco CMS - Persistence - PostgreSQL</Title>
-		<PackageIcon>upostgresql.png</PackageIcon>
 		<Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
 	</PropertyGroup>
@@ -27,13 +26,12 @@
 
 	<ItemGroup>
 		<Content Include="../../readme.md" Pack="true" PackagePath="" />
-		<Content Include="upostgresql.png" Pack="true" PackagePath="" />
 		<Content Include="umbraco-marketplace.json" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="10.0.1" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="17.4.0--rc.preview.76.g3b0972c" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[17.3.0,17.4.0)" />
 	</ItemGroup>
 
 	<ItemGroup>
