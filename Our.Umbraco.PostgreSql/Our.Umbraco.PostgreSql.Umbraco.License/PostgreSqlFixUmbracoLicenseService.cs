@@ -16,7 +16,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
         {
             var success = true;
 
-            if (!cmd.CommandText.StartsWith("UPDATE umbracoProductLicense"))
+            if (!cmd.CommandText.StartsWith("UPDATE umbracoProductLicenseValidationStatus"))
             {
                 return success;
             }
@@ -36,6 +36,15 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
                     success = false;
                     break;
             }
+
+            return success;
+        }
+
+        public override bool InterceptCommandExecuting(DbCommand cmd)
+        {
+            var success = base.InterceptCommandExecuting(cmd);
+
+            success = success && FixCommanText(cmd);
 
             return success;
         }
