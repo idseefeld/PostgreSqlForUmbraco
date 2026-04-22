@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 	<PropertyGroup>
-		<VersionPrefix>17.3.4</VersionPrefix>
+		<VersionPrefix>17.3.4.3</VersionPrefix>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>postgresql-db.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
