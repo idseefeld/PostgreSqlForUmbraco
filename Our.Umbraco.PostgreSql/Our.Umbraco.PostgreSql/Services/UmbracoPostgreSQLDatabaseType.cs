@@ -121,7 +121,9 @@ public class UmbracoPostgreSQLDatabaseType(IPackagesService packagesService) : D
             return ((IDatabaseHelpers)db).ExecuteScalarHelper(cmd.FixCommanText(packagesService));
         }
 
-        ((IDatabaseHelpers)db).ExecuteNonQueryHelper(cmd.FixCommanText(packagesService));
+        var fixedCmd = cmd.FixCommanText(packagesService);
+
+        ((IDatabaseHelpers)db).ExecuteNonQueryHelper(fixedCmd);
         return -1;
     }
 
@@ -140,8 +142,26 @@ public class UmbracoPostgreSQLDatabaseType(IPackagesService packagesService) : D
         return -1;
     }
 
-    public override void PreExecute(DbCommand cmd) => base.PreExecute(cmd.FixCommanText(packagesService));
-    public override string FormatCommand(DbCommand cmd) => base.FormatCommand(cmd.FixCommanText(packagesService));
-    public override Task<DbDataReader> ExecuteReaderAsync(IDatabase database, DbCommand cmd, CancellationToken cancellationToken = default) => base.ExecuteReaderAsync(database, cmd.FixCommanText(packagesService), cancellationToken);
+    public override void PreExecute(DbCommand cmd)
+    {
+        var fixedCmd = cmd.FixCommanText(packagesService);
+
+        base.PreExecute(fixedCmd);
+    }
+
+    public override string FormatCommand(DbCommand cmd)
+    {
+        var fixedCmd = cmd.FixCommanText(packagesService);
+
+        var rVal = base.FormatCommand(fixedCmd);
+
+        return rVal;
+    }
+    public override Task<DbDataReader> ExecuteReaderAsync(IDatabase database, DbCommand cmd, CancellationToken cancellationToken = default)
+    {
+        var fixedCmd = cmd.FixCommanText(packagesService);
+
+        return base.ExecuteReaderAsync(database, fixedCmd, cancellationToken);
+    }
     #endregion
 }

@@ -44,7 +44,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
         {
             var success = base.InterceptCommandExecuting(cmd);
 
-            success = FixCommanText(cmd);
+            success = success && FixCommanText(cmd);
 
             return success;
         }

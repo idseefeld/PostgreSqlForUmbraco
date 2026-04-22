@@ -182,8 +182,11 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 {
                     switch (cmd.CommandText)
                     {
-                        case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @0 AND Created <= @1)\nAND (Form = @2)\nAND (RecordData LIKE @3)\n) npoco_tbl":
-                            cmd.CommandText = "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @0 AND \"Created\" <= @1) AND (\"Form\" = @2) AND (\"RecordData\" LIKE @3)) npoco_tbl";
+                        case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nAND (RecordData LIKE @p3)\n) npoco_tbl":
+                            cmd.CommandText = "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) AND (\"RecordData\" LIKE @p3))";
+                            break;
+                        case "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @p0 AND Created <= @p1)\nAND (Form = @p2)\nAND (RecordData LIKE @p3)\nORDER BY created DESC\nLIMIT @p4 OFFSET @p5":
+                            cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) AND (\"RecordData\" LIKE @p3) ORDER BY \"Created\" DESC LIMIT @p4 OFFSET @p5";
                             break;
                         case "SELECT w.\"Key\" as \"WorkflowKey\", w.\"Name\" as \"WorkflowName\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\"\nFROM UFRecordWorkflowAudit wfa\nINNER JOIN UFRecords r\nON wfa.\"RecordUniqueId\" = r.\"UniqueId\"\nINNER JOIN UFWorkflows w\nON wfa.\"WorkflowKey\" = w.\"Key\"\nWHERE (r.\"Form\" = @p0)\nAND (wfa.\"ExecutedOn\" >= @p1 AND wfa.\"ExecutedOn\" <= @p2)\nGROUP BY w.\"Key\", w.\"Name\"\nORDER BY w.\"Name\"":
                             cmd.CommandText = "SELECT w.\"Key\" as \"WorkflowKey\", w.\"Name\" as \"WorkflowName\", COUNT(*) as \"Triggered\", SUM(CASE WHEN wfa.\"ExecutionStatus\" = 0 THEN 1 ELSE 0 END) as \"Failures\" FROM \"UFRecordWorkflowAudit\" wfa INNER JOIN \"UFRecords\" r ON wfa.\"RecordUniqueId\" = r.\"UniqueId\" INNER JOIN \"UFWorkflows\" w ON wfa.\"WorkflowKey\" = w.\"Key\" WHERE (r.\"Form\" = @p0) AND (wfa.\"ExecutedOn\" >= @p1 AND wfa.\"ExecutedOn\" <= @p2) GROUP BY w.\"Key\", w.\"Name\" ORDER BY w.\"Name\"";
@@ -578,33 +581,36 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
         {
             var success = base.InterceptCommandExecuting(cmd);
 
-            success = FixCommanText(cmd);
+            success = success && FixCommanText(cmd);
 
-            // Place for changes e.g. of the command.CommandText
-            if (cmd.CommandText.Contains(" NONCLUSTERED INDEX "))
+            if (!success)
             {
-                // Example of a specific fix for a known issue with the covering index creation command
-                cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED INDEX ", " INDEX ");
-            }
-            else if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
-            {
-                // Example of a specific fix for a known issue with dropping the index
-                cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
-            }
-            else if (cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE [Date] < @0")
-                || cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE \"Date\" < @p0"))
-            {
-                // Example of a specific fix for a known issue with creating the index
-                cmd.CommandText = "DELETE FROM \"UFAnalyticsProcessedDates\" WHERE \"Date\" < @p0";
-            }
-            switch (cmd.CommandText)
-            {
-                case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @0 AND Created <= @1)\nAND (Form = @2)\nAND (RecordData LIKE @3)\n) npoco_tbl":
-                    cmd.CommandText = "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @0 AND \"Created\" <= @1) AND (\"Form\" = @2) AND (\"RecordData\" LIKE @3)) npoco_tbl";
-                    break;
-                default:
-                    success = false;
-                    break;
+                // Place for changes e.g. of the command.CommandText
+                if (cmd.CommandText.Contains(" NONCLUSTERED INDEX "))
+                {
+                    // Example of a specific fix for a known issue with the covering index creation command
+                    cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED INDEX ", " INDEX ");
+                }
+                else if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
+                {
+                    // Example of a specific fix for a known issue with dropping the index
+                    cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
+                }
+                else if (cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE [Date] < @0")
+                    || cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsProcessedDates WHERE \"Date\" < @p0"))
+                {
+                    // Example of a specific fix for a known issue with creating the index
+                    cmd.CommandText = "DELETE FROM \"UFAnalyticsProcessedDates\" WHERE \"Date\" < @p0";
+                }
+                switch (cmd.CommandText)
+                {
+                    case "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\"\nWHERE (Created >= @0 AND Created <= @1)\nAND (Form = @2)\nAND (RecordData LIKE @3)\n) npoco_tbl":
+                        cmd.CommandText = "SELECT COUNT(*) FROM (SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @0 AND \"Created\" <= @1) AND (\"Form\" = @2) AND (\"RecordData\" LIKE @3)) npoco_tbl";
+                        break;
+                    default:
+                        success = false;
+                        break;
+                }
             }
 
             return success;
