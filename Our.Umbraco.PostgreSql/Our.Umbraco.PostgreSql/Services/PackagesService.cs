@@ -28,12 +28,6 @@ namespace Our.Umbraco.PostgreSql.Services
         public DbCommand FixCommanText(DbCommand cmd)
         {
             var oldCommandText = cmd.CommandText;
-            //var commandHash = oldCommandText.GenerateHash();
-            //if (_cache.TryGetValue(commandHash, out string? cachedCmdText))
-            //{
-            //    cmd.CommandText = cachedCmdText ?? cmd.CommandText;
-            //    return cmd;
-            //}
 
             foreach (IPostgreSqlFixService fix in _fixPackageServices)
             {
@@ -45,7 +39,6 @@ namespace Our.Umbraco.PostgreSql.Services
                 if (cmd.CommandText != oldCommandText)
                 {
                     _logger.LogWarning("Umbraco.Forms fixes for PostgreSQL original CommandText: {OldCommandText} converted into: {NewCommandText}", oldCommandText, cmd.CommandText);
-                    // _cache.Add(commandHash, cmd.CommandText);
                 }
             }
 
