@@ -4,6 +4,9 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Umbraco;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.Services
@@ -29,20 +32,47 @@ namespace Our.Umbraco.PostgreSql.Services
         {
             var oldCommandText = cmd.CommandText;
 
-            foreach (IPostgreSqlFixService fix in _fixPackageServices)
+            if (!FixCommandInternal(cmd))
             {
-                if (fix.InterceptCommandExecuting(cmd))
+                foreach (IPostgreSqlFixService fix in _fixPackageServices)
                 {
-                    continue;
-                }
-
-                if (cmd.CommandText != oldCommandText)
-                {
-                    _logger.LogWarning("Umbraco.Forms fixes for PostgreSQL original CommandText: {OldCommandText} converted into: {NewCommandText}", oldCommandText, cmd.CommandText);
+                    if (fix.InterceptCommandExecuting(cmd))
+                    {
+                        continue;
+                    }
                 }
             }
 
+            if (cmd.CommandText != oldCommandText)
+            {
+                _logger.LogWarning("Umbraco.Forms fixes for PostgreSQL original CommandText: {OldCommandText} converted into: {NewCommandText}", oldCommandText, cmd.CommandText);
+            }
+
             return cmd;
+        }
+
+        private bool FixCommandInternal(DbCommand cmd)
+        {
+            if (cmd.CommandText.Contains("["))
+            {
+                cmd.CommandText = cmd.CommandText
+                    .Replace("[", "\"")
+                    .Replace("]", "\"")
+                    .Replace("CAST(NULL AS nvarchar(255))", "NULL")
+                    .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
+                    .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
+                    .Replace("IsA", "isA")
+                    .Replace("IsL", "isL")
+                    .Replace("Last", "last");
+                return true;
+            }
+            else if (cmd.CommandText.Equals("\r\nUPDATE umbracoPropertyData\r\nSET textValue = varcharValue, varcharValue = NULL\r\nWHERE propertyTypeId IN (\r\n    SELECT id\r\n    FROM cmsPropertyType\r\n    WHERE dataTypeId IN (\r\n        SELECT nodeId\r\n        FROM umbracoDataType\r\n        WHERE propertyEditorAlias = 'Umbraco.Label'\r\n        AND dbType = 'Ntext'\r\n    )\r\n)\r\nAND varcharValue IS NOT NULL"))
+            {
+                cmd.CommandText = "UPDATE \"umbracoPropertyData\" SET \"textValue\" = \"varcharValue\", \"varcharValue\" = NULL WHERE \"propertyTypeId\" IN (SELECT \"id\" FROM \"cmsPropertyType\" WHERE \"dataTypeId\" IN (SELECT \"nodeId\" FROM \"umbracoDataType\" WHERE \"propertyEditorAlias\" = 'Umbraco.Label' AND \"dbType\" = 'Ntext')) AND \"varcharValue\" IS NOT NULL";
+                return true;
+            }
+
+            return false;
         }
 
         public void InterceptCommandExecuting(DbCommand cmd)
