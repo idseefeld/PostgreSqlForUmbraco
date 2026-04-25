@@ -4,12 +4,13 @@ using Umbraco.Cms.Core.Manifest;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Semver;
 using Umbraco.Cms.Core.Services;
-using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.Services
 {
     public class PackagesService : IPackagesService
     {
+        private readonly SemVersion _minRequiredCoreVersion = new SemVersion(17, 4, 0);
+
         private readonly IServerInformationService _serverInformationService;
         private readonly IPackageManifestService _packageManifestService;
 
@@ -20,7 +21,6 @@ namespace Our.Umbraco.PostgreSql.Services
 
         private bool _containsSquareBrackets = false;
         private bool _updatesUmbracoPropertyData = false;
-
 
         public PackagesService(ILogger<PackagesService> logger, IEnumerable<IPostgreSqlFixService> fixPackageServices, IPackageManifestService packageManifestService, IServerInformationService serverInformationService)
         {
@@ -59,7 +59,7 @@ namespace Our.Umbraco.PostgreSql.Services
             return cmd;
         }
 
-        private bool HasAllCoreFixes()
+        private bool MinUmbracoVersionRequired(SemVersion assumedVersion)
         {
             if (_hasAllCoreFixes)
             {
@@ -67,7 +67,7 @@ namespace Our.Umbraco.PostgreSql.Services
             }
 
             ServerInformation serverInfo = _serverInformationService.GetServerInformation();
-            if (serverInfo != null && serverInfo.SemVersion >= new SemVersion(17, 4, 0))
+            if (serverInfo != null && serverInfo.SemVersion >= assumedVersion)
             {
                 _hasAllCoreFixes = true;
             }
@@ -77,22 +77,29 @@ namespace Our.Umbraco.PostgreSql.Services
 
         private bool FixCommandInternal(DbCommand cmd)
         {
-            if (_containsSquareBrackets || cmd.CommandText.Contains("["))
+            if (MinUmbracoVersionRequired(_minRequiredCoreVersion))
             {
-                _containsSquareBrackets = true;
+                return false;
+            }
 
+            _containsSquareBrackets = _containsSquareBrackets
+            || cmd.CommandText.Contains("["); // This is a very basic check, but it should be enough to determine if the command text contains square brackets that need to be replaced. It also assumes that if one command contains square brackets, then more commands will contain square brackets, which is a reasonable assumption given that the square brackets are used for quoting identifiers in SQL Server, and if one command is using them, it's likely that more commands are using them and other fixes related to SQL Server to PostgreSQL conversion will also be needed.
+
+            if (_containsSquareBrackets)
+            {
                 cmd.CommandText = cmd.CommandText
-                    .Replace("[", "\"")
-                    .Replace("]", "\"")
-                    .Replace("CAST(NULL AS nvarchar(255))", "NULL")
-                    .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
-                    .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
-                    .Replace("IsA", "isA")
-                    .Replace("IsL", "isL")
-                    .Replace("Last", "last");
+                     .Replace("[", "\"")
+                     .Replace("]", "\"")
+                     .Replace("CAST(NULL AS nvarchar(255))", "NULL")
+                     .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
+                     .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
+                     .Replace("IsA", "isA")
+                     .Replace("IsL", "isL")
+                     .Replace("Last", "last");
+
                 return true;
             }
-            else if (!HasAllCoreFixes())
+            else
             {
                 const string umbracoPropertyDataSql = "\r\nUPDATE umbracoPropertyData\r\nSET textValue = varcharValue, varcharValue = NULL\r\nWHERE propertyTypeId IN (\r\n    SELECT id\r\n    FROM cmsPropertyType\r\n    WHERE dataTypeId IN (\r\n        SELECT nodeId\r\n        FROM umbracoDataType\r\n        WHERE propertyEditorAlias = 'Umbraco.Label'\r\n        AND dbType = 'Ntext'\r\n    )\r\n)\r\nAND varcharValue IS NOT NULL";
 
