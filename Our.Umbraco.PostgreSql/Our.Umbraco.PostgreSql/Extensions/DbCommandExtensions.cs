@@ -5,14 +5,14 @@ namespace Our.Umbraco.PostgreSql.Extensions
 {
     internal static class DbCommandExtensions
     {
-        public static DbCommand FixCommanText(this DbCommand cmd, IPackagesService packagesFixService)
+        public static DbCommand FixCommanText(this DbCommand cmd, IPackagesService? packagesFixService)
         {
             if (string.IsNullOrEmpty(cmd.CommandText))
             {
                 return cmd;
             }
 
-            packagesFixService.FixCommanText(cmd);
+            packagesFixService?.FixCommanText(cmd);
 
             if (cmd.CommandText.Contains('['))
             {

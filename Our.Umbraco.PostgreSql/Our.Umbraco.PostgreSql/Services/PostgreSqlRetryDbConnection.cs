@@ -11,9 +11,9 @@ namespace Our.Umbraco.PostgreSql.Services
     public class PostgreSqlRetryDbConnection : RetryDbConnection
     {
         private readonly RetryPolicy _cmdRetryPolicy;
-        private readonly IPackagesService _packagesFixService;
+        private readonly IPackagesService? _packagesFixService;
 
-        public PostgreSqlRetryDbConnection(DbConnection connection, RetryPolicy? conRetryPolicy, RetryPolicy? cmdRetryPolicy, IPackagesService packagesFixService)
+        public PostgreSqlRetryDbConnection(DbConnection connection, RetryPolicy? conRetryPolicy, RetryPolicy? cmdRetryPolicy, IPackagesService? packagesFixService)
             : base(connection, conRetryPolicy, cmdRetryPolicy)
         {
             _cmdRetryPolicy = cmdRetryPolicy ?? RetryPolicy.NoRetry;

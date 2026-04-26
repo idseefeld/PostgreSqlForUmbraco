@@ -32,6 +32,9 @@ namespace Our.Umbraco.PostgreSql
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<ISqlSyntaxProvider, PostgreSqlSyntaxProvider>());
 
+            builder.Services.TryAddEnumerable(ServiceDescriptor
+                .Singleton<IPackagesService, PackagesService>());
+
             var useNpgsqlBatching = true;
             if (useNpgsqlBatching)
             {
@@ -58,13 +61,11 @@ namespace Our.Umbraco.PostgreSql
 
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlAddMiniProfilerInterceptor>());
+
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlAddRetryPolicyInterceptor>());
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlExecutingInterceptor>());
-
-            builder.Services.TryAddEnumerable(ServiceDescriptor
-                .Singleton<IPackagesService, PackagesService>());
 
             DbProviderFactories.UnregisterFactory(Constants.ProviderName);
             DbProviderFactories.RegisterFactory(Constants.ProviderName, PostgreSqlDbProviderFactory.Instance);

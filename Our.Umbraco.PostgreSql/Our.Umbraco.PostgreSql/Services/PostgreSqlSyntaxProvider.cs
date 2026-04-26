@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NPoco;
@@ -34,7 +35,10 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     private readonly IOptions<PostgreSqlOptions> _postgreSqlOptions;
     private readonly ILogger<PostgreSqlSyntaxProvider> _logger;
     private readonly IDictionary<Type, IScalarMapper> _scalarMappers;
-    private readonly IPackagesService _packagesService;
+    private readonly IServiceProvider? _serviceProvider;
+
+    // Resolved lazily on first use
+    private IPackagesService? PackagesService => field ??= _serviceProvider?.GetService<IPackagesService>();
 
     private readonly Dictionary<string, long> _lastInsertIds = new Dictionary<string, long>();
     private readonly Dictionary<string, string> _tablesToAlter = new()
@@ -80,20 +84,23 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
 
     private static bool _efMigrationHistoryTableCreated = false;
 
-    public PostgreSqlSyntaxProvider(IOptions<PostgreSqlOptions> globalSettings, IPackagesService packagesService)
-        : this(globalSettings, StaticApplicationLogging.CreateLogger<PostgreSqlSyntaxProvider>(), packagesService) { }
+    public PostgreSqlSyntaxProvider(IOptions<PostgreSqlOptions> globalSettings)
+        : this(globalSettings, StaticApplicationLogging.CreateLogger<PostgreSqlSyntaxProvider>()) { }
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PostgreSqlSyntaxProvider"/> class.
     /// </summary>
     /// <param name="postgreSqlOptions">Inject postgreSqlOptions from configuration.</param>
     /// <param name="logger">Inject Logger.</param>
+    /// <param name="packagesService">Inject PackagesService.</param>
     public PostgreSqlSyntaxProvider(
         IOptions<PostgreSqlOptions> postgreSqlOptions,
         ILogger<PostgreSqlSyntaxProvider> logger,
-        IPackagesService packagesService)
+        IServiceProvider? serviceProvider = null)
     {
-        _packagesService = packagesService;
+        _serviceProvider = serviceProvider;
         _postgreSqlOptions = postgreSqlOptions;
         _logger = logger;
 
@@ -129,7 +136,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     {
         // Return custom database type that handles primary key name normalization
         // This handles the "ID" vs "id" case sensitivity issue in PostgreSQL
-        return new UmbracoPostgreSQLDatabaseType(_packagesService);
+        return new UmbracoPostgreSQLDatabaseType(PackagesService);
     }
 
     /// <summary>
@@ -1122,7 +1129,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         => $"CREATE TABLE {GetQuotedTableName(tableName)} ({columnDefinitionSql})";
 
     /// <inheritdoc />
-    public override string TempTableName(string baseName) 
+    public override string TempTableName(string baseName)
         => $"{GetQuotedTableName(baseName)}";
 
     /// <inheritdoc />
