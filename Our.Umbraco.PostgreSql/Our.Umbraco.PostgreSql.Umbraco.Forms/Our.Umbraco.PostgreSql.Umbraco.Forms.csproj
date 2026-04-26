@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="animal-prevaalues.txt" />
     <None Remove="forms-errors.playlist" />
+    <None Remove="UFDatasource-definition.json" />
   </ItemGroup>
 
   <ItemGroup>
