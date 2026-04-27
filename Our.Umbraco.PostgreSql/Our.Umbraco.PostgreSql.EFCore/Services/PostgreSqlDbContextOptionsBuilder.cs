@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Our.Umbraco.PostgreSql.EFCore.Extensions;
 
 namespace Our.Umbraco.PostgreSql.EFCore
 {

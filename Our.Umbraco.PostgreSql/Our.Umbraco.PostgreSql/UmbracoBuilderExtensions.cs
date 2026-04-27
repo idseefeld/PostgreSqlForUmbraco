@@ -48,7 +48,6 @@ namespace Our.Umbraco.PostgreSql
                     .Singleton<IBulkSqlInsertProvider, PostgreSqlBulkSqlInsertProvider>());
             }
 
-
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IDatabaseCreator, PostgreSqlDatabaseCreator>());
             builder.Services.TryAddEnumerable(ServiceDescriptor

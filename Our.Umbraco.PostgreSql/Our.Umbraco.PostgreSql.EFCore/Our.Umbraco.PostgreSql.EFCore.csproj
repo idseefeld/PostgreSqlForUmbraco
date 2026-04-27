@@ -13,6 +13,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Services\PostgreSqlDbContextOptions.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
 	</ItemGroup>

@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Our.Umbraco.PostgreSql.EFCore.Extensions;
 using Umbraco.Cms.Persistence.EFCore.Migrations;
 
-namespace Our.Umbraco.PostgreSql.EFCore
+namespace Our.Umbraco.PostgreSql.EFCore.Services
 {
     public class PostgreSqlMigrationProviderSetup : IMigrationProviderSetup
     {
