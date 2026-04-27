@@ -48,14 +48,5 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
 
             return success;
         }
-
-        public override bool InterceptCommandExecuting(DbCommand cmd)
-        {
-            var success = base.InterceptCommandExecuting(cmd);
-
-            success = FixCommanText(cmd);
-
-            return success;
-        }
     }
 }
