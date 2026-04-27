@@ -1,4 +1,5 @@
 using System.Data.Common;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NPoco;
 using Our.Umbraco.PostgreSql.FaultHandling;
@@ -12,12 +13,15 @@ namespace Our.Umbraco.PostgreSql.Interceptors
     public class PostgreSqlAddRetryPolicyInterceptor : PostgreSqlConnectionInterceptor
     {
         private readonly IOptionsMonitor<ConnectionStrings> _connectionStrings;
-        private readonly IPackagesService _packagesFixService;
+        private readonly IServiceProvider? _serviceProvider;
 
-        public PostgreSqlAddRetryPolicyInterceptor(IOptionsMonitor<ConnectionStrings> connectionStrings, IPackagesService packagesFixService)
+        // Resolved lazily on first use
+        private IPackagesService? PackagesService => field ??= _serviceProvider?.GetService<IPackagesService>();
+
+        public PostgreSqlAddRetryPolicyInterceptor(IOptionsMonitor<ConnectionStrings> connectionStrings, IServiceProvider serviceProvider)
         {
             _connectionStrings = connectionStrings;
-            _packagesFixService = packagesFixService;
+            _serviceProvider = serviceProvider;
         }
 
         public override DbConnection OnConnectionOpened(IDatabase database, DbConnection conn)
@@ -35,7 +39,7 @@ namespace Our.Umbraco.PostgreSql.Interceptors
                 return conn;
             }
 
-            return new PostgreSqlRetryDbConnection(conn, connectionRetryPolicy, commandRetryPolicy, _packagesFixService);
+            return new PostgreSqlRetryDbConnection(conn, connectionRetryPolicy, commandRetryPolicy, PackagesService);
         }
     }
 }

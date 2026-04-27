@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 
-namespace Our.Umbraco.PostgreSql.EFCore
+namespace Our.Umbraco.PostgreSql.EFCore.Extensions
 {
     public class PostgreSqlForNpgsqlOptionsExtension : NpgsqlOptionsExtension
     {

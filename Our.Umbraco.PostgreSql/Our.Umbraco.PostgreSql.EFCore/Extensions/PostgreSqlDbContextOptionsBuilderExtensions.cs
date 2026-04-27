@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using Our.Umbraco.PostgreSql.EFCore.Interceptors;
 
-namespace Our.Umbraco.PostgreSql.EFCore
+namespace Our.Umbraco.PostgreSql.EFCore.Extensions
 {
     public static class PostgreSqlDbContextOptionsBuilderExtensions
     {

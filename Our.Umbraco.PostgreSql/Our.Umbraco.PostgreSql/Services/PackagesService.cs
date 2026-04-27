@@ -9,6 +9,8 @@ namespace Our.Umbraco.PostgreSql.Services
 {
     public class PackagesService : IPackagesService
     {
+        private readonly SemVersion _minRequiredCoreVersion = new SemVersion(17, 4, 0);
+
         private readonly IServerInformationService _serverInformationService;
         private readonly IPackageManifestService _packageManifestService;
 
@@ -75,7 +77,7 @@ namespace Our.Umbraco.PostgreSql.Services
 
         private bool FixCommandInternal(DbCommand cmd)
         {
-            if (MinUmbracoVersionRequired(new SemVersion(17, 4, 0)))
+            if (MinUmbracoVersionRequired(_minRequiredCoreVersion))
             {
                 return false;
             }
@@ -97,7 +99,7 @@ namespace Our.Umbraco.PostgreSql.Services
 
                 return true;
             }
-            else if (!MinUmbracoVersionRequired(new SemVersion(17, 4, 0)))
+            else
             {
                 const string umbracoPropertyDataSql = "\r\nUPDATE umbracoPropertyData\r\nSET textValue = varcharValue, varcharValue = NULL\r\nWHERE propertyTypeId IN (\r\n    SELECT id\r\n    FROM cmsPropertyType\r\n    WHERE dataTypeId IN (\r\n        SELECT nodeId\r\n        FROM umbracoDataType\r\n        WHERE propertyEditorAlias = 'Umbraco.Label'\r\n        AND dbType = 'Ntext'\r\n    )\r\n)\r\nAND varcharValue IS NOT NULL";
 
