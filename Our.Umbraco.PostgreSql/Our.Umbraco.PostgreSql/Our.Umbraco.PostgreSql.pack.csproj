@@ -31,11 +31,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="10.0.1" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[17.3.0,17.4.0)" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[17.4.0-rc,17.5.0)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" Version="[17.3.4.3,17.4.0)" />
+		<ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" Version="[17.4.0-rc,17.5.0)" />
 	</ItemGroup>
 
 </Project>

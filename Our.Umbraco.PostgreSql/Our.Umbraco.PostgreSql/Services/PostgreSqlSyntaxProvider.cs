@@ -1122,7 +1122,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         => $"CREATE TABLE {GetQuotedTableName(tableName)} ({columnDefinitionSql})";
 
     /// <inheritdoc />
-    public override string TempTableName(string baseName) 
+    public override string TempTableName(string baseName)
         => $"{GetQuotedTableName(baseName)}";
 
     /// <inheritdoc />

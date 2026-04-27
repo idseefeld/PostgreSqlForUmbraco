@@ -75,8 +75,13 @@ namespace Our.Umbraco.PostgreSql.Services
 
         private bool FixCommandInternal(DbCommand cmd)
         {
+            if (MinUmbracoVersionRequired(new SemVersion(17, 4, 0)))
+            {
+                return false;
+            }
+
             _containsSquareBrackets = _containsSquareBrackets
-                || cmd.CommandText.Contains("["); // This is a very basic check, but it should be enough to determine if the command text contains square brackets that need to be replaced. It also assumes that if one command contains square brackets, then more commands will contain square brackets, which is a reasonable assumption given that the square brackets are used for quoting identifiers in SQL Server, and if one command is using them, it's likely that more commands are using them and other fixes related to SQL Server to PostgreSQL conversion will also be needed.
+            || cmd.CommandText.Contains("["); // This is a very basic check, but it should be enough to determine if the command text contains square brackets that need to be replaced. It also assumes that if one command contains square brackets, then more commands will contain square brackets, which is a reasonable assumption given that the square brackets are used for quoting identifiers in SQL Server, and if one command is using them, it's likely that more commands are using them and other fixes related to SQL Server to PostgreSQL conversion will also be needed.
 
             if (_containsSquareBrackets)
             {
