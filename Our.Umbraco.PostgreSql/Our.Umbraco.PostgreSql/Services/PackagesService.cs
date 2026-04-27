@@ -38,8 +38,6 @@ namespace Our.Umbraco.PostgreSql.Services
 
         public DbCommand FixCommanText(DbCommand cmd)
         {
-            var oldCommandText = cmd.CommandText;
-
             if (!FixCommandInternal(cmd))
             {
                 foreach (IPostgreSqlFixService fix in _fixPackageServices)
@@ -49,11 +47,6 @@ namespace Our.Umbraco.PostgreSql.Services
                         continue;
                     }
                 }
-            }
-
-            if (cmd.CommandText != oldCommandText)
-            {
-                _logger.LogWarning("Umbraco.Forms fixes for PostgreSQL original CommandText: {OldCommandText} converted into: {NewCommandText}", oldCommandText, cmd.CommandText);
             }
 
             return cmd;
@@ -77,13 +70,16 @@ namespace Our.Umbraco.PostgreSql.Services
 
         private bool FixCommandInternal(DbCommand cmd)
         {
+            var cmdFixed = false;
             if (MinUmbracoVersionRequired(_minRequiredCoreVersion))
             {
-                return false;
+                return cmdFixed;
             }
 
+            var oldCommandText = cmd.CommandText;
+
             _containsSquareBrackets = _containsSquareBrackets
-            || cmd.CommandText.Contains("["); // This is a very basic check, but it should be enough to determine if the command text contains square brackets that need to be replaced. It also assumes that if one command contains square brackets, then more commands will contain square brackets, which is a reasonable assumption given that the square brackets are used for quoting identifiers in SQL Server, and if one command is using them, it's likely that more commands are using them and other fixes related to SQL Server to PostgreSQL conversion will also be needed.
+            || cmd.CommandText.Contains('['); // This is a very basic check, but it should be enough to determine if the command text contains square brackets that need to be replaced. It also assumes that if one command contains square brackets, then more commands will contain square brackets, which is a reasonable assumption given that the square brackets are used for quoting identifiers in SQL Server, and if one command is using them, it's likely that more commands are using them and other fixes related to SQL Server to PostgreSQL conversion will also be needed.
 
             if (_containsSquareBrackets)
             {
@@ -97,7 +93,7 @@ namespace Our.Umbraco.PostgreSql.Services
                      .Replace("IsL", "isL")
                      .Replace("Last", "last");
 
-                return true;
+                cmdFixed = true;
             }
             else
             {
@@ -107,11 +103,16 @@ namespace Our.Umbraco.PostgreSql.Services
                 {
                     _updatesUmbracoPropertyData = true;
                     cmd.CommandText = "UPDATE \"umbracoPropertyData\" SET \"textValue\" = \"varcharValue\", \"varcharValue\" = NULL WHERE \"propertyTypeId\" IN (SELECT \"id\" FROM \"cmsPropertyType\" WHERE \"dataTypeId\" IN (SELECT \"nodeId\" FROM \"umbracoDataType\" WHERE \"propertyEditorAlias\" = 'Umbraco.Label' AND \"dbType\" = 'Ntext')) AND \"varcharValue\" IS NOT NULL";
-                    return true;
+                    cmdFixed = true;
                 }
             }
 
-            return false;
+            if (cmdFixed)
+            {
+                _logger.LogWarning("Fixes for PostgreSQL applied - original CommandText: {OldCommandText} converted into: {NewCommandText}", oldCommandText, cmd.CommandText);
+            }
+
+            return cmdFixed;
         }
 
         public void InterceptCommandExecuting(DbCommand cmd)
