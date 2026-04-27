@@ -12,12 +12,12 @@ namespace Our.Umbraco.PostgreSql.Extensions
                 return cmd;
             }
 
-            packagesFixService?.FixCommanText(cmd);
+            packagesFixService?.FixCommandText(cmd);
 
-            if (cmd.CommandText.Contains('['))
-            {
-                cmd.CommandText = cmd.CommandText.Replace("[", "\"").Replace("]", "\"");
-            }
+            //if (cmd.CommandText.Contains('['))
+            //{
+            //    cmd.CommandText = cmd.CommandText.Replace("[", "\"").Replace("]", "\"");
+            //}
 
             return cmd;
         }
