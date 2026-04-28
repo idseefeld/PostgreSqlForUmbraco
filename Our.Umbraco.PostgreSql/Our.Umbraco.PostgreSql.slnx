@@ -7,6 +7,7 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
+    <File Path="postgresql.png" />
   </Folder>
   <Project Path="Umbraco17.www/Umbraco17.www.csproj" />
 </Solution>
