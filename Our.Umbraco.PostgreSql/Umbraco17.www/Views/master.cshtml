@@ -1,0 +1,26 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.Name</title>
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/bootstrap.5.3.8.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        @await Html.PartialAsync("Menu")
+    </header>
+        
+    @RenderBody()
+
+    <footer>
+        <a href="/umbraco" target="_blank">backoffice</a>
+    </footer>
+
+    <script src="/scripts/boostrap.5.3.8.js"></script>
+</body>
+</html>
