@@ -12,7 +12,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
     /// </summary>
     public class PostgreSqlFixUmbracoLicenseService : PostgreSqlFixServiceBase
     {
-        private static bool FixCommanText(DbCommand cmd)
+        private readonly Lock _lock = new();
+
+        private bool FixCommandInternal(DbCommand cmd)
         {
             var success = true;
 
@@ -21,30 +23,33 @@ namespace Our.Umbraco.PostgreSql.Umbraco.License
                 return success;
             }
 
-            switch (cmd.CommandText)
+            lock (_lock)
             {
-                case "UPDATE umbracoProductLicenseValidationStatus SET LastValidatedOn = LastValidatedOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
-                    cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"LastValidatedOn\" = \"LastValidatedOn\" {GetTimeZone()}";
-                    break;
-                case "UPDATE umbracoProductLicenseValidationStatus SET LastSuccessfullyValidatedOn = LastSuccessfullyValidatedOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
-                    cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"LastSuccessfullyValidatedOn\" = \"LastSuccessfullyValidatedOn\" {GetTimeZone()}";
-                    break;
-                case "UPDATE umbracoProductLicenseValidationStatus SET ExpiresOn = ExpiresOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
-                    cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"ExpiresOn\" = \"ExpiresOn\" {GetTimeZone()}";
-                    break;
-                default:
-                    success = false;
-                    break;
-            }
+                switch (cmd.CommandText)
+                {
+                    case "UPDATE umbracoProductLicenseValidationStatus SET LastValidatedOn = LastValidatedOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
+                        cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"LastValidatedOn\" = \"LastValidatedOn\" {GetTimeZone()}";
+                        break;
+                    case "UPDATE umbracoProductLicenseValidationStatus SET LastSuccessfullyValidatedOn = LastSuccessfullyValidatedOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
+                        cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"LastSuccessfullyValidatedOn\" = \"LastSuccessfullyValidatedOn\" {GetTimeZone()}";
+                        break;
+                    case "UPDATE umbracoProductLicenseValidationStatus SET ExpiresOn = ExpiresOn AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
+                        cmd.CommandText = $"UPDATE \"umbracoProductLicenseValidationStatus\" SET \"ExpiresOn\" = \"ExpiresOn\" {GetTimeZone()}";
+                        break;
+                    default:
+                        success = false;
+                        break;
+                }
 
-            return success;
+                return success;
+            } // end lock
         }
 
         public override bool InterceptCommandExecuting(DbCommand cmd)
         {
             var success = base.InterceptCommandExecuting(cmd);
 
-            success = success && FixCommanText(cmd);
+            success = success && FixCommandInternal(cmd);
 
             return success;
         }

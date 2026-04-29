@@ -21,24 +21,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
     {
         private readonly SortedDictionary<string, string> _commandTextReplacements = new SortedDictionary<string, string>();
 
-        private string[] UfTables
-            => [
-                "UFDataSource",
-                "UFFolders",
-                "UFForms",
-                "UFPrevalueSource",
-                "UFRecordAudit",
-                "UFRecordDataDateTime",
-                "UFRecordDataInteger",
-                "UFRecordDataLongString",
-                "UFRecordDataString",
-                "UFRecordWorkflowAudit",
-                "UFRecords",
-                "UFUserFormSecurity",
-                "UFUserGroupFormSecurity",
-                "UFUserGroupSecurity",
-                "UFWorkflows"
-                ];
+        private readonly Lock _lock = new();
 
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
@@ -47,7 +30,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return null;
             }
 
-            return value =>
+            return value => ConvertParameterValue(cmd, value);
+        }
+
+        private object ConvertParameterValue(DbCommand cmd, object value)
+        {
+            lock (_lock)
             {
                 if (value is Guid)
                 {
@@ -77,7 +65,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 }
 
                 return value;
-            };
+            }
         }
 
         private static bool IsUfCommand(DbCommand cmd) =>
@@ -88,7 +76,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
 
-        private static bool FixCommanText(DbCommand cmd)
+        private static bool FixCommandInternal(DbCommand cmd)
         {
             var success = true;
 
@@ -606,46 +594,39 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return true;
             }
 
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            string hashedCmd = cmd.CommandText.GenerateMd5();
-
-            var afterHashing = stopWatch.ElapsedMilliseconds;
-
-            if (_commandTextReplacements.TryGetValue(hashedCmd, out var replacement))
+            lock (_lock)
             {
-                cmd.CommandText = replacement;
-                return true;
-            }
+                string hashedCmd = cmd.CommandText.GenerateMd5();
 
-            var success = base.InterceptCommandExecuting(cmd);
-
-            success = success && FixCommanText(cmd);
-
-            if (!success)
-            {
-                if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
+                if (_commandTextReplacements.TryGetValue(hashedCmd, out var replacement))
                 {
-                    cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
+                    cmd.CommandText = replacement;
+                    return true;
                 }
+
+                var success = base.InterceptCommandExecuting(cmd);
+
+                success = success && FixCommandInternal(cmd);
+
+                if (!success)
+                {
+                    if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
+                    {
+                        cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
+                    }
+                }
+
+                try
+                {
+                    _commandTextReplacements.TryAdd(hashedCmd, cmd.CommandText);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning($"Failed to add command text replacement for hash: {hashedCmd}", ex);
+                }
+
+                return success;
             }
-
-            try
-            {
-                _commandTextReplacements.TryAdd(hashedCmd, cmd.CommandText);
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning($"Failed to add command text replacement for hash: {hashedCmd}", ex);
-            }
-
-            stopWatch.Stop();
-            var afterReplacement = stopWatch.ElapsedMilliseconds;
-            logger.LogDebug($"Hashing time: {afterHashing} ms, Replacement time: {afterReplacement - afterHashing} ms");
-
-
-            return success;
         }
     }
 }
