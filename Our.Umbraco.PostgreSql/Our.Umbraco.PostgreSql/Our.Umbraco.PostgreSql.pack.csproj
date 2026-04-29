@@ -11,11 +11,15 @@
 		<None Remove="datetime-erros.playlist" />
 		<None Remove="errors-2.playlist" />
 		<None Remove="errors-3.playlist" />
+		<None Remove="errors-new.playlist" />
 		<None Remove="errors.playlist" />
 		<None Remove="ExecuteScalar-errors.playlist" />
 		<None Remove="file-open-error.playlist" />
 		<None Remove="getalias-errors.playlist" />
+		<None Remove="not-run.playlist" />
+		<None Remove="postgresql-db.png" />
 		<None Remove="second-half-of-integration-tests.playlist" />
+		<None Remove="uElephant-Copilot_20260402_142603.png" />
 		<None Remove="umb.sql" />
 		<None Remove="umbMain.sql" />
 		<None Remove="uniqueid-errors.playlist" />
@@ -35,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" Version="[17.4.0-rc,17.5.0)" />
+		<ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" Version="[17.4.0-rc2,17.5.0)" />
 	</ItemGroup>
 
 </Project>
