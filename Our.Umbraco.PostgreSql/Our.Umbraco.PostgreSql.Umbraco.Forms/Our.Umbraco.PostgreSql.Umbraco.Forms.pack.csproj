@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>17.3.4.5</VersionPrefix>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco Forms with PostgreSQL.</Description>

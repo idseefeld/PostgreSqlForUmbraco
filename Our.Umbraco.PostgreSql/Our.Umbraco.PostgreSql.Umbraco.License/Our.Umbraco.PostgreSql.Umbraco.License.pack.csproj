@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>17.3.4.5</VersionPrefix>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.License</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco.License - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.License with PostgreSQL.</Description>
