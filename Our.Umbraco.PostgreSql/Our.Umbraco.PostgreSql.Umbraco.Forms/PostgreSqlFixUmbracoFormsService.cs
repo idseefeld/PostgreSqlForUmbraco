@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using Examine;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
@@ -19,10 +20,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
     /// </summary>
     public class PostgreSqlFixUmbracoFormsService(ILogger<PostgreSqlFixUmbracoFormsService> logger) : PostgreSqlFixServiceBase
     {
-        private readonly SortedDictionary<string, string> _commandTextReplacements = new SortedDictionary<string, string>();
-
-        private readonly Lock _lock = new();
-
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
             if (!IsUfCommand(cmd))
@@ -35,48 +32,110 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
         private object ConvertParameterValue(DbCommand cmd, object value)
         {
-            lock (_lock)
+            if (value is Guid)
             {
-                if (value is Guid)
+                switch (cmd.CommandText)
                 {
-                    switch (cmd.CommandText)
-                    {
-                        case "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4":
-                            cmd.Parameters["@p3"].Value = cmd.Parameters["@p3"]?.Value?.ToString()?.Trim('\'');
-                            break;
-                        case "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'":
-                            cmd.Parameters["@p7"].Value = cmd.Parameters["@p7"]?.Value?.ToString()?.Trim('\'');
-                            break;
-                        default:
-                            break;
-                    }
+                    case "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4":
+                        cmd.Parameters["@p3"].Value = cmd.Parameters["@p3"]?.Value?.ToString()?.Trim('\'');
+                        break;
+                    case "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'":
+                        cmd.Parameters["@p7"].Value = cmd.Parameters["@p7"]?.Value?.ToString()?.Trim('\'');
+                        break;
+                    default:
+                        break;
                 }
-
-                if (value is string str && Guid.TryParse(str, out Guid guidValue))
-                {
-                    return guidValue;
-                }
-
-                if (value is int i
-                    && (i == 0 || i == 1)
-                    && bool.TryParse(i.ToString(), out bool boolValue))
-                {
-                    return boolValue;
-                }
-
-                return value;
             }
+
+            if (value is string str && Guid.TryParse(str, out Guid guidValue))
+            {
+                return guidValue;
+            }
+
+            if (value is int i
+                && (i == 0 || i == 1)
+                && bool.TryParse(i.ToString(), out bool boolValue))
+            {
+                return boolValue;
+            }
+
+            return value;
         }
 
-        private static bool IsUfCommand(DbCommand cmd) =>
+        private bool IsUfCommand(DbCommand cmd) =>
             string.IsNullOrEmpty(cmd.CommandText)
                 || cmd.CommandText.Contains(" UF")
                 || cmd.CommandText.Contains(" \"UF")
                 || cmd.CommandText.Contains("sys.indexes")
+                || cmd.CommandText.Contains("IX_UFRecords_Form_Created")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
 
-        private static bool FixCommandInternal(DbCommand cmd)
+        // Matches: UPDATE UFXxx SET col = col AT TIME ZONE 'Windows Tz' AT TIME ZONE 'UTC'
+        private static readonly Regex SimpleAtTimeZonePattern = new(
+            @"^UPDATE (UF\w+) SET (\w+) = \2 AT TIME ZONE '([^']+)' AT TIME ZONE 'UTC'$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        // Matches: UPDATE UFXxx SET col = COALESCE(TRY_CONVERT(datetime, col AT TIME ZONE 'Windows Tz' AT TIME ZONE 'UTC'), col)
+        private static readonly Regex TryConvertAtTimeZonePattern = new(
+            @"^UPDATE (UF\w+) SET (\w+) = COALESCE\(TRY_CONVERT\(datetime, \2 AT TIME ZONE '([^']+)' AT TIME ZONE 'UTC'\), \2\)$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        // Matches: SELECT COUNT(*) FROM UFXxx WHERE col IS NOT NULL AND TRY_CONVERT(datetime, col AT TIME ZONE '...' AT TIME ZONE 'UTC') IS NULL
+        private static readonly Regex TryConvertSelectCountPattern = new(
+            @"^SELECT COUNT\(\*\) FROM (UF\w+) WHERE (\w+) IS NOT NULL AND TRY_CONVERT\(datetime, \2 AT TIME ZONE '[^']+' AT TIME ZONE 'UTC'\) IS NULL$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Rewrites SQL Server-specific "AT TIME ZONE" UPDATE statements for Forms tables
+        /// generated by the MigrateSystemDatesToUtc migration into PostgreSQL-compatible SQL,
+        /// regardless of the Windows timezone name embedded in the statement.
+        /// </summary>
+        private bool TryRewriteTimeMigrationUpdate(DbCommand cmd)
+        {
+            Match match = SimpleAtTimeZonePattern.Match(cmd.CommandText);
+            if (!match.Success)
+            {
+                match = TryConvertAtTimeZonePattern.Match(cmd.CommandText);
+            }
+
+            if (!match.Success)
+            {
+                return false;
+            }
+
+            var table = match.Groups[1].Value;   // e.g. UFDataSource
+            var column = match.Groups[2].Value;  // e.g. Created
+            var windowsTz = match.Groups[3].Value; // e.g. W. Europe Standard Time
+
+            cmd.CommandText = $"UPDATE \"{table}\" SET \"{column}\" = \"{column}\" {GetTimeZone(windowsTz)}";
+            return true;
+        }
+
+        /// <summary>
+        /// Rewrites the SQL Server-specific pre-check SELECT COUNT(*) that the Forms
+        /// MigrateSystemDatesToUtc migration runs before updating each column.
+        /// The original query counts rows whose value cannot be converted; since PostgreSQL
+        /// timestamp columns are always valid, we simply return 0 (no bad rows).
+        /// </summary>
+        private bool TryRewriteTimeMigrationSelectCount(DbCommand cmd)
+        {
+            Match match = TryConvertSelectCountPattern.Match(cmd.CommandText);
+            if (!match.Success)
+            {
+                return false;
+            }
+
+            var table = match.Groups[1].Value;  // e.g. UFDataSource
+            var column = match.Groups[2].Value; // e.g. Created
+
+            // PostgreSQL timestamp columns are always valid so there are never any
+            // "unconvertible" rows. Return 0 so the migration proceeds to the UPDATE.
+            cmd.CommandText = $"SELECT 0 FROM \"{table}\" WHERE FALSE";
+            return true;
+        }
+
+        private bool FixCommandInternal(DbCommand cmd)
         {
             var success = true;
 
@@ -95,6 +154,13 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
             if (cmd.CommandText.StartsWith("SELECT "))
             {
+                // Pattern-based rewrite for MigrateSystemDatesToUtc Forms pre-check SELECT.
+                // Must run before all other StartsWith checks.
+                if (TryRewriteTimeMigrationSelectCount(cmd))
+                {
+                    return success;
+                }
+
                 if (cmd.CommandText.StartsWith("SELECT \"Form\", COUNT(*) as \"Total\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN (")
                     ||
                     cmd.CommandText.StartsWith("SELECT \"Form\", \"UmbracoPageId\"\nFROM UFRecords\nWHERE (\"Form\" IN ("))
@@ -188,7 +254,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 else
                 {
                     var cmdLength = cmd.CommandText.Length;
-                    var useLength = true;
+                    var useLength = false; // length checking is not sufficient 
                     var switchText = useLength
                         ? cmdLength.ToString()
                         : cmd.CommandText;
@@ -424,8 +490,18 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
             }
             else if (cmd.CommandText.StartsWith("UPDATE "))
             {
+                // Pattern-based rewrite for MigrateSystemDatesToUtc Forms migration statements.
+                // These contain an arbitrary Windows timezone name so exact string matching is insufficient.
+                if (TryRewriteTimeMigrationUpdate(cmd))
+                {
+                    return success;
+                }
+
                 switch (cmd.CommandText)
                 {
+                    case "UPDATE UFDataSource SET Created = COALESCE(TRY_CONVERT(datetime, Created AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'), Created)":
+                        cmd.CommandText = $"UPDATE \"UFDataSource\" SET \"Created\" = \"Created\" {GetTimeZone()}";
+                        break;
                     case "UPDATE UFDataSource SET Created = Created AT TIME ZONE 'W. Europe Standard Time' AT TIME ZONE 'UTC'":
                         cmd.CommandText = $"UPDATE \"UFDataSource\" SET \"Created\" = \"Created\" {GetTimeZone()}";
                         break;
@@ -579,9 +655,26 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         break;
                 }
             }
-            else if (cmd.CommandText.Contains(" NONCLUSTERED "))
+            else if (cmd.CommandText.StartsWith("CREATE "))
             {
-                cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED ", " ");
+                if (cmd.CommandText.Contains(" NONCLUSTERED "))
+                {
+                    cmd.CommandText = cmd.CommandText.Replace(" NONCLUSTERED ", " ");
+                }
+
+                switch (cmd.CommandText)
+                {
+                    case "CREATE INDEX \"IX_UFRecords_Form_Created_IncPageId\"\n            ON \"UFRecords\" (\"Form\", \"Created\")\n            INCLUDE (\"UmbracoPageId\")":
+                        cmd.CommandText = "CREATE INDEX \"IX_UFRecords_Form_Created_IncPageId\" ON \"UFRecords\" (\"Form\", \"Created\") INCLUDE (\"UmbracoPageId\")";
+                        break;
+                    default:
+                        success = false;
+                        break;
+                }
+            }
+            else
+            {
+                success = false;
             }
 
             return success;
@@ -594,39 +687,19 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return true;
             }
 
-            lock (_lock)
+            var success = base.InterceptCommandExecuting(cmd);
+
+            success = success && FixCommandInternal(cmd);
+
+            if (!success)
             {
-                string hashedCmd = cmd.CommandText.GenerateMd5();
-
-                if (_commandTextReplacements.TryGetValue(hashedCmd, out var replacement))
+                if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
                 {
-                    cmd.CommandText = replacement;
-                    return true;
+                    cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
                 }
-
-                var success = base.InterceptCommandExecuting(cmd);
-
-                success = success && FixCommandInternal(cmd);
-
-                if (!success)
-                {
-                    if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
-                    {
-                        cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
-                    }
-                }
-
-                try
-                {
-                    _commandTextReplacements.TryAdd(hashedCmd, cmd.CommandText);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogWarning($"Failed to add command text replacement for hash: {hashedCmd}", ex);
-                }
-
-                return success;
             }
+
+            return success;
         }
     }
 }
