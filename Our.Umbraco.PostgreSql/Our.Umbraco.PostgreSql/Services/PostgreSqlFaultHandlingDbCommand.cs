@@ -107,7 +107,22 @@ namespace Our.Umbraco.PostgreSql.Services
         protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior) =>
             Execute(() => Inner.ExecuteReader(behavior));
 
-        public override object? ExecuteScalar() => Execute(() => Inner.ExecuteScalar());
+        public override object? ExecuteScalar()
+        {
+            try
+            {
+                return Execute(() => Inner.ExecuteScalar());
+            }
+            catch (Npgsql.PostgresException ex) when (ex.SqlState == "42P01")
+            {
+                // Table does not exist yet (PostgreSQL error 42P01 = undefined_table).
+                // This can happen during Umbraco.Forms migrations when EnsureTableConstraints
+                // checks for duplicate rows before the table has been created, or when
+                // FixCommanText rewrites SQL to reference tables not yet created.
+                // Returning 0 is semantically correct: no rows exist in a non-existent table.
+                return 0;
+            }
+        }
 
         public override void Prepare() => Inner.Prepare();
 
