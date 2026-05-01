@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<VersionPrefix>17.3.5</VersionPrefix>
 		<Authors>Dirk Seefeld</Authors>
-		<PackageIcon>postgresql-db.png</PackageIcon>
+		<PackageIcon>postgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<Product>PostgreSQL Provider for Umbraco CMS</Product>
 		<Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
@@ -21,7 +21,7 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<None Include="..\..\postgresql-db.png" Pack="true" PackagePath=""/>
+		<None Include="..\..\postgresql.png" Pack="true" PackagePath=""/>
 		<None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
 </Project>
