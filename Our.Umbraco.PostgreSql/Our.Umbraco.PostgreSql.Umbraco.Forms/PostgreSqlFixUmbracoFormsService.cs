@@ -19,10 +19,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
     /// </summary>
     public class PostgreSqlFixUmbracoFormsService(ILogger<PostgreSqlFixUmbracoFormsService> logger) : PostgreSqlFixServiceBase
     {
-        private readonly SortedDictionary<string, string> _commandTextReplacements = new SortedDictionary<string, string>();
-
-        private readonly Lock _lock = new();
-
         public override Func<object, object>? GetParameterConverter(DbCommand cmd, Type sourceType)
         {
             if (!IsUfCommand(cmd))
@@ -35,40 +31,37 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
         private object ConvertParameterValue(DbCommand cmd, object value)
         {
-            lock (_lock)
+            if (value is Guid)
             {
-                if (value is Guid)
+                switch (cmd.CommandText)
                 {
-                    switch (cmd.CommandText)
-                    {
-                        case "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4":
-                            cmd.Parameters["@p3"].Value = cmd.Parameters["@p3"]?.Value?.ToString()?.Trim('\'');
-                            break;
-                        case "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'":
-                            cmd.Parameters["@p7"].Value = cmd.Parameters["@p7"]?.Value?.ToString()?.Trim('\'');
-                            break;
-                        default:
-                            break;
-                    }
+                    case "UPDATE \"UFUserFormSecurity\" SET \"HasAccess\" = @p0, \"SecurityType\" = @p1, \"AllowInEditor\" = @p2 WHERE \"User\" = '@p3' AND \"Form\" = @p4":
+                        cmd.Parameters["@p3"].Value = cmd.Parameters["@p3"]?.Value?.ToString()?.Trim('\'');
+                        break;
+                    case "UPDATE \"UFUserSecurity\" SET \"ManageForms\" = @p0, \"ManageDataSources\" = @p1, \"ManagePreValueSources\" = @p2, \"ManageWorkflows\" = @p3, \"ViewEntries\" = @p4, \"EditEntries\" = @p5, \"DeleteEntries\" = @p6 WHERE \"User\" = '@p7'":
+                        cmd.Parameters["@p7"].Value = cmd.Parameters["@p7"]?.Value?.ToString()?.Trim('\'');
+                        break;
+                    default:
+                        break;
                 }
-
-                if (value is string str && Guid.TryParse(str, out Guid guidValue))
-                {
-                    return guidValue;
-                }
-
-                if (value is int i
-                    && (i == 0 || i == 1)
-                    && bool.TryParse(i.ToString(), out bool boolValue))
-                {
-                    return boolValue;
-                }
-
-                return value;
             }
+
+            if (value is string str && Guid.TryParse(str, out Guid guidValue))
+            {
+                return guidValue;
+            }
+
+            if (value is int i
+                && (i == 0 || i == 1)
+                && bool.TryParse(i.ToString(), out bool boolValue))
+            {
+                return boolValue;
+            }
+
+            return value;
         }
 
-        private static bool IsUfCommand(DbCommand cmd) =>
+        private bool IsUfCommand(DbCommand cmd) =>
             string.IsNullOrEmpty(cmd.CommandText)
                 || cmd.CommandText.Contains(" UF")
                 || cmd.CommandText.Contains(" \"UF")
@@ -76,7 +69,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
 
-        private static bool FixCommandInternal(DbCommand cmd)
+        private bool FixCommandInternal(DbCommand cmd)
         {
             var success = true;
 
@@ -594,39 +587,19 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 return true;
             }
 
-            lock (_lock)
+            var success = base.InterceptCommandExecuting(cmd);
+
+            success = success && FixCommandInternal(cmd);
+
+            if (!success)
             {
-                string hashedCmd = cmd.CommandText.GenerateMd5();
-
-                if (_commandTextReplacements.TryGetValue(hashedCmd, out var replacement))
+                if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
                 {
-                    cmd.CommandText = replacement;
-                    return true;
+                    cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
                 }
-
-                var success = base.InterceptCommandExecuting(cmd);
-
-                success = success && FixCommandInternal(cmd);
-
-                if (!success)
-                {
-                    if (cmd.CommandText.Equals("DROP INDEX \"IX_UFRecords_Form_Created\" ON \"UFRecords\""))
-                    {
-                        cmd.CommandText = "DROP INDEX IF EXISTS \"IX_UFRecords_Form_Created\"";
-                    }
-                }
-
-                try
-                {
-                    _commandTextReplacements.TryAdd(hashedCmd, cmd.CommandText);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogWarning($"Failed to add command text replacement for hash: {hashedCmd}", ex);
-                }
-
-                return success;
             }
+
+            return success;
         }
     }
 }
