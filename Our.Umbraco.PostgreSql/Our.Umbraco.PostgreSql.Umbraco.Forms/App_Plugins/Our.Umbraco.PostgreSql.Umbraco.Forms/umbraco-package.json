@@ -1,0 +1,7 @@
+{
+  "id": "Our.Umbraco.PostgreSql.Umbraco.Forms",
+  "name": "Umbraco ​C​M​S - ​Persistence - ​Umbraco ​Forms - ​Postgre​S​Q​L",
+  "version": "17.4.0-rc",
+  "allowPackageTelemetry": true,
+  "extensions": []
+}
