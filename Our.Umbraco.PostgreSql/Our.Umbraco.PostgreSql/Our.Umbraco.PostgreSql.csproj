@@ -50,4 +50,10 @@
     <Content Include="uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="App_Plugins\Our.Umbraco.PostgreSql\umbraco-package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
