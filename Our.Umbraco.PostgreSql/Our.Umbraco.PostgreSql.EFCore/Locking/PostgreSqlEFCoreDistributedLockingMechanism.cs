@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -197,7 +198,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                 // SET LOCAL kann nur in Transaktionsblöcken verwendet werden
                 await dbContext.Database.ExecuteSqlRawAsync($"SET LOCAL lock_timeout = '{(int)_timeout.TotalMilliseconds}ms'");
 
-                var updateCmd = $"UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={LockId}";
+                var updateCmd = $"UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={LockId.ToString(CultureInfo.InvariantCulture)}";
                 var rowsAffected = await dbContext.Database.ExecuteSqlRawAsync(updateCmd);
 
                 if (rowsAffected == 0)

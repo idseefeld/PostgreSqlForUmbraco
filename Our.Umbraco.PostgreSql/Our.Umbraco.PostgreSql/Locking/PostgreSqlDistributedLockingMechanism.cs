@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Configuration.Models;
@@ -203,7 +204,7 @@ namespace Our.Umbraco.PostgreSql.Locking
                 // SET LOCAL kann nur in Transaktionsblöcken verwendet werden
                 db.Execute($"SET LOCAL lock_timeout = '{(int)_timeout.TotalMilliseconds}ms'");
 
-                var updateCmd = $"UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={LockId}";
+                var updateCmd = $"UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={LockId.ToString(CultureInfo.InvariantCulture)}";
                 var rowsAffected = db.Execute(updateCmd);
 
                 if (rowsAffected == 0)
