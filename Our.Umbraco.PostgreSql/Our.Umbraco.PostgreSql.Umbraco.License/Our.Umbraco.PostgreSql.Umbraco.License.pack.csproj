@@ -1,13 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.License</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco.License - PostgreSQL</Title>
 		<Description>Adds support for Umbraco.License with PostgreSQL.</Description>
+		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
+		<StaticWebAssetBasePath>\</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\App_Plugins\Our.Umbraco.PostgreSql.Umbraco.License\umbraco-package.json" />
 	</ItemGroup>
 
 	<ItemGroup>
