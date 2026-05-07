@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql</PackageId>
@@ -11,6 +11,7 @@
     <Copyright>Copyright © Dirk Seefeld $([System.DateTime]::Today.ToString('yyyy'))</Copyright>
     <Title>Umbraco CMS - Persistence - PostgreSQL</Title>
     <Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,9 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="App_Plugins\Our.Umbraco.PostgreSql\umbraco-package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Update="wwwroot\App_Plugins\Our.Umbraco.PostgreSql\umbraco-package.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

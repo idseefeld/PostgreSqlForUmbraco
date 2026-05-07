@@ -5,6 +5,7 @@
 		<Title>Umbraco CMS - Persistence - Umbraco Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco Forms with PostgreSQL.</Description>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>

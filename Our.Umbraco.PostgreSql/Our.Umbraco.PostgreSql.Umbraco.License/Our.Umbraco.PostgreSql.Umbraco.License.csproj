@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql.Umbraco.License</PackageId>
@@ -10,6 +10,7 @@
     <PackageTags>umbraco, postgresql, community</PackageTags>
     <Title>Umbraco CMS - Persistence - Umbraco.License - PostgreSQL</Title>
     <Description>Adds support for Umbraco.License with PostgreSQL.</Description>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>

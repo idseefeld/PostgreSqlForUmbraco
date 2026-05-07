@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql</PackageId>
 		<Title>Umbraco CMS - Persistence - PostgreSQL</Title>
 		<Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>

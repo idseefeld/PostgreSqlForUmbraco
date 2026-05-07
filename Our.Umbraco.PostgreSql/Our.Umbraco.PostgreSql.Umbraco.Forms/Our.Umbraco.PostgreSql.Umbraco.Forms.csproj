@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
     <Title>Umbraco CMS - Persistence - Umbraco.Forms - PostgreSQL</Title>
     <Description>Adds support for Umbraco.Forms with PostgreSQL.</Description>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,12 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="App_Plugins\Our.Umbraco.PostgreSql.Umbraco.Forms\umbraco-package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
