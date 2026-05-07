@@ -7,7 +7,17 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
+    <File Path="Our.Umbraco.PostgreSql/wwwroot/App_Plugins/Our.Umbraco.PostgreSql/umbraco-package.json" />
     <File Path="postgresql.png" />
+  </Folder>
+  <Folder Name="/Solution Items/core/">
+    <File Path="Our.Umbraco.PostgreSql/wwwroot/App_Plugins/Our.Umbraco.PostgreSql/umbraco-package.json" />
+  </Folder>
+  <Folder Name="/Solution Items/forms/">
+    <File Path="Our.Umbraco.PostgreSql.Umbraco.Forms/wwwroot/App_Plugins/Our.Umbraco.PostgreSql.Umbraco.Forms/umbraco-package.json" />
+  </Folder>
+  <Folder Name="/Solution Items/license/">
+    <File Path="Our.Umbraco.PostgreSql.Umbraco.License/wwwroot/App_Plugins/Our.Umbraco.PostgreSql.Umbraco.License/umbraco-package.json" />
   </Folder>
   <Project Path="Umbraco17.www/Umbraco17.www.csproj" />
 </Solution>
