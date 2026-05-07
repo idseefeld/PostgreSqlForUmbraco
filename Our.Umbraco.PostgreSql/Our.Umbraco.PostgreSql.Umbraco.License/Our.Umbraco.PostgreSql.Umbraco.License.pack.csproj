@@ -2,22 +2,17 @@
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.License</PackageId>
-		<Title>Umbraco CMS - Persistence - Umbraco.License - PostgreSQL</Title>
-		<Description>Adds support for Umbraco.License with PostgreSQL.</Description>
-		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
-		<StaticWebAssetBasePath>\</StaticWebAssetBasePath>
+		<Title>Umbraco CMS - Persistence - Umbraco License - PostgreSQL</Title>
+		<Description>Adds support for Umbraco License with PostgreSQL.</Description>
+		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="readme.md" Pack="true" PackagePath="\" />
+		<Content Include="readme.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="wwwroot\App_Plugins\Our.Umbraco.PostgreSql.Umbraco.License\umbraco-package.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.pack.csproj" Version="[17.4.0-rc2,17.5.0)" />
+		<ProjectReference Include="../Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.pack.csproj" Version="[17.4.0-rc6,17.5.0)" />
 	</ItemGroup>
 
 </Project>
