@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<PackageId>Our.Umbraco.PostgreSql</PackageId>
+		<PackageId>Our.Umbraco.PostgreSql.Razor</PackageId>
 		<Title>Umbraco CMS - Persistence - PostgreSQL</Title>
 		<Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
-		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+		<StaticWebAssetBasePath>\</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove=".gitignore" />
 		<None Remove="datetime-erros.playlist" />
 		<None Remove="errors-2.playlist" />
 		<None Remove="errors-3.playlist" />
