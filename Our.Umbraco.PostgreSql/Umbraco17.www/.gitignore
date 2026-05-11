@@ -475,6 +475,9 @@ umbraco-package-schema.json
 /umbraco/Data/*.sqlite.db-shm
 /umbraco/Data/*.sqlite.db-wal
 
+# Form files
+/umbraco/Data/UmbracoForms/
+
 # Log files
 /umbraco/Logs/
 

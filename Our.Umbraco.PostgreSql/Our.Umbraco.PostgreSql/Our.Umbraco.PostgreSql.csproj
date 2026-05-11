@@ -52,9 +52,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\App_Plugins\Our.Umbraco.PostgreSql\umbraco-package.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    <None Update="App_Plugins\Our.Umbraco.PostgreSql\umbraco-package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
