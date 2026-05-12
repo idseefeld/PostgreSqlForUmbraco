@@ -46,8 +46,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         break;
                 }
             }
-
-            if (value is string str && Guid.TryParse(str, out Guid guidValue))
+            else if (value is string str && Guid.TryParse(str, out Guid guidValue))
             {
                 return guidValue;
             }
@@ -415,9 +414,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         cmd.CommandText = "INSERT INTO \"UFRecordDataBit\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
                         tableName = "UFRecordDataBit";
                         break;
-                    case "INSERT INTO UFRecordDataIDateTime(\"Key\", \"Value\") VALUES(@p0, @p1)":
-                        cmd.CommandText = "INSERT INTO \"UFRecordDataIDateTime\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
-                        tableName = "UFRecordDataIDateTime";
+                    case "INSERT INTO UFRecordDataDateTime(\"Key\", \"Value\") VALUES(@p0, @p1)":
+                        cmd.CommandText = "INSERT INTO \"UFRecordDataDateTime\" (\"Key\", \"Value\") VALUES (@p0, @p1)";
+                        tableName = "UFRecordDataDateTime";
                         break;
                     case "INSERT INTO \"UFRecords\" (\"Form\",\"Created\",\"Updated\",\"CurrentPage\",\"UmbracoPageId\",\"IP\",\"MemberKey\",\"UniqueId\",\"State\",\"RecordData\",\"Culture\",\"AdditionalData\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8,@p9,@p10,@p11) returning \"id\" as id":
                         cmd.CommandText = "INSERT INTO \"UFRecords\" (\"Form\",\"Created\",\"Updated\",\"CurrentPage\",\"UmbracoPageId\",\"IP\",\"MemberKey\",\"UniqueId\",\"State\",\"RecordData\",\"Culture\",\"AdditionalData\") VALUES (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8,@p9,@p10,@p11) returning \"Id\" as id;";
@@ -437,43 +436,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     var insertStart = "INSERT INTO \"";
                     if (cmd.CommandText.StartsWith(insertStart))
                     {
-                        if (cmd.CommandText.Contains("UFDataSource"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFFolders"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFPrevalueSource"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFRecordAudit"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFRecordWorkflowAudit"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFUserFormSecurity"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFUserGroupFormSecurity"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFAnalyticsDailySummary"))
-                        {
-
-                        }
-                        else if (cmd.CommandText.Contains("UFAnalyticsProcessedDates"))
-                        {
-
-                        }
-
                         if (cmd.CommandText.Contains(") returning "))
                         {
                             if (cmd.CommandText.InvariantContains(") returning \"id\" as id"))

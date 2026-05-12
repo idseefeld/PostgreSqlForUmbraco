@@ -90,10 +90,8 @@ namespace Our.Umbraco.PostgreSql.Services
                          .Replace("IsA", "isA")
                          .Replace("IsL", "isL")
                          .Replace("Last", "last");
-
-                    cmdFixed = true;
                 }
-                else
+                else if (cmd.CommandText.StartsWith("UPDATE umbracoPropertyData"))
                 {
                     const string umbracoPropertyDataSql = "\r\nUPDATE umbracoPropertyData\r\nSET textValue = varcharValue, varcharValue = NULL\r\nWHERE propertyTypeId IN (\r\n    SELECT id\r\n    FROM cmsPropertyType\r\n    WHERE dataTypeId IN (\r\n        SELECT nodeId\r\n        FROM umbracoDataType\r\n        WHERE propertyEditorAlias = 'Umbraco.Label'\r\n        AND dbType = 'Ntext'\r\n    )\r\n)\r\nAND varcharValue IS NOT NULL";
 
