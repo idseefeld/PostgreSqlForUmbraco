@@ -1,4 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Forms.Web
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
     Layout = null;
@@ -9,6 +10,8 @@
     <title>@Model.Name</title>
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/bootstrap.5.3.8.css" rel="stylesheet">
+    
+    @Html.RenderUmbracoFormDependencies(Url)
 </head>
 <body>
     <header>
@@ -18,9 +21,18 @@
     @RenderBody()
 
     <footer>
-        <a href="/umbraco" target="_blank">backoffice</a>
+        <a href="/">EN</a> | <a href="/de">DE</a>
+         - <a href="/umbraco" target="_blank">backoffice</a>
     </footer>
 
     <script src="/scripts/boostrap.5.3.8.js"></script>
+
+    @if (Context.Items.TryGetValue("UmbracoForms", out object? formIdsObject) && formIdsObject is IEnumerable<Guid> formIds)
+    {
+        foreach (var formId in formIds)
+        {
+            @await Component.InvokeAsync("RenderFormScripts", new { formId, theme = "default" })
+        }
+    }
 </body>
 </html>
