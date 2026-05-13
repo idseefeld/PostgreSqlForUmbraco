@@ -1,7 +1,7 @@
 {
   "id": "Our.Umbraco.PostgreSql.Umbraco.License",
   "name": "Umbraco CMS - Persistence - Umbraco License - PostgreSQL",
-  "version": "17.4.0-rc8",
+  "version": "17.4.0",
   "allowPackageTelemetry": true,
   "extensions": []
 }
