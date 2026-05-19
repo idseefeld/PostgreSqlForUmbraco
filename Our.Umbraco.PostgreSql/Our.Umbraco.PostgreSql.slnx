@@ -7,7 +7,6 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
-    <File Path="Our.Umbraco.PostgreSql/wwwroot/App_Plugins/Our.Umbraco.PostgreSql/umbraco-package.json" />
     <File Path="postgresql.png" />
   </Folder>
   <Folder Name="/Solution Items/core/">
