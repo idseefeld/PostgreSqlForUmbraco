@@ -6,11 +6,15 @@
 		<CompressionEnabled>false</CompressionEnabled>
 		<!-- Disable compression. E.g. for umbraco backoffice files. These files should be precompressed by node and not let dotnet handle it -->
 	</PropertyGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="Views\Page.cshtml" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-		<PackageReference Include="Umbraco.Cms" Version="17.4.0" />
+		<PackageReference Include="Umbraco.Cms" Version="17.5.0-rc" />
+		<PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" Version="17.0.4" />
 		<PackageReference Include="Umbraco.Forms" Version="17.3.2" />
 		<PackageReference Include="uSync" Version="17.3.2" />
 		<PackageReference Include="uSync.Forms" Version="17.0.0" />

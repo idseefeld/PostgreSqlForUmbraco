@@ -1,31 +1,69 @@
 .field-validation-error {
-  color: red;
+    color: red;
 }
 
 .umbraco-forms-hidden {
-  display: none;
+    display: none;
 }
 
 form {
-  padding: 1em;
+    padding: 1em;
 }
 
 .btn.primary {
-  color: var(--bs-btn-active-color);
-  background-color: #eee;
-  border-color: var(--bs-btn-active-border-color);
+    color: var(--bs-btn-active-color);
+    background-color: #eee;
+    border-color: var(--bs-btn-active-border-color);
 }
 
-  .btn.primary:hover {
-    color: var(--bs-btn-active-color);
-    background-color: var(--bs-btn-active-bg);
-    border-color: var(--bs-btn-active-border-color);
-  }
+    .btn.primary:hover {
+        color: var(--bs-btn-active-color);
+        background-color: var(--bs-btn-active-bg);
+        border-color: var(--bs-btn-active-border-color);
+    }
 
 li.current {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .radiobuttonlist-horizontal div {
-  display: inline;
+    display: inline;
 }
+
+figure {
+    margin: 0
+}
+
+    figure img {
+        width: 100%;
+    }
+
+body, html {
+    margin: 0;
+}
+
+#canvas {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.call-to-action {
+    display: inline-block;
+}
+
+    .call-to-action button {
+        background-color: var(--wysiwg-call-to-action-background-color, initial);
+        color: var(--wysiwg-call-to-action-color, initial);
+        border: var(--wysiwg-call-to-action-border, none);
+        padding: var(--wysiwg-call-to-action-padding, 0.5em 1em);
+        font-size: var(--wysiwg-call-to-action-font-size, 1em);
+        border-radius: var(--wysiwg-call-to-action-border-radius, 0.5em);
+        cursor: pointer;
+        box-shadow: var(--wysiwg-call-to-action-box-shadow, rgba(0,0,0,0.3) 5px 10px 10px);
+    }
+
+        .call-to-action button:active {
+            margin-left: var(--wysiwg-call-to-action-active-margin-left, 10px);
+            margin-top: var(--wysiwg-call-to-action-active-margin-top, 10px);
+            box-shadow: none;
+        }

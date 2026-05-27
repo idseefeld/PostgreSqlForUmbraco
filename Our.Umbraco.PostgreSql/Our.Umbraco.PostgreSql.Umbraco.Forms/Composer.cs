@@ -22,6 +22,9 @@ public class Composer : IComposer
     /// <inheritdoc />
     public void Compose(IUmbracoBuilder builder)
     {
+        builder.Services.Configure<Configuration>(
+        builder.Config.GetSection(Configuration.SectionName));
+
         builder.Services.TryAddEnumerable(ServiceDescriptor
             .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoFormsService>());
 

@@ -2,7 +2,15 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Page>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "master.cshtml";
+    Layout = "master.cshtml";
+    var hasGrid = Model.HasProperty("grid") && Model.GetProperty("grid") != null;
 }
 
-@Model.Body
+@if (hasGrid)
+{
+    @await Html.GetBlockGridHtmlAsync(Model, "grid")
+}
+else
+{
+    @Model.Body
+}
