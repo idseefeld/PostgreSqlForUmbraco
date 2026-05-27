@@ -4,6 +4,7 @@
 		<PackageId>Our.Umbraco.PostgreSql.EFCore</PackageId>
 		<Title>Umbraco CMS - Persistence - Entity Framework Core - PostgreSQL</Title>
 		<Description>Adds support for Entity Framework Core PostgreSQL to Umbraco CMS.</Description>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".pack", ""))</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

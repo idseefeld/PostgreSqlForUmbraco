@@ -6,6 +6,7 @@
 		<Description>Adds support for PostgreSQL to Umbraco CMS.</Description>
 		<PackageTags>umbraco;umbraco-marketplace</PackageTags>
 		<StaticWebAssetBasePath>\</StaticWebAssetBasePath>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".pack", ""))</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

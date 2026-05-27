@@ -5,6 +5,7 @@
 		<Title>Umbraco CMS - Persistence - Umbraco License - PostgreSQL</Title>
 		<Description>Adds support for Umbraco License with PostgreSQL.</Description>
 		<StaticWebAssetBasePath>\</StaticWebAssetBasePath>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".pack", ""))</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
