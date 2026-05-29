@@ -8,6 +8,7 @@
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
     <File Path="postgresql.png" />
+    <File Path="Umbraco18.www/Directory.Packages.props" />
   </Folder>
   <Folder Name="/Solution Items/core/">
     <File Path="Our.Umbraco.PostgreSql/wwwroot/App_Plugins/Our.Umbraco.PostgreSql/umbraco-package.json" />
@@ -19,4 +20,5 @@
     <File Path="Our.Umbraco.PostgreSql.Umbraco.License/wwwroot/App_Plugins/Our.Umbraco.PostgreSql.Umbraco.License/umbraco-package.json" />
   </Folder>
   <Project Path="Umbraco17.www/Umbraco17.www.csproj" />
+  <Project Path="Umbraco18.www/Umbraco18.www.csproj" Id="29fdd9d7-06d6-4321-abc1-936810aa2c10" />
 </Solution>
