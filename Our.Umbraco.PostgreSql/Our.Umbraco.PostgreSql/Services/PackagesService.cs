@@ -81,31 +81,7 @@ namespace Our.Umbraco.PostgreSql.Services
 
                 // version 18.0.0-rc
                 cmd.CommandText = cmd.CommandText
-                         .Replace(".\"Text\"", ".\"text\"")
-                         .Replace(".\"Type\"", ".\"type\"");
-
-                if (cmd.CommandText.Contains('['))
-                {
-                    cmd.CommandText = cmd.CommandText
-                         .Replace("[", "\"")
-                         .Replace("]", "\"")
-                         .Replace("CAST(NULL AS nvarchar(255))", "NULL")
-                         .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
-                         .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
-                         .Replace("IsA", "isA")
-                         .Replace("IsL", "isL")
-                         .Replace("Last", "last");
-                }
-                else if (cmd.CommandText.StartsWith("UPDATE umbracoPropertyData"))
-                {
-                    const string umbracoPropertyDataSql = "\r\nUPDATE umbracoPropertyData\r\nSET textValue = varcharValue, varcharValue = NULL\r\nWHERE propertyTypeId IN (\r\n    SELECT id\r\n    FROM cmsPropertyType\r\n    WHERE dataTypeId IN (\r\n        SELECT nodeId\r\n        FROM umbracoDataType\r\n        WHERE propertyEditorAlias = 'Umbraco.Label'\r\n        AND dbType = 'Ntext'\r\n    )\r\n)\r\nAND varcharValue IS NOT NULL";
-
-                    if (cmd.CommandText.Equals(umbracoPropertyDataSql))
-                    {
-                        cmd.CommandText = "UPDATE \"umbracoPropertyData\" SET \"textValue\" = \"varcharValue\", \"varcharValue\" = NULL WHERE \"propertyTypeId\" IN (SELECT \"id\" FROM \"cmsPropertyType\" WHERE \"dataTypeId\" IN (SELECT \"nodeId\" FROM \"umbracoDataType\" WHERE \"propertyEditorAlias\" = 'Umbraco.Label' AND \"dbType\" = 'Ntext')) AND \"varcharValue\" IS NOT NULL";
-                        cmdFixed = true;
-                    }
-                }
+                        .Replace(".\"Text\"", ".\"text\"");
 
                 if (cmdFixed)
                 {
