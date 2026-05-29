@@ -89,11 +89,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
         : this(globalSettings, StaticApplicationLogging.CreateLogger<PostgreSqlSyntaxProvider>()) { }
 
     public PostgreSqlSyntaxProvider(IOptions<PostgreSqlOptions> globalSettings, ILogger<PostgreSqlSyntaxProvider> logger)
-    {
-        _postgreSqlOptions = globalSettings;
-
-        _logger = logger;
-    }
+        : this(globalSettings, logger, null) { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PostgreSqlSyntaxProvider"/> class.
@@ -737,7 +733,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
 
         var alterSql = new StringBuilder();
         alterSql.Append(FormatString(column));
-        alterSql.Append(" ");
+        alterSql.Append(" TYPE ");
         alterSql.Append(FormatType(column));
         alterSql.Append(" ");
         alterSql.Append(FormatNullable(column));
@@ -808,7 +804,19 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     public override string DropColumn => "ALTER TABLE {0} DROP COLUMN {1} CASCADE";
 
     /// <inheritdoc />
-    public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1} TYPE {2}";
+    public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1}";
+
+    /// <inheritdoc />
+    public override string FormatAlterColumnDefinition(ColumnDefinition column)
+    {
+        var alterSql = new StringBuilder();
+        alterSql.Append(FormatString(column));
+        alterSql.Append(" TYPE ");
+        alterSql.Append(FormatType(column));
+        alterSql.Append(" ");
+        alterSql.Append(FormatNullable(column));
+        return alterSql.ToString();
+    }
 
     /// <inheritdoc />
     public override string RenameColumn => "ALTER TABLE {0} RENAME COLUMN {1} TO {2}";
