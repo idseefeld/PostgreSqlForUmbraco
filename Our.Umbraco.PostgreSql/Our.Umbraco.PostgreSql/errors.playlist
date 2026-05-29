@@ -4,50 +4,6 @@
       <Property Name="Solution" />
       <Rule Match="Any">
         <Rule Match="All">
-          <Property Name="Project" Value="Umbraco.Tests.UnitTests.PostgreSql" />
-          <Rule Match="Any">
-            <Rule Match="All">
-              <Property Name="Namespace" Value="Umbraco.Cms.Tests.UnitTests.PostgreSql.Umbraco.Infrastructure.Migrations" />
-              <Rule Match="Any">
-                <Rule Match="All">
-                  <Property Name="Class" Value="AlterMigrationTests" />
-                  <Rule Match="Any">
-                    <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.UnitTests.PostgreSql.Umbraco.Infrastructure.Migrations.AlterMigrationTests.AlterColumn" />
-                      <Rule Match="Any">
-                        <Property Name="DisplayName" Value="AlterColumn" />
-                      </Rule>
-                    </Rule>
-                    <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.UnitTests.PostgreSql.Umbraco.Infrastructure.Migrations.AlterMigrationTests.CreateColumn" />
-                      <Rule Match="Any">
-                        <Property Name="DisplayName" Value="CreateColumn" />
-                      </Rule>
-                    </Rule>
-                    <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.UnitTests.PostgreSql.Umbraco.Infrastructure.Migrations.AlterMigrationTests.Drop_Foreign_Key" />
-                      <Rule Match="Any">
-                        <Property Name="DisplayName" Value="Drop_Foreign_Key" />
-                      </Rule>
-                    </Rule>
-                  </Rule>
-                </Rule>
-                <Rule Match="All">
-                  <Property Name="Class" Value="MigrationPlanTests" />
-                  <Rule Match="Any">
-                    <Rule Match="All">
-                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.UnitTests.PostgreSql.Umbraco.Infrastructure.Migrations.MigrationPlanTests.CanExecute" />
-                      <Rule Match="Any">
-                        <Property Name="DisplayName" Value="CanExecute" />
-                      </Rule>
-                    </Rule>
-                  </Rule>
-                </Rule>
-              </Rule>
-            </Rule>
-          </Rule>
-        </Rule>
-        <Rule Match="All">
           <Property Name="Project" Value="Umbraco.Tests.Integration" />
           <Rule Match="Any">
             <Rule Match="All">
