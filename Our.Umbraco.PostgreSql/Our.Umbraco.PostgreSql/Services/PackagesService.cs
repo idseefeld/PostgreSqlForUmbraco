@@ -89,7 +89,6 @@ namespace Our.Umbraco.PostgreSql.Services
                     cmd.CommandText = cmd.CommandText
                          .Replace("[", "\"")
                          .Replace("]", "\"")
-                         .Replace("\"umbracoNode\".\"Text\"", "\"umbracoNode\".\"text\"")
                          .Replace("CAST(NULL AS nvarchar(255))", "NULL")
                          .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
                          .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
