@@ -144,7 +144,7 @@ namespace Our.Umbraco.PostgreSql.Locking
                     throw new PanicException("Could not find a database");
                 }
 
-                if (!db.InTransaction)
+                if (db.InTransaction is false || db.Transaction is null)
                 {
                     throw new InvalidOperationException(
                         "PostgreSqlDistributedLockingMechanism requires a transaction to function.");
@@ -189,13 +189,13 @@ namespace Our.Umbraco.PostgreSql.Locking
                     throw new PanicException("Could not find a database");
                 }
 
-                if (!db.InTransaction)
+                if (db.InTransaction is false || db.Transaction is null)
                 {
                     throw new InvalidOperationException(
                         "PostgreSqlDistributedLockingMechanism requires a transaction to function.");
                 }
 
-                if (db.Transaction is not null && db.Transaction.IsolationLevel < IsolationLevel.ReadCommitted)
+                if (db.Transaction.IsolationLevel < IsolationLevel.ReadCommitted)
                 {
                     throw new InvalidOperationException(
                         "A transaction with minimum ReadCommitted isolation level is required.");

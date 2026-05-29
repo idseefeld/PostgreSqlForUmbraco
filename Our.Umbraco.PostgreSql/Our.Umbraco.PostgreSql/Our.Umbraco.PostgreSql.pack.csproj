@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<PackageId>Our.Umbraco.PostgreSql</PackageId>
@@ -37,7 +37,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Npgsql" Version="10.0.2" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[17.4.0,17.5.0)" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="[18.0.0,19.0.0)" />
 	</ItemGroup>
 
 	<ItemGroup>

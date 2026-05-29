@@ -1,7 +1,7 @@
 {
   "id": "Our.Umbraco.PostgreSql",
   "name": "Umbraco ​C​M​S - ​Persistence - ​Postgre​S​Q​L",
-  "version": "17.5.0-rc",
+  "version": "18.0.0-rc",
   "allowPackageTelemetry": true,
   "extensions": []
 }

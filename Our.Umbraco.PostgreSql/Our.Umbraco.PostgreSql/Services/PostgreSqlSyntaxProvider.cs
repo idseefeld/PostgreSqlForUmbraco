@@ -1,9 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using NPoco;
-using Our.Umbraco.PostgreSql.Caching;
-using Our.Umbraco.PostgreSql.Mappers;
 using System.Data;
 using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
@@ -12,7 +6,14 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NPoco;
+using Our.Umbraco.PostgreSql.Caching;
+using Our.Umbraco.PostgreSql.Mappers;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence.DatabaseAnnotations;
@@ -87,7 +88,12 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     public PostgreSqlSyntaxProvider(IOptions<PostgreSqlOptions> globalSettings)
         : this(globalSettings, StaticApplicationLogging.CreateLogger<PostgreSqlSyntaxProvider>()) { }
 
+    public PostgreSqlSyntaxProvider(IOptions<PostgreSqlOptions> globalSettings, ILogger<PostgreSqlSyntaxProvider> logger)
+    {
+        _postgreSqlOptions = globalSettings;
 
+        _logger = logger;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PostgreSqlSyntaxProvider"/> class.
