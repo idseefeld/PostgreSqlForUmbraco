@@ -9,7 +9,7 @@ namespace Our.Umbraco.PostgreSql.Services
 {
     public class PackagesService : IPackagesService
     {
-        private readonly SemVersion _minRequiredCoreVersion = new SemVersion(17, 4, 0);
+        private readonly SemVersion _minRequiredCoreVersion = new SemVersion(18, 0, 2);
 
         private readonly IServerInformationService _serverInformationService;
         private readonly IList<IPostgreSqlFixService> _fixPackageServices;
@@ -79,11 +79,17 @@ namespace Our.Umbraco.PostgreSql.Services
             {
                 var oldCommandText = cmd.CommandText;
 
+                // version 18.0.0-rc
+                cmd.CommandText = cmd.CommandText
+                         .Replace(".\"Text\"", ".\"text\"")
+                         .Replace(".\"Type\"", ".\"type\"");
+
                 if (cmd.CommandText.Contains('['))
                 {
                     cmd.CommandText = cmd.CommandText
                          .Replace("[", "\"")
                          .Replace("]", "\"")
+                         .Replace("\"umbracoNode\".\"Text\"", "\"umbracoNode\".\"text\"")
                          .Replace("CAST(NULL AS nvarchar(255))", "NULL")
                          .Replace("CAST(NULL AS datetime)", "NULL::TIMESTAMPTZ")
                          .Replace("CAST(NULL AS uniqueidentifier)", "NULL::UUID")
