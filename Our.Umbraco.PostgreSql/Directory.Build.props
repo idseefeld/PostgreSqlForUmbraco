@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 	<PropertyGroup>
-		<VersionPrefix>17.5.0-rc</VersionPrefix>
+		<VersionPrefix>17.5.0</VersionPrefix>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>postgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -19,6 +19,7 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageOutputPath>Z:\nuget.local</PackageOutputPath>
 	</PropertyGroup>
 	
 	<ItemGroup>
