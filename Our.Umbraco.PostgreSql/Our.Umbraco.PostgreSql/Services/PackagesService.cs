@@ -9,8 +9,6 @@ namespace Our.Umbraco.PostgreSql.Services
 {
     public class PackagesService : IPackagesService
     {
-        private readonly SemVersion _minRequiredCoreVersion = new SemVersion(18, 0, 2);
-
         private readonly IServerInformationService _serverInformationService;
         private readonly IList<IPostgreSqlFixService> _fixPackageServices;
         private readonly ILogger<PackagesService> _logger;
@@ -70,7 +68,7 @@ namespace Our.Umbraco.PostgreSql.Services
         private bool FixCommandInternal(DbCommand cmd)
         {
             var cmdFixed = false;
-            if (MinUmbracoVersionRequired(_minRequiredCoreVersion))
+            if (MinUmbracoVersionRequired(new SemVersion(18, 0, 2)))
             {
                 return cmdFixed;
             }
