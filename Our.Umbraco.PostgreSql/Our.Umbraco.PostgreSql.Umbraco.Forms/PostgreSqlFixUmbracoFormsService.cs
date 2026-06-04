@@ -238,6 +238,21 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
+                else if (cmd.CommandText.StartsWith("SELECT rf.\"Record\" AS \"RecordId\", rf.\"FieldId\" AS \"FieldId\", dt.\"Value\" AS \"Value\"\n                    FROM UFRecordDataDateTime dt\n                    INNER JOIN UFRecordFields rf ON dt.\"Key\" = rf.\"Key\"\n                    WHERE rf.\"Record\" IN ("))
+                {
+                    var sb = new StringBuilder("SELECT rf.\"Record\" AS \"RecordId\", rf.\"FieldId\" AS \"FieldId\", dt.\"Value\" AS \"Value\" FROM \"UFRecordDataDateTime\" dt INNER JOIN \"UFRecordFields\" rf ON dt.\"Key\" = rf.\"Key\" WHERE rf.\"Record\" IN (");
+                    for (int i = 0; i < cmd.Parameters.Count; i++)
+                    {
+                        sb.Append($"@p{i}");
+                        if (i < cmd.Parameters.Count - 1)
+                        {
+                            sb.Append(",");
+                        }
+                    }
+                    sb.Append(")");
+                    cmd.CommandText = sb.ToString();
+                    return success;
+                }
                 else if (cmd.CommandText.Contains("FROM UFWorkflows"))
                 {
                     cmd.CommandText = cmd.CommandText
@@ -253,7 +268,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 else
                 {
                     var cmdLength = cmd.CommandText.Length;
-                    var useLength = false; // length checking is not sufficient 
+                    var useLength = false; // length checking is not sufficient
                     var switchText = useLength
                         ? cmdLength.ToString()
                         : cmd.CommandText;
