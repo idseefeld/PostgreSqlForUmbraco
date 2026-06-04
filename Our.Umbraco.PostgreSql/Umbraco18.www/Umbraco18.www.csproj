@@ -5,10 +5,6 @@
     <Nullable>enable</Nullable>
     <CompressionEnabled>false</CompressionEnabled> <!-- Disable compression. E.g. for umbraco backoffice files. These files should be precompressed by node and not let dotnet handle it -->
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="Views\Partials\blockgrid\Components\fullLayout.cshtml" />
-    <Content Remove="Views\Partials\blockgrid\Components\twoColumnLayout.cshtml" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Umbraco.Cms" />
@@ -17,6 +13,7 @@
   <ItemGroup>
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" />
+    <PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" />
     <PackageReference Include="Umbraco.Licenses" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.pack.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />

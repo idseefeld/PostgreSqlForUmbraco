@@ -2,19 +2,26 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Page>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = null;
+    Layout = null;
 
     var images = Model.Pictures?.ToArray() ?? [];
-}
-<h1>@Model.Headline</h1>
 
-@foreach (var img in images)
+    var hasGrid = Model.Grid?.Any() ?? false;
+}
+
+@if (hasGrid)
 {
-    <img src="@img.Url()" alt="@img.Name" width="100" />
+    @await Html.GetBlockGridHtmlAsync(Model.Grid)
 }
+else
+{
+    <h1>@Model.Headline</h1>
 
-@Model.Value("bodytext")
+    @foreach (var img in images)
+    {
+        <img src="@img.Url()" alt="@img.Name" width="100" />
+    }
 
-<hr />
+    @Model.Value("bodytext")
 
-@await Html.GetBlockGridHtmlAsync(Model.Grid)
+}
