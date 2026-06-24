@@ -3,25 +3,8 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = null;
-
-    var images = Model.Pictures?.ToArray() ?? [];
-
-    var hasGrid = Model.Grid?.Any() ?? false;
 }
 
-@if (hasGrid)
-{
-    @await Html.GetBlockGridHtmlAsync(Model.Grid)
-}
-else
-{
-    <h1>@Model.Headline</h1>
+<h1>@Model.Headline</h1>
 
-    @foreach (var img in images)
-    {
-        <img src="@img.Url()" alt="@img.Name" width="100" />
-    }
-
-    @Model.Value("bodytext")
-
-}
+@Model.Bodytext
