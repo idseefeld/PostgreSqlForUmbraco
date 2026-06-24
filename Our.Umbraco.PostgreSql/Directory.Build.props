@@ -13,7 +13,7 @@
 		<Nullable>enable</Nullable>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>
-		<Version>$(VersionPrefix)-rc</Version>
+		<Version>$(VersionPrefix)</Version>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 	
