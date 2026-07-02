@@ -1,0 +1,7 @@
+{
+  "id": "Our.Umbraco.PostgreSql.Umbraco.Commerce",
+  "name": "Umbraco CMS - Persistence - Umbraco Commerce - PostgreSQL",
+  "version": "17.5.1",
+  "allowPackageTelemetry": true,
+  "extensions": []
+}
