@@ -1,25 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>Our.Umbraco.PostgreSql.Umbraco.Commerce</PackageId>
+    <Company>-</Company>
+    <Authors>Dirk Seefeld</Authors>
+    <PackageIcon>upostgresqlfix.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Product>PostgreSQL Provider for Umbraco Commerce</Product>
+    <PackageTags>umbraco, postgresql, community</PackageTags>
+    <Title>Umbraco CMS - Persistence - Umbraco.Commerce - PostgreSQL</Title>
+    <Description>Adds support for Umbraco.Commerce with PostgreSQL.</Description>
+    <StaticWebAssetBasePath>\</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="readme.md">
-      <PackagePath>\</PackagePath>
-      <Pack>true</Pack>
-    </Content>
+    <Content Include="readme.md" Pack="true" PackagePath="\" />
+    <Content Include="..\Our.Umbraco.PostgreSql\upostgresqlfix.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
-    <PackageReference Include="Umbraco.Commerce.Persistence" Version="18.0.0" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.csproj" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Umbraco.Commerce.Persistence" />
   </ItemGroup>
 
 </Project>
