@@ -7,16 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ExampleJsInterop.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="readme.md">
       <PackagePath>\</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
-
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -25,10 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
     <PackageReference Include="Umbraco.Commerce.Persistence" Version="18.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
