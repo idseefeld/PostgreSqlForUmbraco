@@ -1,0 +1,54 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Umbraco.Tests.Integration" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="GetElementPermissionsCurrentUserControllerTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current.GetElementPermissionsCurrentUserControllerTests.As_Admin_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Admin_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current.GetElementPermissionsCurrentUserControllerTests.As_Editor_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Editor_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current.GetElementPermissionsCurrentUserControllerTests.As_Sensitive_Data_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Sensitive_Data_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current.GetElementPermissionsCurrentUserControllerTests.As_Translator_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Translator_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.User.Current.GetElementPermissionsCurrentUserControllerTests.As_Writer_I_Have_Specified_Access" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="As_Writer_I_Have_Specified_Access" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
