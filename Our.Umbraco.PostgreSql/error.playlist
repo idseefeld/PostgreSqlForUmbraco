@@ -1,0 +1,202 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Umbraco.Tests.Integration" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Services" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="UserStartNodeEntitiesServiceElementTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.ManagementApi.Services.UserStartNodeEntitiesServiceElementTests.RootUserAccessEntities_ChildContainersAsStartNode_YieldsChildRoots_AsNotAllowed" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="RootUserAccessEntities_ChildContainersAsStartNode_YieldsChildRoots_AsNotAllowed" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="MigrateSingleBlockListTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Empty_Single_Block_List_Without_Failing" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Empty_Single_Block_List_Without_Failing" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Nested_In_Block_Grid" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Nested_In_Block_Grid" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Nested_In_Block_List" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Nested_In_Block_List" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Nested_In_Block_List_Stored_With_Pascal_Cased_Property_Names" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Nested_In_Block_List_Stored_With_Pascal_Cased_Property_Names" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Nested_In_Rich_Text" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Nested_In_Rich_Text" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Nested_Two_Levels_Deep" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Nested_Two_Levels_Deep" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Used_Directly_On_A_Document_Type" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Used_Directly_On_A_Document_Type" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V_18_0_0.MigrateSingleBlockListTests.Can_Migrate_Single_Block_List_Without_Losing_Sibling_Values" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_Single_Block_List_Without_Losing_Sibling_Values" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V17_0_0" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="SetDateDefaultsToUtcNowTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V17_0_0.SetDateDefaultsToUtcNowTests.Can_Migrate_When_Default_Constraint_Has_A_System_Generated_Name" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_When_Default_Constraint_Has_A_System_Generated_Name" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V17_0_0.SetDateDefaultsToUtcNowTests.Can_Migrate_When_Default_Constraint_Has_The_Expected_Name" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_When_Default_Constraint_Has_The_Expected_Name" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Migrations.Upgrade.V17_0_0.SetDateDefaultsToUtcNowTests.Can_Migrate_When_Default_Constraint_Is_Missing" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Migrate_When_Default_Constraint_Is_Missing" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Persistence" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="TruncateTableTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Persistence.TruncateTableTests.Can_Truncate_A_Table" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="Can_Truncate_A_Table" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Persistence.Repositories" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ElementRepositoryTest" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Infrastructure.Persistence.Repositories.ElementRepositoryTest.PropertyDataAssignedCorrectly" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="PropertyDataAssignedCorrectly" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.IndexService" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="VariantDocumentTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.IndexService.VariantDocumentTests.CanIndexInvariantProperty" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanIndexInvariantProperty(&quot;invariantdecimalproperty&quot;,&quot;decimals&quot;,12.4552d,&quot;da-DK&quot;)" />
+                        <Property Name="DisplayName" Value="CanIndexInvariantProperty(&quot;invariantdecimalproperty&quot;,&quot;decimals&quot;,12.4552d,&quot;en-US&quot;)" />
+                        <Property Name="DisplayName" Value="CanIndexInvariantProperty(&quot;invariantdecimalproperty&quot;,&quot;decimals&quot;,12.4552d,&quot;ja-JP&quot;)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="InvariantFacetsTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService.InvariantFacetsTests.CanSearchDecimalExactFacet" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanSearchDecimalExactFacet(False)" />
+                        <Property Name="DisplayName" Value="CanSearchDecimalExactFacet(True)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="InvariantSortingTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService.InvariantSortingTests.CanSortDecimals" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanSortDecimals(False,Ascending)" />
+                        <Property Name="DisplayName" Value="CanSortDecimals(True,Descending)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService.InvariantSortingTests.CanSortIntegers" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanSortIntegers(Ascending)" />
+                        <Property Name="DisplayName" Value="CanSortIntegers(Descending)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
