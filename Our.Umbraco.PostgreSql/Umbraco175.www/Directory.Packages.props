@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Our.Umbraco.PostgreSql" Version="17.5.1" />
+    <PackageVersion Include="Our.Umbraco.PostgreSql.Umbraco.Forms" Version="17.5.1" />
+    <PackageVersion Include="Umbraco.Cms" Version="17.5.3" />
+    <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="17.5.3" />
+    <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
+    <PackageVersion Include="Umbraco.Forms" Version="17.4.7" />
+    <PackageVersion Include="uSync" Version="17.3.6" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,43 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Forms.Web
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@Model.Name</title>
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/bootstrap.5.3.8.css" rel="stylesheet">
+
+    <link href="~/styles/wysiwyg-blockgrid.min.css" rel="stylesheet" />
+
+    @Html.RenderUmbracoFormDependencies(Url)
+</head>
+<body id="top">
+    <div id="canvas">
+
+        <header>
+            @await Html.PartialAsync("Menu")
+        </header>
+
+        @RenderBody()
+
+        <footer>
+            <a href="/">EN</a> | <a href="/de">DE</a>
+            - <a href="/umbraco" target="_blank">backoffice</a>
+        </footer>
+
+    </div>
+    <script src="/scripts/boostrap.5.3.8.js"></script>
+
+    @if (Context.Items.TryGetValue("UmbracoForms", out object? formIdsObject) && formIdsObject is IEnumerable<Guid> formIds)
+    {
+        foreach (var formId in formIds)
+        {
+            @await Component.InvokeAsync("RenderFormScripts", new { formId, theme = "default" })
+        }
+    }
+</body>
+</html>
