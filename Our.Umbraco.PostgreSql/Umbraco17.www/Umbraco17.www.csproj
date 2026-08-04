@@ -13,20 +13,22 @@
 	<ItemGroup>
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-		<PackageReference Include="Umbraco.Cms" Version="17.5.0-rc" />
-		<PackageReference Include="Umbraco.Commerce" Version="17.1.5" />
-		<PackageReference Include="Umbraco.Community.WysiwgUmbracoCommunityExtensions" Version="17.0.4" />
-		<PackageReference Include="Umbraco.Forms" Version="17.4.0" />
+		<PackageReference Include="Umbraco.Cms" Version="17.6.0-rc2" />
+		<PackageReference Include="Umbraco.Forms" Version="17.4.7" />
 		<PackageReference Include="uSync" Version="17.3.2" />
-		<PackageReference Include="uSync.Forms" Version="17.0.0" />
-		<ProjectReference Include="..\Our.Umbraco.PostgreSql.Commerce\Our.Umbraco.PostgreSql.Commerce.pack.csproj" />
+		<PackageReference Include="uSync.Forms" Version="17.1.0" />
 		<ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="uSync\" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<!-- Razor files are needed for the backoffice to work correctly -->
 		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+		<UserSecretsId>6186a1d0-106d-4a8b-951c-bae031e66312</UserSecretsId>
 	</PropertyGroup>
 
 
