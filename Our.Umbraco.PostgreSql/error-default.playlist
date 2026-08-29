@@ -1,0 +1,47 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Umbraco.Tests.Integration" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.IndexService" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="VariantDocumentTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.IndexService.VariantDocumentTests.CanIndexInvariantProperty" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanIndexInvariantProperty(&quot;invariantdecimalproperty&quot;,&quot;decimals&quot;,12.4552d,&quot;en-US&quot;)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="InvariantFacetsTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Umbraco.Cms.Tests.Integration.Umbraco.Search.Provider.Examine.Tests.ContentTests.SearchService.InvariantFacetsTests.CanSearchDecimalExactFacet" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CanSearchDecimalExactFacet(False)" />
+                        <Property Name="DisplayName" Value="CanSearchDecimalExactFacet(True)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
