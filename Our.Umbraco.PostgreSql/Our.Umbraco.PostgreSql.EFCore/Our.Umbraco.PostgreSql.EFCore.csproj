@@ -24,7 +24,10 @@
 	<ItemGroup>
 		<Content Include="readme.md" Pack="true" PackagePath="\" />
 		<Content Include="..\Our.Umbraco.PostgreSql\uPostgresql.png" Pack="true" PackagePath="" Visible="false" />
-	  <ProjectReference Include="..\..\..\Umbraco.Cms.Persistence.EFCore\Umbraco.Cms.Persistence.EFCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Umbraco.Infrastructure\Umbraco.Infrastructure.csproj" />
 	</ItemGroup>
 
 
