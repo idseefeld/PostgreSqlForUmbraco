@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Our.Umbraco.PostgreSql.EFCore.Services;
 using Umbraco.Cms.Core.Configuration.Models;
+using Umbraco.Cms.Infrastructure.Persistence.EFCore.Extensions;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.EFCore.Extensions
@@ -22,7 +23,7 @@ namespace Our.Umbraco.PostgreSql.EFCore.Extensions
             Action<IServiceProvider, DbContextOptionsBuilder, string?, string?>? optionsAction)
             where T : PostgreSqlDbContext
         {
-            return services.AddUmbracoDbContext<T>(optionsAction);
+            return services.AddUmbracoDbContext<T>(optionsAction, shareUmbracoConnection: true);
         }
     }
 }

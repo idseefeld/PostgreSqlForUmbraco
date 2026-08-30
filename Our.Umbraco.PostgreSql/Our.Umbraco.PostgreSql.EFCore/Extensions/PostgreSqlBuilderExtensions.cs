@@ -4,6 +4,8 @@ using Our.Umbraco.PostgreSql.EFCore.Locking;
 using Our.Umbraco.PostgreSql.EFCore.Services;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.DistributedLocking;
+using Umbraco.Cms.Infrastructure.Persistence.EFCore;
+using Umbraco.Cms.Infrastructure.Persistence.EFCore.Migrations;
 using Umbraco.Cms.Persistence.EFCore;
 using Umbraco.Cms.Persistence.EFCore.Migrations;
 using Umbraco.Extensions;
@@ -22,9 +24,16 @@ public static class PostgreSqlBuilderExtensions
     {
         builder.Services.AddSingleton<IMigrationProvider, PostgreSqlMigrationProvider>();
         builder.Services.AddSingleton<IMigrationProviderSetup, PostgreSqlMigrationProviderSetup>();
+        builder.Services.AddSingleton<IDatabaseConfigurator, PostgreSqlDatabaseConfigurator>();
 
-        builder.Services.AddSingleton<IDistributedLockingMechanism, PostgreSqlEFCoreDistributedLockingMechanism<UmbracoDbContext>>();
+        builder.AddDbContextRegistrar<PostgreSqlDbContextServiceRegistrar>();
+
+        AddCustomizers(builder);
 
         return builder;
     }
+
+    private static void AddCustomizers(IUmbracoBuilder builder) => builder
+            .AddEFCoreModelCustomizer<PostgreSqlNodeDtoModelCustomizer>()
+            .AddEFCoreModelCustomizer<PostgreSqlRedirectUrlDtoModelCustomizer>();
 }

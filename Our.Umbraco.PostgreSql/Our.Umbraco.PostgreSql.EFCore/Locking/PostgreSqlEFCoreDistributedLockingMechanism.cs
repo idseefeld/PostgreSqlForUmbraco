@@ -12,9 +12,9 @@ using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.DistributedLocking;
 using Umbraco.Cms.Core.DistributedLocking.Exceptions;
 using Umbraco.Cms.Core.Exceptions;
-using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Infrastructure.Persistence.EFCore.Extensions;
+using Umbraco.Cms.Infrastructure.Persistence.EFCore.Scoping;
 using Umbraco.Cms.Infrastructure.Scoping;
-using Umbraco.Cms.Persistence.EFCore.Scoping;
 using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.EFCore.Locking;
@@ -35,22 +35,19 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
     private ConnectionStrings _connectionStrings;
     private GlobalSettings _globalSettings;
     private readonly ILogger<PostgreSqlEFCoreDistributedLockingMechanism<T>> _logger;
-    private readonly IScopeAccessor _scopeAccessor;
-    private readonly Lazy<IEFCoreScopeAccessor<T>> _scopeAccessorEFCore; // Hooray it's a circular dependency.
+    private readonly Lazy<IEFCoreScopeAccessor<T>> _scopeAccessor;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostgreSqlEFCoreDistributedLockingMechanism{T}"/> class.
     /// </summary>
     public PostgreSqlEFCoreDistributedLockingMechanism(
         ILogger<PostgreSqlEFCoreDistributedLockingMechanism<T>> logger,
-        IScopeAccessor scopeAccessor,
-        Lazy<IEFCoreScopeAccessor<T>> scopeAccessorEFCore,
+        Lazy<IEFCoreScopeAccessor<T>> scopeAccessor,
         IOptionsMonitor<GlobalSettings> globalSettings,
         IOptionsMonitor<ConnectionStrings> connectionStrings)
     {
         _logger = logger;
         _scopeAccessor = scopeAccessor;
-        _scopeAccessorEFCore = scopeAccessorEFCore;
         _globalSettings = globalSettings.CurrentValue;
         _connectionStrings = connectionStrings.CurrentValue;
         //_connectionStrings.ProviderName = Constants.ProviderName; // force provider name to our provider
@@ -58,24 +55,24 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
         connectionStrings.OnChange(x => _connectionStrings = x);
     }
 
-    public bool HasActiveRelatedScope => _scopeAccessorEFCore.Value.AmbientScope is not null;
+    public bool HasActiveRelatedScope => _scopeAccessor.Value.AmbientScope is not null;
 
     /// <inheritdoc />
     public bool Enabled => _connectionStrings.IsConnectionStringConfigured() &&
-                           string.Equals(_connectionStrings.ProviderName, Constants.ProviderName, StringComparison.InvariantCultureIgnoreCase) && _scopeAccessorEFCore.Value.AmbientScope is not null;
+                           string.Equals(_connectionStrings.ProviderName, Constants.ProviderName, StringComparison.InvariantCultureIgnoreCase) && _scopeAccessor.Value.AmbientScope is not null;
 
     /// <inheritdoc />
     public IDistributedLock ReadLock(int lockId, TimeSpan? obtainLockTimeout = null)
     {
         obtainLockTimeout ??= _globalSettings.DistributedLockingReadLockDefaultTimeout;
-        return new PostgreSqlDistributedLock(this, _scopeAccessor, lockId, DistributedLockType.ReadLock, obtainLockTimeout.Value);
+        return new PostgreSqlDistributedLock(this, lockId, DistributedLockType.ReadLock, obtainLockTimeout.Value);
     }
 
     /// <inheritdoc />
     public IDistributedLock WriteLock(int lockId, TimeSpan? obtainLockTimeout = null)
     {
         obtainLockTimeout ??= _globalSettings.DistributedLockingWriteLockDefaultTimeout;
-        return new PostgreSqlDistributedLock(this, _scopeAccessor, lockId, DistributedLockType.WriteLock, obtainLockTimeout.Value);
+        return new PostgreSqlDistributedLock(this, lockId, DistributedLockType.WriteLock, obtainLockTimeout.Value);
     }
 
 
@@ -87,12 +84,10 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
 
         public PostgreSqlDistributedLock(
             PostgreSqlEFCoreDistributedLockingMechanism<T> parent,
-            IScopeAccessor scopeAccessor,
             int lockId,
             DistributedLockType lockType,
             TimeSpan timeout)
         {
-            _syntax = scopeAccessor.AmbientScope?.SqlContext.SqlSyntax ?? throw new InvalidOperationException("No SQL syntax available.");
             _parent = parent;
             _timeout = timeout;
             LockId = lockId;
@@ -141,7 +136,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "EF1002:Risk of vulnerability to SQL injection.", Justification = "<Pending>")]
         private void ObtainReadLock()
         {
-            IEFCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
+            IEFCoreScope<T>? scope = _parent._scopeAccessor.Value.AmbientScope
                 ?? throw new PanicException("No ambient scope");
 
             scope.ExecuteWithContextAsync<Task>(async dbContext =>
@@ -166,19 +161,15 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                 // 1. Removed WITH (REPEATABLEREAD) because PostgreSQL does not support this syntax.
                 // ToDo: check 2. PostgreSQL handles repeatable read at the transaction level, so ensure your transaction is started with the correct isolation level elsewhere in your code.
                 var selectCmd = $"SELECT value FROM {_syntax.GetQuotedTableName("umbracoLock")} WHERE id={LockId} FOR SHARE";
-                var number = await dbContext.Database.ExecuteScalarAsync<int?>(selectCmd);
+                var number = await dbContext.Database.ExecuteScalarAsync<int?>(selectCmd)
+                    ?? throw new ArgumentException(@$"LockObject with id={LockId} does not exist.", nameof(LockId));
 
-                if (number == null)
-                {
-                    // ensure we are actually locking!
-                    throw new ArgumentException(@$"LockObject with id={LockId} does not exist.", nameof(LockId));
-                }
             }).GetAwaiter().GetResult();
         }
 
         private void ObtainWriteLock()
         {
-            IEFCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
+            IEFCoreScope<T>? scope = _parent._scopeAccessor.Value.AmbientScope
                 ?? throw new PanicException("No ambient scope");
 
             scope.ExecuteWithContextAsync<Task>(async dbContext =>

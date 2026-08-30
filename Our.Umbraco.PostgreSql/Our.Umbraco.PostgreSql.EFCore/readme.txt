@@ -11,10 +11,12 @@
 # and not try to parse them as options.
 # Any extra arguments not used by dotnet ef are forwarded to the app.
 
-dotnet ef migrations add AddOpenIdDict -s src/Umbraco.Web.UI -p src/Our.Umbraco.PostgreSql.EFCore -c UmbracoDbContext
+dotnet ef migrations add Add20260830Migrations -s src/Umbraco.Web.UI -p src/PostgreSqlForUmbraco/Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.csproj -c UmbracoDbContext
+
+dotnet ef migrations add AddNoOpMirgation -s src/Umbraco.Web.UI -p src/PostgreSqlForUmbraco/Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.csproj -c UmbracoDbContext
 
 # remove
-dotnet ef migrations remove -s src/Umbraco.Web.UI -p src/Our.Umbraco.PostgreSql.EFCore -c UmbracoDbContext
+dotnet ef migrations remove -s src/Umbraco.Web.UI -p src/PostgreSqlForUmbraco/Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.csproj -c UmbracoDbContext
 
 # test
-dotnet ef migrations add Test -s src/Umbraco.Web.UI -p src/Our.Umbraco.PostgreSql.EFCore -c UmbracoDbContext
+dotnet ef migrations add Test -s src/Umbraco.Web.UI -p src/PostgreSqlForUmbraco/Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.EFCore/Our.Umbraco.PostgreSql.EFCore.csproj -c UmbracoDbContext
