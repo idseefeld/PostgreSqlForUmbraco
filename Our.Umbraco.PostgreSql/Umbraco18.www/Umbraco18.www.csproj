@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" />
     <PackageReference Include="Umbraco.Forms" />
     <PackageReference Include="Umbraco.Licenses" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
 
