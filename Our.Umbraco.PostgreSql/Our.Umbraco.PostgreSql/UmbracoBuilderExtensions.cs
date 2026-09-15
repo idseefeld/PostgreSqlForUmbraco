@@ -66,6 +66,9 @@ namespace Our.Umbraco.PostgreSql
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlExecutingInterceptor>());
 
+            builder.Services.TryAddEnumerable(ServiceDescriptor
+                .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoMigrationService>());
+
             DbProviderFactories.UnregisterFactory(Constants.ProviderName);
             DbProviderFactories.RegisterFactory(Constants.ProviderName, PostgreSqlDbProviderFactory.Instance);
 

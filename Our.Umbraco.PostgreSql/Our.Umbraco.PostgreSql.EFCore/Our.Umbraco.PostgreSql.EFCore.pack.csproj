@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
-	  <PackageReference Include="Umbraco.Cms.Persistence.EFCore" Version="[18.1.0,19.0.0)" />
+	  <PackageReference Include="Umbraco.Cms.Persistence.EFCore" Version="[18.2.0-rc,19.0.0)" />
 	</ItemGroup>
 
 

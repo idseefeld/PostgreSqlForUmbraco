@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Our.Umbraco.PostgreSql.Umbraco.Forms" />
     <PackageReference Include="Umbraco.Cms" />
   </ItemGroup>
 
