@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.csproj" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
-    <PackageReference Include="Umbraco.Commerce.Persistence" Version="18.0.0" />
+    <PackageReference Include="Umbraco.Commerce.Persistence" Version="17.1.5" />
   </ItemGroup>
 
 </Project>

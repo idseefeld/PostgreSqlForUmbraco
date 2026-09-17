@@ -1,20 +1,21 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Page>
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Page>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = null;
-
-    var images = Model.Pictures?.ToArray() ?? [];
+    Layout = "master.cshtml";
+    var formId = Model.Picker;
+    var theme = Model.Theme ?? "default";
 }
+
 <h1>@Model.Headline</h1>
 
-@foreach (var img in images)
+@Model.Bodytext
+
+@if (formId != null)
 {
-    <img src="@img.Url()" alt="@img.Name" width="100" />
+    @await Component.InvokeAsync("RenderForm", new
+    {
+        formId = formId,
+        theme = theme,
+        includeScripts = false
+    })
 }
-
-@Model.Value("bodytext")
-
-<hr />
-
-@await Html.GetBlockGridHtmlAsync(Model.Grid)

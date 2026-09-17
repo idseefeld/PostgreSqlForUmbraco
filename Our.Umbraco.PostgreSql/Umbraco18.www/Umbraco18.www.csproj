@@ -6,8 +6,10 @@
     <CompressionEnabled>false</CompressionEnabled> <!-- Disable compression. E.g. for umbraco backoffice files. These files should be precompressed by node and not let dotnet handle it -->
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Views\Partials\blockgrid\Components\fullLayout.cshtml" />
-    <Content Remove="Views\Partials\blockgrid\Components\twoColumnLayout.cshtml" />
+    <Content Remove="Views\master.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="Views\master.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +19,13 @@
   <ItemGroup>
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" />
-    <PackageReference Include="Umbraco.Licenses" />
+    <PackageReference Include="Umbraco.Forms" />
+    <ProjectReference Include="..\NPoco\src\NPoco.Abstractions\NPoco.Abstractions.csproj" />
+    <ProjectReference Include="..\NPoco\src\NPoco.SqlServer\NPoco.SqlServer.csproj" />
+    <ProjectReference Include="..\NPoco\src\NPoco\NPoco.csproj" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql\Our.Umbraco.PostgreSql.pack.csproj" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
   </ItemGroup>
@@ -26,6 +34,7 @@
   <PropertyGroup>
     <!-- Razor files are needed for the backoffice to work correctly -->
     <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+    <UserSecretsId>8ce144bb-5694-42ef-b639-f3a59ddf8019</UserSecretsId>
   </PropertyGroup>
 
 

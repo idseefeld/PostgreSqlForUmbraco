@@ -802,7 +802,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     public override string DropColumn => "ALTER TABLE {0} DROP COLUMN {1} CASCADE";
 
     /// <inheritdoc />
-    public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1} TYPE {2}";
+    public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1}";
 
     /// <inheritdoc />
     public override string RenameColumn => "ALTER TABLE {0} RENAME COLUMN {1} TO {2}";

@@ -141,7 +141,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "EF1002:Risk of vulnerability to SQL injection.", Justification = "<Pending>")]
         private void ObtainReadLock()
         {
-            IEfCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
+            IEFCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
                 ?? throw new PanicException("No ambient scope");
 
             scope.ExecuteWithContextAsync<Task>(async dbContext =>
@@ -178,7 +178,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
 
         private void ObtainWriteLock()
         {
-            IEfCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
+            IEFCoreScope<T>? scope = _parent._scopeAccessorEFCore.Value.AmbientScope
                 ?? throw new PanicException("No ambient scope");
 
             scope.ExecuteWithContextAsync<Task>(async dbContext =>
