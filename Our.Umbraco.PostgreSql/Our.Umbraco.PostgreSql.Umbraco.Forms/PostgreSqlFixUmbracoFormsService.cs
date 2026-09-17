@@ -66,6 +66,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 || cmd.CommandText.Contains(" UF")
                 || cmd.CommandText.Contains(" \"UF")
                 || cmd.CommandText.Contains("sys.indexes")
+                || cmd.CommandText.Contains("IX_UFRecords_MemberKey_Form")
                 || cmd.CommandText.Contains("IX_UFRecords_Form_Created")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
@@ -274,6 +275,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         : cmd.CommandText;
                     switch (switchText)
                     {
+                        case "SELECT DISTINCT UmbracoPageId\nFROM \"UFRecords\"\nWHERE ((\"UFRecords\".\"UmbracoPageId\" > @p0))\nAND (UmbracoPageKey IS NULL)":
+                            cmd.CommandText = "SELECT DISTINCT \"UmbracoPageId\" FROM \"UFRecords\" WHERE ((\"UFRecords\".\"UmbracoPageId\" > @p0)) AND (\"UmbracoPageKey\" IS NULL)";
+                            break;
+                        case "SELECT DISTINCT UmbracoPageId\r\nFROM \"UFRecords\"\r\nWHERE ((\"UFRecords\".\"UmbracoPageId\" > @p0))\r\nAND (UmbracoPageKey IS NULL)":
+                            cmd.CommandText = "SELECT DISTINCT \"UmbracoPageId\" FROM \"UFRecords\" WHERE ((\"UFRecords\".\"UmbracoPageId\" > @p0)) AND (\"UmbracoPageKey\" IS NULL)";
+                            break;
                         case "36":
                         case "SELECT MIN(\"Created\")\nFROM UFRecords":
                             cmd.CommandText = "SELECT MIN(\"Created\") FROM \"UFRecords\"";
@@ -643,6 +650,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
                 switch (cmd.CommandText)
                 {
+                    case "CREATE INDEX [IX_UFRecords_MemberKey_Form] ON [UFRecords] ([MemberKey], [Form])":
+                        cmd.CommandText = "CREATE INDEX \"IX_UFRecords_MemberKey_Form\" ON \"UFRecords\" (\"MemberKey\", \"Form\")";
+                        break;
                     case "CREATE INDEX \"IX_UFRecords_Form_Created_IncPageId\"\n            ON \"UFRecords\" (\"Form\", \"Created\")\n            INCLUDE (\"UmbracoPageId\")":
                         cmd.CommandText = "CREATE INDEX \"IX_UFRecords_Form_Created_IncPageId\" ON \"UFRecords\" (\"Form\", \"Created\") INCLUDE (\"UmbracoPageId\")";
                         break;
