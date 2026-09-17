@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Umbraco.Forms" Version="[18.1.2,19.0.0)" />
+	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="18.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>

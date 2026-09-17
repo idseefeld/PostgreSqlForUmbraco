@@ -8,6 +8,6 @@
     <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="18.0.0-beta2" />
     <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
     <PackageVersion Include="Umbraco.Licenses" Version="18.0.2" />
-    <PackageVersion Include="Umbraco.Forms" Version="18.1.1" />
+    <PackageVersion Include="Umbraco.Forms" Version="18.1.2" />
   </ItemGroup>
 </Project>
