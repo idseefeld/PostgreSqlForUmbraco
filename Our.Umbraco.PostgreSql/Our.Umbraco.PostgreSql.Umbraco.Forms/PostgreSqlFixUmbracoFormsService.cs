@@ -1,13 +1,14 @@
-using System.Data;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
 using Examine;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Our.Umbraco.PostgreSql.Services;
+using System.Data;
+using System.Data.Common;
+using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
 using Umbraco.Forms.Core.Models;
@@ -70,7 +71,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 || cmd.CommandText.Contains("IX_UFRecords_MemberKey_Form")
                 || cmd.CommandText.Contains("IX_UFRecords_Form_Created")
                 || cmd.CommandText.StartsWith("DELETE FROM umbracoNode")
-                || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation");
+                || cmd.CommandText.StartsWith("DELETE FROM umbracoRelation")
+                || cmd.CommandText.StartsWith("INSERT INTO umbracoLog (userId,")
+                || cmd.CommandText.StartsWith("SELECT DISTINCT NodeId FROM umbracoLog WHERE entityType");
 
         // Matches: UPDATE UFXxx SET col = col AT TIME ZONE 'Windows Tz' AT TIME ZONE 'UTC'
         private static readonly Regex SimpleAtTimeZonePattern = new(
@@ -217,7 +220,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 }
                 else if (
                     cmd.CommandText.StartsWith("SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (uniqueid IN (")
-                    || 
+                    ||
                     cmd.CommandText.StartsWith("SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"UmbracoPageKey\" AS \"UmbracoPageKey\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (uniqueid IN ("))
                 {
                     cmd.CommandText = cmd.CommandText
@@ -274,6 +277,52 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
+                else if (cmd.CommandText.Equals("SELECT DISTINCT NodeId FROM umbracoLog WHERE entityType = @p0"))
+                {
+                    cmd.CommandText = "SELECT DISTINCT \"NodeId\" FROM \"umbracoLog\" WHERE \"entityType\" = @p0";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT DISTINCT FormKey FROM UFFormVersions"))
+                {
+                    cmd.CommandText = "SELECT DISTINCT \"FormKey\" FROM \"UFFormVersions\"";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT * FROM UFForms f WHERE f.Trashed = 1 AND (f.FolderKey IS NULL OR NOT EXISTS (SELECT 1 FROM UFFolders fo WHERE fo.\"Key\" = f.FolderKey AND fo.Trashed = 1))"))
+                {
+                    cmd.CommandText = "SELECT * FROM \"UFForms\" f WHERE f.\"Trashed\" = true AND (f.\"FolderKey\" IS NULL OR NOT EXISTS (SELECT 1 FROM \"UFFolders\" fo WHERE fo.\"Key\" = f.\"FolderKey\" AND fo.\"Trashed\" = true))";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT Id, \"Key\", FormKey, Name, CreatedBy, CreateDate, PreventCleanup\nFROM UFFormVersions\nWHERE (FormKey = @p0)\nORDER BY CreateDate DESC, Id DESC"))
+                {
+                    cmd.CommandText = "SELECT \"Id\", \"Key\", \"FormKey\", \"Name\", \"CreatedBy\", \"CreateDate\", \"PreventCleanup\" FROM \"UFFormVersions\" WHERE(\"FormKey\" = @p0) ORDER BY \"CreateDate\" DESC, \"Id\" DESC";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT * FROM UFFolders fo WHERE fo.Trashed = 1 AND (fo.ParentKey IS NULL OR NOT EXISTS (SELECT 1 FROM UFFolders p WHERE p.\"Key\" = fo.ParentKey AND p.Trashed = 1))"))
+                {
+                    cmd.CommandText = "SELECT * FROM \"UFFolders\" fo WHERE fo.\"Trashed\" = true AND (fo.\"ParentKey\" IS NULL OR NOT EXISTS (SELECT 1 FROM \"UFFolders\" p WHERE p.\"Key\" = fo.\"ParentKey\" AND p.\"Trashed\" = true))";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT *\nFROM UFFormVersions\nWHERE (FormKey = @p0)\nORDER BY CreateDate DESC, Id DESC"))
+                {
+                    cmd.CommandText = "SELECT * FROM \"UFFormVersions\" WHERE(\"FormKey\" = @p0) ORDER BY \"CreateDate\" DESC, \"Id\" DESC";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT *\nFROM UFFormVersions\nWHERE (\"Key\" = @p0)"))
+                {
+                    cmd.CommandText = "SELECT * FROM \"UFFormVersions\" WHERE(\"Key\" = @p0)";
+                    return success;
+                }
+                else if (cmd.CommandText.Equals("SELECT \"UFRecords\".\"Id\" AS \"Id\", \"UFRecords\".\"Form\" AS \"Form\", \"UFRecords\".\"Created\" AS \"Created\", \"UFRecords\".\"Updated\" AS \"Updated\", \"UFRecords\".\"CurrentPage\" AS \"CurrentPage\", \"UFRecords\".\"UmbracoPageId\" AS \"UmbracoPageId\", \"UFRecords\".\"UmbracoPageKey\" AS \"UmbracoPageKey\", \"UFRecords\".\"IP\" AS \"IP\", \"UFRecords\".\"MemberKey\" AS \"MemberKey\", \"UFRecords\".\"UniqueId\" AS \"UniqueId\", \"UFRecords\".\"State\" AS \"StateAsString\", \"UFRecords\".\"RecordData\" AS \"RecordData\", \"UFRecords\".\"Culture\" AS \"Culture\", \"UFRecords\".\"AdditionalData\" AS \"AdditionalData\"\nFROM \"UFRecords\"\nWHERE (Form = @p0)\nORDER BY (\"UFRecords\".\"Id\")\nLIMIT @p1 OFFSET @p2"))
+                {
+                    cmd.CommandText = "SELECT \"UFRecords\".\"Id\" AS \"Id\", \"UFRecords\".\"Form\" AS \"Form\", \"UFRecords\".\"Created\" AS \"Created\", \"UFRecords\".\"Updated\" AS \"Updated\", \"UFRecords\".\"CurrentPage\" AS \"CurrentPage\", \"UFRecords\".\"UmbracoPageId\" AS \"UmbracoPageId\", \"UFRecords\".\"UmbracoPageKey\" AS \"UmbracoPageKey\", \"UFRecords\".\"IP\" AS \"IP\", \"UFRecords\".\"MemberKey\" AS \"MemberKey\", \"UFRecords\".\"UniqueId\" AS \"UniqueId\", \"UFRecords\".\"State\" AS \"StateAsString\", \"UFRecords\".\"RecordData\" AS \"RecordData\", \"UFRecords\".\"Culture\" AS \"Culture\", \"UFRecords\".\"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Form\" = @p0) ORDER BY (\"UFRecords\".\"Id\") LIMIT @p1 OFFSET @p2";
+                    return success;
+                }
+                //else if (cmd.CommandText.Equals(""))
+                //{
+                //    cmd.CommandText = "";
+                //    return success;
+                //}
+
                 //else if (cmd.CommandText.StartsWith(""))
                 //{
                 //    var sb = new StringBuilder("");
@@ -347,7 +396,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                         "UFRecordDataBit",
                         "UFRecordDataDateTime"
                     };
-                    foreach(var table in dataTables)
+                    foreach (var table in dataTables)
                     {
                         if (cmd.CommandText.StartsWith($"SELECT \"Id\" AS \"Id\", \"Key\" AS \"Key\", \"Value\" AS \"Value\" FROM \"{table}\" WHERE \"Key\" IN ("))
                         {
@@ -565,20 +614,28 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
                 if (!success)
                 {
-                    var insertStart = "INSERT INTO \"";
-                    if (cmd.CommandText.StartsWith(insertStart))
+                    if (cmd.CommandText.Equals("INSERT INTO umbracoLog (userId, NodeId, entityType, Datestamp, logHeader, logComment) VALUES (@p0, @p1, @p2, @p3, @p4, @p5)"))
                     {
-                        if (cmd.CommandText.Contains(") returning "))
+                        cmd.CommandText = "INSERT INTO \"umbracoLog\" (\"userId\", \"NodeId\", \"entityType\", \"Datestamp\", \"logHeader\", \"logComment\") VALUES (@p0, @p1, @p2, @p3, @p4, @p5)";
+                        success = true;
+                    }
+                    else
+                    {
+                        var insertStart = "INSERT INTO \"";
+                        if (cmd.CommandText.StartsWith(insertStart))
                         {
-                            if (cmd.CommandText.InvariantContains(") returning \"id\" as id"))
+                            if (cmd.CommandText.Contains(") returning "))
                             {
-                                cmd.CommandText = cmd.CommandText.Replace(") returning \"id\" as id", ") returning \"Id\" as id;", StringComparison.OrdinalIgnoreCase);
-                                success = true;
-                            }
-                            else
-                            {
-                                cmd.CommandText = cmd.CommandText[..cmd.CommandText.IndexOf(" returning ", StringComparison.OrdinalIgnoreCase)];
-                                success = true;
+                                if (cmd.CommandText.InvariantContains(") returning \"id\" as id"))
+                                {
+                                    cmd.CommandText = cmd.CommandText.Replace(") returning \"id\" as id", ") returning \"Id\" as id;", StringComparison.OrdinalIgnoreCase);
+                                    success = true;
+                                }
+                                else
+                                {
+                                    cmd.CommandText = cmd.CommandText[..cmd.CommandText.IndexOf(" returning ", StringComparison.OrdinalIgnoreCase)];
+                                    success = true;
+                                }
                             }
                         }
                     }
@@ -595,6 +652,15 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
                 switch (cmd.CommandText)
                 {
+                    case "UPDATE UFForms SET Name = Name WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFForms\" SET \"Name\" = \"Name\" WHERE \"Key\" = @p0";
+                        break;
+                    case "UPDATE UFForms SET Trashed = 0 WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFForms\" SET \"Trashed\" = false WHERE \"Key\" = @p0";
+                        break;
+                    case "UPDATE UFForms SET Trashed = 1 WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFForms\" SET \"Trashed\" = true WHERE \"Key\" = @p0";
+                        break;
                     case "UPDATE \"UFRecords\" SET\n \"UmbracoPageKey\"=@p0\n \nWHERE ((\"UFRecords\".\"UmbracoPageId\" = @p1))\nAND (UmbracoPageKey IS NULL)":
                         cmd.CommandText = "UPDATE \"UFRecords\" SET \"UmbracoPageKey\"=@p0 WHERE ((\"UFRecords\".\"UmbracoPageId\" = @p1)) AND (\"UFRecords\".\"UmbracoPageKey\" IS NULL)";
                         break;
@@ -658,7 +724,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 }
             }
             else if (cmd.CommandText.StartsWith("DELETE "))
-            {
+            {                
                 if (cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsDailySummary WHERE \"Date\" IN ("))
                 {
                     cmd.CommandText = cmd.CommandText.Replace("UFAnalyticsDailySummary", "\"UFAnalyticsDailySummary\"");
@@ -685,6 +751,9 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 {
                     switch (cmd.CommandText)
                     {
+                        case "DELETE FROM UFFormVersions WHERE FormKey = @p0":
+                            cmd.CommandText = "DELETE FROM \"UFFormVersions\" WHERE \"FormKey\" = @p0";
+                            break;
                         case "DELETE FROM UFRecordDataString WHERE record = @p0":
                             cmd.CommandText = "DELETE FROM \"UFRecordDataString\" WHERE \"Record\" = @p0";
                             break;
