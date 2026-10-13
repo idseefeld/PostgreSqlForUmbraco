@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<VersionPrefix>18.2.4</VersionPrefix>
+		<VersionPrefix>18.2.5</VersionPrefix>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>
 		<Version>$(VersionPrefix)</Version>
@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="18.1.3" />
+	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="18.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
