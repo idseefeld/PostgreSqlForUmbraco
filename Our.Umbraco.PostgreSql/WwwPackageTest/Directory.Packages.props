@@ -10,10 +10,10 @@
     <UmbracoAppLocalIcuVersion Condition="'$(UmbracoAppLocalIcuVersion)' == ''">72.1.0.3</UmbracoAppLocalIcuVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Our.Umbraco.PostgreSql.Umbraco.Forms" Version="18.2.4" />
-    <PackageVersion Include="Umbraco.Cms" Version="18.2.0" />
+    <PackageVersion Include="Our.Umbraco.PostgreSql.Umbraco.Forms" Version="18.2.5-rc" />
+    <PackageVersion Include="Umbraco.Cms" Version="18.2.2" />
     <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="18.2.0" />
     <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="$(UmbracoAppLocalIcuVersion)" />
-    <PackageVersion Include="Umbraco.Forms" Version="18.1.3" />
+    <PackageVersion Include="Umbraco.Forms" Version="18.2.1" />
   </ItemGroup>
 </Project>
