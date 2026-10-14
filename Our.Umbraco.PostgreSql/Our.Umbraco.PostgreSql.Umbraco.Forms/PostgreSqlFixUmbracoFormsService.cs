@@ -1,18 +1,10 @@
-using Examine;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using Our.Umbraco.PostgreSql.Services;
 using System.Data;
 using System.Data.Common;
-using System.Diagnostics;
-using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using Umbraco.Cms.Core.Models;
 using Umbraco.Extensions;
-using Umbraco.Forms.Core.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 {
@@ -277,6 +269,15 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText = sb.ToString();
                     return success;
                 }
+                else if (cmd.CommandText.StartsWith("SELECT COUNT(DISTINCT \"MemberKey\")\nFROM UFRecords\nWHERE (\"MemberKey\" IS NOT NULL)\nAND (\"Form\" IN ("))
+                {
+                    var sb = new StringBuilder("SELECT COUNT(DISTINCT \"MemberKey\") FROM \"UFRecords\" WHERE (\"MemberKey\" IS NOT NULL) AND (\"Form\" IN (");
+                    var lastIndex = cmd.Parameters.Count - 2;
+                    inClause = string.Join(",", cmd.Parameters.Cast<DbParameter>().Select(p => p.ParameterName).Take(lastIndex));
+                    sb.Append($"{inClause})) AND (\"Created\" >= @p{lastIndex}) AND (\"Created\" <= @p{lastIndex + 1})");
+                    cmd.CommandText = sb.ToString();
+                    return success;
+                }
                 else if (cmd.CommandText.Equals("SELECT DISTINCT NodeId FROM umbracoLog WHERE entityType = @p0"))
                 {
                     cmd.CommandText = "SELECT DISTINCT \"NodeId\" FROM \"umbracoLog\" WHERE \"entityType\" = @p0";
@@ -317,27 +318,6 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                     cmd.CommandText = "SELECT \"UFRecords\".\"Id\" AS \"Id\", \"UFRecords\".\"Form\" AS \"Form\", \"UFRecords\".\"Created\" AS \"Created\", \"UFRecords\".\"Updated\" AS \"Updated\", \"UFRecords\".\"CurrentPage\" AS \"CurrentPage\", \"UFRecords\".\"UmbracoPageId\" AS \"UmbracoPageId\", \"UFRecords\".\"UmbracoPageKey\" AS \"UmbracoPageKey\", \"UFRecords\".\"IP\" AS \"IP\", \"UFRecords\".\"MemberKey\" AS \"MemberKey\", \"UFRecords\".\"UniqueId\" AS \"UniqueId\", \"UFRecords\".\"State\" AS \"StateAsString\", \"UFRecords\".\"RecordData\" AS \"RecordData\", \"UFRecords\".\"Culture\" AS \"Culture\", \"UFRecords\".\"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Form\" = @p0) ORDER BY (\"UFRecords\".\"Id\") LIMIT @p1 OFFSET @p2";
                     return success;
                 }
-                //else if (cmd.CommandText.Equals(""))
-                //{
-                //    cmd.CommandText = "";
-                //    return success;
-                //}
-
-                //else if (cmd.CommandText.StartsWith(""))
-                //{
-                //    var sb = new StringBuilder("");
-                //    for (int i = 3; i < cmd.Parameters.Count; i++)
-                //    {
-                //        sb.Append($"@p{i}");
-                //        if (i < cmd.Parameters.Count - 1)
-                //        {
-                //            sb.Append(",");
-                //        }
-                //    }
-                //    sb.Append("");
-                //    cmd.CommandText = sb.ToString();
-                //    return success;
-                //}
                 else if (cmd.CommandText.StartsWith("SELECT COUNT(*) as \"Total\", CAST(Created AS DATE) as \"Created\"\nFROM UFRecords\nWHERE (\"Created\" >= @p0 AND \"Created\" <= @p1)\nAND (\"Form\" IN ("))
                 {
                     var sb = new StringBuilder("SELECT COUNT(*) as \"Total\", CAST(\"Created\" AS DATE) as \"Created\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" IN (");
@@ -510,6 +490,12 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                             cmd.CommandText = "SELECT \"Id\" AS \"Id\", \"Form\" AS \"Form\", \"Created\" AS \"Created\", \"Updated\" AS \"Updated\", \"CurrentPage\" AS \"CurrentPage\", \"UmbracoPageId\" AS \"UmbracoPageId\", \"IP\" AS \"IP\", \"MemberKey\" AS \"MemberKey\", \"UniqueId\" AS \"UniqueId\", \"State\" AS \"StateAsString\", \"RecordData\" AS \"RecordData\", \"Culture\" AS \"Culture\", \"AdditionalData\" AS \"AdditionalData\" FROM \"UFRecords\" WHERE (\"Created\" >= @p0 AND \"Created\" <= @p1) AND (\"Form\" = @p2) AND (LOWER(\"RecordData\") LIKE @p3) ORDER BY \"Created\" DESC LIMIT @p4 OFFSET @p5";
                             cmd.Parameters[3].Value = cmd.Parameters[3].Value?.ToString()?.ToLower();
                             break;
+                        case "SELECT \"UFForms\".\"NodeId\" AS \"NodeId\"\nFROM \"UFForms\"\nWHERE ((\"UFForms\".\"Key\" = @p0))":
+                            cmd.CommandText = "SELECT \"NodeId\" FROM \"UFForms\" WHERE \"UFForms\".\"Key\" = @p0";
+                            break;
+                        case "SELECT COUNT(*) FROM UFFolders WHERE \"Key\" = @p0 AND Trashed = 1":
+                            cmd.CommandText = "SELECT COUNT(*) FROM \"UFFolders\" WHERE \"Key\" = @p0 AND \"Trashed\" = true";
+                            break;
                         default:
                             switch (cmd.CommandText)
                             {
@@ -652,6 +638,18 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
 
                 switch (cmd.CommandText)
                 {
+                    case "UPDATE UFFolders SET Trashed = 1 WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFFolders\" SET \"Trashed\" = true WHERE \"Key\" = @p0";
+                        break;
+                    case "UPDATE UFFolders SET Trashed = 0 WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFFolders\" SET \"Trashed\" = false WHERE \"Key\" = @p0";
+                        break;
+                    case "UPDATE UFFolders SET Trashed = Trashed WHERE \"Key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFFolders\" SET \"Trashed\" = \"Trashed\" WHERE \"Key\" = @p0";
+                        break;
+                    case "UPDATE UFForms SET Definition = Definition WHERE \"key\" = @p0":
+                        cmd.CommandText = "UPDATE \"UFForms\" SET \"Definition\" = \"Definition\" WHERE \"Key\" = @p0";
+                        break;
                     case "UPDATE UFForms SET Name = Name WHERE \"key\" = @p0":
                         cmd.CommandText = "UPDATE \"UFForms\" SET \"Name\" = \"Name\" WHERE \"Key\" = @p0";
                         break;
@@ -724,7 +722,7 @@ namespace Our.Umbraco.PostgreSql.Umbraco.Forms
                 }
             }
             else if (cmd.CommandText.StartsWith("DELETE "))
-            {                
+            {
                 if (cmd.CommandText.StartsWith("DELETE FROM UFAnalyticsDailySummary WHERE \"Date\" IN ("))
                 {
                     cmd.CommandText = cmd.CommandText.Replace("UFAnalyticsDailySummary", "\"UFAnalyticsDailySummary\"");

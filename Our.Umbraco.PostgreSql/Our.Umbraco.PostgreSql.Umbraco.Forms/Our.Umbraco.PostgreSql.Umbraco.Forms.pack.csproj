@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<VersionPrefix>18.2.5</VersionPrefix>
+		<VersionPrefix>18.2.6</VersionPrefix>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>
 		<Version>$(VersionPrefix)</Version>
