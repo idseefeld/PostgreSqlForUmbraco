@@ -1,0 +1,4 @@
+[submodule "NPoco"]
+	path = NPoco
+	url = ../NPoco.git
+	branch = master

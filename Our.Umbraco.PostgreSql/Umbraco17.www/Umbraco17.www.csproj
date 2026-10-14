@@ -17,6 +17,9 @@
 		<PackageReference Include="Umbraco.Forms" Version="17.4.7" />
 		<PackageReference Include="uSync" Version="17.3.2" />
 		<PackageReference Include="uSync.Forms" Version="17.1.0" />
+		<ProjectReference Include="..\..\NPoco\src\NPoco.Abstractions\NPoco.Abstractions.csproj" />
+		<ProjectReference Include="..\..\NPoco\src\NPoco.SqlServer\NPoco.SqlServer.csproj" />
+		<ProjectReference Include="..\..\NPoco\src\NPoco\NPoco.csproj" />
 		<ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
 	</ItemGroup>
