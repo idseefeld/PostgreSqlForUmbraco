@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
+using Our.Umbraco.PostgreSql.Extensions;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using Our.Umbraco.PostgreSql.Extensions;
 using Umbraco.Cms.Infrastructure.Persistence.FaultHandling;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Our.Umbraco.PostgreSql.Services
 {
@@ -19,7 +15,7 @@ namespace Our.Umbraco.PostgreSql.Services
         public PostgreSqlFaultHandlingDbCommand(RetryDbConnection connection, DbCommand command, RetryPolicy? cmdRetryPolicy, IPackagesService packagesService)
         {
             _connection = connection;
-            Inner = command.FixCommanText(packagesService);
+            Inner = command.FixCommandText(packagesService);
             _cmdRetryPolicy = cmdRetryPolicy ?? RetryPolicy.NoRetry;
             _packagesService = packagesService;
         }
@@ -118,7 +114,7 @@ namespace Our.Umbraco.PostgreSql.Services
                 // Table does not exist yet (PostgreSQL error 42P01 = undefined_table).
                 // This can happen during Umbraco.Forms migrations when EnsureTableConstraints
                 // checks for duplicate rows before the table has been created, or when
-                // FixCommanText rewrites SQL to reference tables not yet created.
+                // FixCommandText rewrites SQL to reference tables not yet created.
                 // Returning 0 is semantically correct: no rows exist in a non-existent table.
                 return 0;
             }

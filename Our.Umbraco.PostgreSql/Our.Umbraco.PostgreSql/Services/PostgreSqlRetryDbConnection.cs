@@ -23,7 +23,7 @@ namespace Our.Umbraco.PostgreSql.Services
         protected override DbCommand CreateDbCommand()
         {
             var cmd = Inner.CreateCommand();
-            var fixedCmd = cmd.FixCommanText(_packagesFixService);
+            var fixedCmd = cmd.FixCommandText(_packagesFixService);
             return new PostgreSqlFaultHandlingDbCommand(this, fixedCmd, _cmdRetryPolicy, _packagesFixService);
         }
     }

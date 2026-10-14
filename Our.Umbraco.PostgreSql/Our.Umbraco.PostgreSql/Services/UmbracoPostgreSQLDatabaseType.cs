@@ -117,11 +117,11 @@ public class UmbracoPostgreSQLDatabaseType(IPackagesService packagesService) : D
 
         if (normalizedPrimaryKey != null)
         {
-            AdjustSqlInsertCommandText(cmd.FixCommanText(packagesService), normalizedPrimaryKey);
-            return ((IDatabaseHelpers)db).ExecuteScalarHelper(cmd.FixCommanText(packagesService));
+            AdjustSqlInsertCommandText(cmd.FixCommandText(packagesService), normalizedPrimaryKey);
+            return ((IDatabaseHelpers)db).ExecuteScalarHelper(cmd.FixCommandText(packagesService));
         }
 
-        var fixedCmd = cmd.FixCommanText(packagesService);
+        var fixedCmd = cmd.FixCommandText(packagesService);
 
         ((IDatabaseHelpers)db).ExecuteNonQueryHelper(fixedCmd);
         return -1;
@@ -135,23 +135,23 @@ public class UmbracoPostgreSQLDatabaseType(IPackagesService packagesService) : D
         if (normalizedPrimaryKey != null)
         {
             AdjustSqlInsertCommandText(cmd, normalizedPrimaryKey);
-            return await ((IDatabaseHelpers)db).ExecuteScalarHelperAsync(cmd.FixCommanText(packagesService), cancellationToken).ConfigureAwait(false);
+            return await ((IDatabaseHelpers)db).ExecuteScalarHelperAsync(cmd.FixCommandText(packagesService), cancellationToken).ConfigureAwait(false);
         }
 
-        await ((IDatabaseHelpers)db).ExecuteNonQueryHelperAsync(cmd.FixCommanText(packagesService), cancellationToken).ConfigureAwait(false);
+        await ((IDatabaseHelpers)db).ExecuteNonQueryHelperAsync(cmd.FixCommandText(packagesService), cancellationToken).ConfigureAwait(false);
         return -1;
     }
 
     public override void PreExecute(DbCommand cmd)
     {
-        var fixedCmd = cmd.FixCommanText(packagesService);
+        var fixedCmd = cmd.FixCommandText(packagesService);
 
         base.PreExecute(fixedCmd);
     }
 
     public override string FormatCommand(DbCommand cmd)
     {
-        var fixedCmd = cmd.FixCommanText(packagesService);
+        var fixedCmd = cmd.FixCommandText(packagesService);
 
         var rVal = base.FormatCommand(fixedCmd);
 
@@ -159,7 +159,7 @@ public class UmbracoPostgreSQLDatabaseType(IPackagesService packagesService) : D
     }
     public override Task<DbDataReader> ExecuteReaderAsync(IDatabase database, DbCommand cmd, CancellationToken cancellationToken = default)
     {
-        var fixedCmd = cmd.FixCommanText(packagesService);
+        var fixedCmd = cmd.FixCommandText(packagesService);
 
         return base.ExecuteReaderAsync(database, fixedCmd, cancellationToken);
     }
