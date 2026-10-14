@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
+		<VersionPrefix>17.7.1</VersionPrefix>
+		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+		<FileVersion>$(VersionPrefix)</FileVersion>
+		<Version>$(VersionPrefix)-rc</Version>
 		<PackageId>Our.Umbraco.PostgreSql.Umbraco.Forms</PackageId>
 		<Title>Umbraco CMS - Persistence - Umbraco Forms - PostgreSQL</Title>
 		<Description>Adds support for Umbraco Forms with PostgreSQL.</Description>
@@ -20,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Umbraco.Forms" Version="[17.4.7,18.0.0)" />
+		<PackageReference Include="Umbraco.Forms" Version="[17.6.1,17.7.0)" />
 	</ItemGroup>
 
 	<ItemGroup>
