@@ -1,7 +1,14 @@
 {
   "id": "Our.Umbraco.PostgreSql.Umbraco.Forms",
   "name": "Umbraco ​C​M​S - ​Persistence - ​Umbraco ​Forms - ​Postgre​S​Q​L",
-  "version": "17.7.1-rc",
+  "version": "18.2.6",
   "allowPackageTelemetry": true,
-  "extensions": []
+  "extensions": [
+    {
+      "name": "Exclude Forms DataSources Menu Item",
+      "alias": "Umb.Forms.Exclude.DataSources",
+      "type": "backofficeEntryPoint",
+      "js": "/App_Plugins/Our.Umbraco.PostgreSql.Umbraco.Forms/exclude-datasources.js"
+    }
+  ]
 }
