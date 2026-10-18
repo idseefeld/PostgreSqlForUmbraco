@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 	<PropertyGroup>
-		<VersionPrefix>17.7.0</VersionPrefix>
+		<VersionPrefix>17.8.0</VersionPrefix>
+		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+		<FileVersion>$(VersionPrefix)</FileVersion>
+		<Version>$(VersionPrefix)-rc</Version>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>postgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>

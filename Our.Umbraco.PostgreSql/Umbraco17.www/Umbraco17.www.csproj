@@ -13,7 +13,7 @@
 	<ItemGroup>
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
-		<PackageReference Include="Umbraco.Cms" Version="17.7.2" />
+		<PackageReference Include="Umbraco.Cms" Version="17.8.0-rc" />
 		<PackageReference Include="Umbraco.Forms" Version="17.6.1" />
 		<PackageReference Include="uSync" Version="17.3.2" />
 		<PackageReference Include="uSync.Forms" Version="17.1.0" />
