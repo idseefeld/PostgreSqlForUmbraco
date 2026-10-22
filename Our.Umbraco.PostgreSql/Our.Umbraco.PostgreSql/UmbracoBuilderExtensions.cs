@@ -1,7 +1,8 @@
 using System.Data.Common;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Our.Umbraco.PostgreSql.Configuration;
 using Our.Umbraco.PostgreSql.Interceptors;
 using Our.Umbraco.PostgreSql.Locking;
 using Our.Umbraco.PostgreSql.Services;
@@ -10,7 +11,6 @@ using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.DistributedLocking;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence.SqlSyntax;
-using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql
 {
@@ -66,12 +66,13 @@ namespace Our.Umbraco.PostgreSql
             builder.Services.TryAddEnumerable(ServiceDescriptor
                 .Singleton<IProviderSpecificInterceptor, PostgreSqlExecutingInterceptor>());
 
-            // This is only needed for Umbraco 18+ and was merged into wrong branch
-            // builder.Services.TryAddEnumerable(ServiceDescriptor
-            //    .Singleton<IPostgreSqlFixService, PostgreSqlFixUmbracoMigrationService>());
-
             DbProviderFactories.UnregisterFactory(Constants.ProviderName);
             DbProviderFactories.RegisterFactory(Constants.ProviderName, PostgreSqlDbProviderFactory.Instance);
+
+            // NPocoSqlServerDatabaseExtensions.ConfigureNPocoBulkExtensions(); // ??? is this supported for PostgreSQL? Not sure if we need to do this, but it was in the original code.
+
+            builder.Services.TryAddEnumerable(ServiceDescriptor
+                .Singleton<IPostConfigureOptions<ConnectionStrings>, ConfigurePostgreSqlConnectionStringTimeouts>());
 
             return builder;
         }
