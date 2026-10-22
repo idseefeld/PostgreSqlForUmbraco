@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Umbraco.Cms.Infrastructure.Persistence;
@@ -15,6 +10,8 @@ namespace Our.Umbraco.PostgreSql.Services
     public class PostgreSqlDatabaseCreator : IDatabaseCreator
     {
         private readonly ILogger<PostgreSqlDatabaseCreator> _logger;
+
+        /// <inheritdoc />
         public string ProviderName => Constants.ProviderName;
 
         public PostgreSqlDatabaseCreator(ILogger<PostgreSqlDatabaseCreator> logger) => _logger = logger;

@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -13,6 +11,7 @@ using Umbraco.Cms.Core.DistributedLocking;
 using Umbraco.Cms.Core.DistributedLocking.Exceptions;
 using Umbraco.Cms.Core.Exceptions;
 using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Cms.Persistence.EFCore.Scoping;
 using Umbraco.Extensions;
@@ -114,7 +113,7 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                         throw new ArgumentOutOfRangeException(nameof(lockType), lockType, @"Unsupported lockType");
                 }
             }
-            catch (PostgresException ex) when (ex.SqlState == "55P03" || ex.SqlState == "40P01")
+            catch (Exception exception) when (IsLockTimeout(exception))
             {
                 if (LockType == DistributedLockType.ReadLock)
                 {
@@ -159,14 +158,11 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                         "A transaction with minimum ReadCommitted isolation level is required.");
                 }
 
-                // SET LOCAL kann nur in Transaktionsblöcken verwendet werden
-                await dbContext.Database.ExecuteSqlRawAsync($"SET LOCAL lock_timeout = '{(int)_timeout.TotalMilliseconds}ms'");
-
-                // GitHub Copilot: The WITH (REPEATABLEREAD) table hint is specific to SQL Server and is not valid in PostgreSQL. In PostgreSQL, transaction isolation is controlled at the transaction level, not per-query, and you cannot use SQL Server-style table hints.
-                // 1. Removed WITH (REPEATABLEREAD) because PostgreSQL does not support this syntax.
-                // ToDo: check 2. PostgreSQL handles repeatable read at the transaction level, so ensure your transaction is started with the correct isolation level elsewhere in your code.
-                var selectCmd = $"SELECT value FROM {_syntax.GetQuotedTableName("umbracoLock")} WHERE id={LockId} FOR SHARE";
-                var number = await dbContext.Database.ExecuteScalarAsync<int?>(selectCmd);
+                var selectCmd = $"{GetLockTimeoutQuery()};SELECT value FROM {_syntax.GetQuotedTableName("umbracoLock")} WHERE id=@id FOR SHARE";
+                var number = await dbContext.Database.ExecuteScalarAsync<int?>(
+                    selectCmd,
+                    [new NpgsqlParameter("@id", LockId)],
+                    commandTimeOut: TimeSpan.FromSeconds(CommandTimeoutSeconds));
 
                 if (number == null)
                 {
@@ -174,6 +170,11 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                     throw new ArgumentException(@$"LockObject with id={LockId} does not exist.", nameof(LockId));
                 }
             }).GetAwaiter().GetResult();
+        }
+
+        private string GetLockTimeoutQuery()
+        {
+            return $"SET LOCAL lock_timeout = '{(int)_timeout.TotalMilliseconds}ms'";
         }
 
         private void ObtainWriteLock()
@@ -195,11 +196,27 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                         "A transaction with minimum ReadCommitted isolation level is required.");
                 }
 
-                // SET LOCAL kann nur in Transaktionsblöcken verwendet werden
-                await dbContext.Database.ExecuteSqlRawAsync($"SET LOCAL lock_timeout = '{(int)_timeout.TotalMilliseconds}ms'");
+                // Unlike the read lock, this path has no per-command timeout hook, so the context-wide
+                // one has to be set and put back.
+                int? originalCommandTimeout = dbContext.Database.GetCommandTimeout();
+                dbContext.Database.SetCommandTimeout(CommandTimeoutSeconds);
 
-                var updateCmd = $"UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={LockId.ToString(CultureInfo.InvariantCulture)}";
-                var rowsAffected = await dbContext.Database.ExecuteSqlRawAsync(updateCmd);
+                int rowsAffected;
+                try
+                {
+                    // S2077: SET LOCAL lock_timeout only accepts a literal, so the timeout cannot be a
+                    // parameter. It is an int, and the lock id is parameterized, so no part of the
+                    // statement comes from a string.
+#pragma warning disable EF1002, S2077
+                    rowsAffected = await dbContext.Database.ExecuteSqlRawAsync(
+                        @$"{GetLockTimeoutQuery()};UPDATE {_syntax.GetQuotedTableName("umbracoLock")} SET value = (CASE WHEN (value=1) THEN -1 ELSE 1 END) WHERE id={{0}}",
+                        LockId);
+#pragma warning restore EF1002, S2077
+                }
+                finally
+                {
+                    dbContext.Database.SetCommandTimeout(originalCommandTimeout);
+                }
 
                 if (rowsAffected == 0)
                 {
@@ -208,5 +225,30 @@ public sealed class PostgreSqlEFCoreDistributedLockingMechanism<T> : IDistribute
                 }
             }).GetAwaiter().GetResult();
         }
+
+        private static bool IsLockTimeout(Exception exception)
+        {
+            if (exception is PostgresException { SqlState: "55P03" or "40P01" })
+            {
+                return true;
+            }
+
+            if (exception is TimeoutException)
+            {
+                return true;
+            }
+
+            return exception.InnerException is not null && IsLockTimeout(exception.InnerException);
+        }
+
+        /// <summary>
+        ///     Gets the command timeout, in whole seconds, that the statement obtaining this lock runs
+        ///     under, derived from the lock's own timeout.
+        /// </summary>
+        /// <remarks>
+        ///     Without this the ambient command timeout can abort the statement while the server is still
+        ///     waiting for the row lock, surfacing a raw timeout instead of a lock timeout exception.
+        /// </remarks>
+        private int CommandTimeoutSeconds => _timeout.ToLockCommandTimeoutSeconds();
     }
 }
