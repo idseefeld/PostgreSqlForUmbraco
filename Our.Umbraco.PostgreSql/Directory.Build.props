@@ -4,7 +4,7 @@
 		<VersionPrefix>17.8.0</VersionPrefix>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>
-		<Version>$(VersionPrefix)-rc</Version>
+		<Version>$(VersionPrefix)</Version>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>postgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
