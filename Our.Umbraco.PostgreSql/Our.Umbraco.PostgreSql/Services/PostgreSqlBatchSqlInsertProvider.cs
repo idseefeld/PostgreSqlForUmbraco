@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NPoco;
+using NPoco.Internal;
 using Npgsql;
 using Our.Umbraco.PostgreSql;
 using Umbraco.Cms.Infrastructure.Persistence;
+using Umbraco.Extensions;
 
 namespace Our.Umbraco.PostgreSql.Services
 {
@@ -58,17 +60,34 @@ namespace Our.Umbraco.PostgreSql.Services
                 bool autoIncrement = pocoData.TableInfo.AutoIncrement;
                 string? primaryKeyName = autoIncrement ? pocoData.TableInfo.PrimaryKey : null;
 
-                // Get columns to insert (excluding auto-increment primary key)
+                // Match INSERT's treatment of result, computed, and auto-increment columns.
                 var columns = pocoData.Columns
+                    .Where(c => !c.Value.ResultColumn
+                        && !(c.Value.ComputedColumn && c.Value.ComputedColumnType != ComputedColumnType.ComputedOnUpdate))
                     .Where(c => !autoIncrement || !string.Equals(c.Key, primaryKeyName, StringComparison.OrdinalIgnoreCase))
                     .OrderBy(c => c.Value.ColumnName)
                     .ToList();
 
-                var connection = database.Connection as NpgsqlConnection;
+                NpgsqlConnection? connection;
+                try
+                {
+                    // Umbraco's retry and profiling interceptors wrap the Npgsql connection.
+                    connection = NPocoDatabaseExtensions.GetTypedConnection<NpgsqlConnection>(database.Connection);
+                }
+                catch (NotSupportedException)
+                {
+                    connection = null;
+                }
+
                 if (connection == null)
                 {
                     // Fallback to individual inserts if we can't get NpgsqlConnection
-                    return BulkInsertRecordsFallback(database, pocoData, recordsArray);
+                    var count = BulkInsertRecordsFallback(database, pocoData, recordsArray);
+                    if (!inTrans)
+                    {
+                        database.CompleteTransaction();
+                    }
+                    return count;
                 }
 
                 // Ensure connection is open
@@ -81,26 +100,29 @@ namespace Our.Umbraco.PostgreSql.Services
                 var columnNames = string.Join(", ", columns.Select(c => $"\"{c.Value.ColumnName}\""));
                 var copyCommand = $"COPY \"{tableName}\" ({columnNames}) FROM STDIN (FORMAT BINARY)";
 
-                using var writer = connection.BeginBinaryImport(copyCommand);
-
-                foreach (var record in recordsArray)
+                ulong insertedCount;
+                // Complete finishes the import; disposal releases COPY mode before committing.
+                using (var writer = connection.BeginBinaryImport(copyCommand))
                 {
-                    writer.StartRow();
-                    foreach (var column in columns)
+                    foreach (var record in recordsArray)
                     {
-                        var value = column.Value.GetValue(record);
-                        if (value == null)
+                        writer.StartRow();
+                        foreach (var column in columns)
                         {
-                            writer.WriteNull();
-                        }
-                        else
-                        {
-                            writer.Write(value);
+                            var value = column.Value.GetColumnValue(pocoData, record, database.ProcessMapper);
+                            if (value == null || value == DBNull.Value)
+                            {
+                                writer.WriteNull();
+                            }
+                            else
+                            {
+                                // Preserve normal INSERT conversions, including PostgreSQL's UTC dates.
+                                writer.Write(database.DatabaseType.MapParameterValue(value));
+                            }
                         }
                     }
+                    insertedCount = writer.Complete();
                 }
-
-                var insertedCount = writer.Complete();
 
                 if (!inTrans)
                 {

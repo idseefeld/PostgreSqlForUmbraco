@@ -1,0 +1,50 @@
+name: PostgreSQL provider tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bulk-insert:
+    name: Bulk insert (PostgreSQL ${{ matrix.postgres }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres: ['16', '17', '18']
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: provider_tests
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d provider_tests"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      POSTGRES_TEST_CONNECTION_STRING: Host=localhost;Port=5432;Database=provider_tests;Username=postgres;Password=postgres
+      TZ: Europe/Oslo
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
+        with:
+          dotnet-version: '10.0.x'
+      - name: Run PostgreSQL integration tests
+        run: dotnet test tests/Our.Umbraco.PostgreSql.Tests/Our.Umbraco.PostgreSql.Tests.csproj --configuration Release --logger "trx;LogFileName=postgresql.trx" --results-directory TestResults
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: postgresql-${{ matrix.postgres }}-test-results
+          path: TestResults/*.trx
+          if-no-files-found: warn

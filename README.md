@@ -33,3 +33,5 @@ If you find any issues or want to ask for features, please use the [IssueTracker
 
 
 ### Comments and contributions are very welcome!
+
+For reproducible PostgreSQL provider integration tests, see [tests/README.md](tests/README.md).
