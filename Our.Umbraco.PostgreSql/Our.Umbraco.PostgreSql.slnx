@@ -18,5 +18,5 @@
   <Folder Name="/Solution Items/license/">
     <File Path="Our.Umbraco.PostgreSql.Umbraco.License/wwwroot/App_Plugins/Our.Umbraco.PostgreSql.Umbraco.License/umbraco-package.json" />
   </Folder>
-  <Project Path="Umbraco18.www/Umbraco18.www.csproj" Id="29fdd9d7-06d6-4321-abc1-936810aa2c10" />
+  <Project Path="Umbraco19.www/Umbraco19.www.csproj" Id="b6647c55-2312-41bf-bca2-91c30d60aa73" />
 </Solution>
