@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 	<PropertyGroup>
-		<VersionPrefix>18.3.0</VersionPrefix>
+		<VersionPrefix>18.4.0</VersionPrefix>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>
-		<Version>$(VersionPrefix)</Version>
+		<Version>$(VersionPrefix)-rc</Version>
 		<Authors>Dirk Seefeld</Authors>
 		<PackageIcon>postgresql.png</PackageIcon>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>

@@ -20,6 +20,9 @@
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" />
     <PackageReference Include="Umbraco.Forms" />
+    <ProjectReference Include="..\..\NPoco\src\NPoco.Abstractions\NPoco.Abstractions.csproj" />
+    <ProjectReference Include="..\..\NPoco\src\NPoco.SqlServer\NPoco.SqlServer.csproj" />
+    <ProjectReference Include="..\..\NPoco\src\NPoco\NPoco.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.EFCore\Our.Umbraco.PostgreSql.EFCore.pack.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
