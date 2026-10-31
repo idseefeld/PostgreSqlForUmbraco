@@ -14,7 +14,7 @@
 		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
 		<PackageReference Include="Umbraco.Cms" Version="17.9.0-rc" />
-		<PackageReference Include="Umbraco.Forms" Version="17.6.2" />
+		<PackageReference Include="Umbraco.Forms" Version="17.7.0-rc" />
 		<PackageReference Include="uSync" Version="17.5.1" />
 		<PackageReference Include="uSync.Forms" Version="17.2.0" />
 		<ProjectReference Include="..\..\NPoco\src\NPoco.Abstractions\NPoco.Abstractions.csproj" />
