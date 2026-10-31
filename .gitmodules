@@ -1,3 +1,4 @@
 [submodule "NPoco"]
-	path = Our.Umbraco.PostgreSql/NPoco
-	url = https://github.com/idseefeld/NPoco.git
+	path = NPoco
+	url = ../NPoco.git
+	branch = net11
