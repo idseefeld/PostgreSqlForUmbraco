@@ -24,7 +24,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="18.2.1" />
+	  <PackageReference Include="System.Security.Cryptography.Xml" Version="11.0.0-rc.3.26522.148" />
+	  <PackageReference Include="Umbraco.Forms.Core.Providers" Version="18.3.0-rc" />
 	</ItemGroup>
 
 	<ItemGroup>
