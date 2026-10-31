@@ -11,6 +11,7 @@
     <Project Path="Our.Umbraco.PostgreSql/Our.Umbraco.PostgreSql.pack.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path="../.gitmodules" />
     <File Path="Directory.Build.props" />
     <File Path="postgresql.png" />
   </Folder>
