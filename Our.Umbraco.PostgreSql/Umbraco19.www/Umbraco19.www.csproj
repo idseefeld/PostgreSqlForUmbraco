@@ -40,7 +40,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.Forms\Our.Umbraco.PostgreSql.Umbraco.Forms.pack.csproj" />
+    <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
   </ItemGroup>
 
   <ItemGroup>
