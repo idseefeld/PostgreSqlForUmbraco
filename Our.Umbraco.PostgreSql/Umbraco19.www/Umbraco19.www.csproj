@@ -40,6 +40,9 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NPoco\src\NPoco.Abstractions\NPoco.Abstractions.csproj" />
+    <ProjectReference Include="..\..\NPoco\src\NPoco.SqlServer\NPoco.SqlServer.csproj" />
+    <ProjectReference Include="..\..\NPoco\src\NPoco\NPoco.csproj" />
     <ProjectReference Include="..\Our.Umbraco.PostgreSql.Umbraco.License\Our.Umbraco.PostgreSql.Umbraco.License.pack.csproj" />
   </ItemGroup>
 
