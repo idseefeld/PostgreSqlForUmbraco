@@ -416,4 +416,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/Our.Umbraco.PostgreSql/Umbraco17.www
 /Our.Umbraco.PostgreSql/Umbraco18.www

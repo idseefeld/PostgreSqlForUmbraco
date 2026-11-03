@@ -1,6 +1,8 @@
+using System.Data.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Our.Umbraco.PostgreSql.Configuration;
 using Our.Umbraco.PostgreSql.Interceptors;
 using Our.Umbraco.PostgreSql.Locking;
 using Our.Umbraco.PostgreSql.Services;

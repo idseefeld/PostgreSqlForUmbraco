@@ -18,7 +18,7 @@ namespace Our.Umbraco.PostgreSql.EFCore.Extensions
 
         public static IServiceCollection AddPostgreSqlDatabaseContext<T>(
             this IServiceCollection services,
-             Action<IServiceProvider,
+            Action<IServiceProvider,
             DbContextOptionsBuilder, string?, string?>? optionsAction,
             bool shareUmbracoConnection)
             where T : PostgreSqlDbContext

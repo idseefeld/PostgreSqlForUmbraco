@@ -1,3 +1,5 @@
+using System;
+using System.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Data;
@@ -153,6 +155,8 @@ namespace Our.Umbraco.PostgreSql.Locking
                     throw new InvalidOperationException(
                         "A transaction with minimum ReadCommitted isolation level is required.");
                 }
+
+                BoundNextCommandByLockTimeout(db);
 
                 BoundNextCommandByLockTimeout(db);
 
