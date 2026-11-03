@@ -1,3 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NPoco;
+using Our.Umbraco.PostgreSql.Caching;
+using Our.Umbraco.PostgreSql.Mappers;
 using System.Data;
 using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
@@ -6,14 +12,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using NPoco;
-using Our.Umbraco.PostgreSql.Caching;
-using Our.Umbraco.PostgreSql.Mappers;
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Infrastructure.Persistence.DatabaseAnnotations;
@@ -733,7 +732,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
 
         var alterSql = new StringBuilder();
         alterSql.Append(FormatString(column));
-        alterSql.Append(" TYPE ");
+        alterSql.Append(" ");
         alterSql.Append(FormatType(column));
         alterSql.Append(" ");
         alterSql.Append(FormatNullable(column));
@@ -804,7 +803,7 @@ public class PostgreSqlSyntaxProvider : SqlSyntaxProviderBase<PostgreSqlSyntaxPr
     public override string DropColumn => "ALTER TABLE {0} DROP COLUMN {1} CASCADE";
 
     /// <inheritdoc />
-    // public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1} TYPE {2}";
+    public override string AlterColumn => "ALTER TABLE {0} ALTER COLUMN {1}";
 
     /// <inheritdoc />
     public override string RenameColumn => "ALTER TABLE {0} RENAME COLUMN {1} TO {2}";

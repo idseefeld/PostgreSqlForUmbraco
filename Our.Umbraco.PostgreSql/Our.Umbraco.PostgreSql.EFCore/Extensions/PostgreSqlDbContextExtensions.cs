@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -19,10 +18,12 @@ namespace Our.Umbraco.PostgreSql.EFCore.Extensions
 
         public static IServiceCollection AddPostgreSqlDatabaseContext<T>(
             this IServiceCollection services,
-            Action<IServiceProvider, DbContextOptionsBuilder, string?, string?>? optionsAction)
+             Action<IServiceProvider,
+            DbContextOptionsBuilder, string?, string?>? optionsAction,
+            bool shareUmbracoConnection)
             where T : PostgreSqlDbContext
         {
-            return services.AddUmbracoDbContext<T>(optionsAction);
+            return services.AddUmbracoDbContext<T>(optionsAction, shareUmbracoConnection);
         }
     }
 }
